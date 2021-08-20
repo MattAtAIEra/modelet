@@ -10,7 +10,7 @@
 	<classpathentry kind="lib" path="lib/commons-codec-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections.jar"/>
 	<classpathentry kind="lib" path="lib/commons-dbcp.jar"/>
-	<classpathentry kind="lib" path="lib/commons-dbutils-1.0.jar" sourcepath="/Users/matt/Java/lib/commons-dbutils-1.0/src/java"/>
+	<classpathentry kind="lib" path="lib/commons-dbutils-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-fileupload-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-httpclient-3.0.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-1.2.jar"/>
@@ -20,7 +20,6 @@
 	<classpathentry kind="lib" path="lib/oscore.jar"/>
 	<classpathentry kind="lib" path="lib/common-annotations.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
 	<classpathentry kind="lib" path="optional-lib/hsqldb.jar"/>
 	<classpathentry kind="lib" path="optional-lib/freemarker.jar"/>
 	<classpathentry kind="lib" path="optional-lib/jetty-7.0.0pre3.jar"/>
@@ -42,6 +41,8 @@
 	<classpathentry kind="lib" path="lib/aopalliance.jar"/>
 	<classpathentry kind="lib" path="lib/org.springframework.asm-3.0.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/org.springframework.expression-3.0.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.7-bin.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.35-bin.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-api-2.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-core-2.6.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
