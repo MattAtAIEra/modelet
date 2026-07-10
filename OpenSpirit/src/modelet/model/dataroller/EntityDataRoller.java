@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelet.entity.Entity;
+import modelet.entity.EntityMetadata;
 import modelet.entity.TxnMode;
 import modelet.model.paging.PageContainer;
 
@@ -30,18 +31,21 @@ public class EntityDataRoller<E extends Entity> extends DataRoller<E> {
 
   @Override
   protected E processRow(List<Column> columns, ResultSet rst) throws Exception {
-    
+
     E entity = (E) Class.forName(this.clazz.getName()).newInstance();
+    EntityMetadata metadata = EntityMetadata.of(this.clazz);
     List<Method> publicSetterMethods = getPublicSetterMethods(this.clazz);
     for (Column column : columns) {
       Object columnValue = retrieveColumnValue(rst, column);
       if (columnValue == null)
         continue;
+      //a column annotated with @Column(name) maps back to its field; otherwise the label itself is the property name
+      String targetProperty = metadata.fieldForColumn(column.getName());
       for (Method method : publicSetterMethods) {
-        if (method.getName().substring(3).equalsIgnoreCase(column.getName())) {
+        if (method.getName().substring(3).equalsIgnoreCase(targetProperty)) {
           Class[] clazzs =  method.getParameterTypes();
           if (isSetterParamAEnum(method)) {
-            columnValue = Enum.valueOf(clazzs[0], columnValue.toString());
+            columnValue = metadata.restoreEnumValue(clazzs[0], targetProperty, columnValue);
           }
           else if (isSetterParamAArray(method)) {
             columnValue = convertToArray(columnValue.toString(), clazzs[0]);

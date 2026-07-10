@@ -18,6 +18,7 @@ from decimal import Decimal
 from enum import Enum
 
 from .entity import Entity, TxnMode, column_name
+from .persistence import enum_from_column
 
 
 def rows_to_dicts(cursor) -> list[dict]:
@@ -37,7 +38,7 @@ def dict_to_entity(cls: type[Entity], row: dict) -> Entity:
         f = fields_by_norm.get(_normalize(col))
         if f is None or value is None:
             continue
-        setattr(entity, f.name, _coerce(hints.get(f.name), value))
+        setattr(entity, f.name, _coerce(hints.get(f.name), value, f))
 
     entity.txn_mode = TxnMode.UPDATE
     return entity
@@ -47,12 +48,12 @@ def _normalize(name: str) -> str:
     return name.replace("_", "").lower()
 
 
-def _coerce(hint, value):
+def _coerce(hint, value, f: dataclasses.Field | None = None):
     target = _unwrap_optional(hint)
     if target is None or isinstance(target, str):
         return value
     if isinstance(target, type) and issubclass(target, Enum):
-        return value if isinstance(value, target) else target[str(value)]
+        return value if isinstance(value, target) else enum_from_column(f, target, value)
     if target is Decimal and not isinstance(value, Decimal):
         return Decimal(str(value))
     if target is datetime and isinstance(value, str):

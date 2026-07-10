@@ -19,17 +19,22 @@ import org.apache.commons.beanutils.MethodUtils;
 public class EntityHelper {
   
   public static Map<String, Object> convert(Entity entity) {
-    
+
     Map<String, Object> value = new HashMap<String, Object>();
-    
+    EntityMetadata metadata = EntityMetadata.of(entity.getClass());
+
     List fields = new ArrayList();
     ReflactionUtil.retrieveFields(fields, entity.getClass());
-    
+
     for (int i=0; i<fields.size(); i++) {
       Field field = (Field) fields.get(i);
-      
+
       String fieldName = field.getName();
-      
+
+      if (metadata.isTransient(fieldName)) {
+        continue;
+      }
+
       if (fieldName.equalsIgnoreCase("id") && (entity.getId() != null)) {
         ; //no skip
       }
@@ -54,7 +59,7 @@ public class EntityHelper {
         }
         
         if (fieldValue != null && fieldValue.getClass().isEnum()) {
-          fieldValue = fieldValue.toString();
+          fieldValue = metadata.convertEnumValue(fieldName, fieldValue);
         }
         
 //        if (fieldValue instanceof String) {
@@ -74,7 +79,7 @@ public class EntityHelper {
         }
 
         if (fieldValue != null || entity.isAllowNullValue()) {
-          value.put(fieldName, fieldValue);
+          value.put(metadata.columnOf(fieldName), fieldValue);
         }
       }
       catch (Exception e) {

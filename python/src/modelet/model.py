@@ -29,6 +29,7 @@ from .dialect import Dialect
 from .entity import AppEntity, Entity, TxnMode
 from .exceptions import ModelException
 from .paging import PageContainer, PagingElement
+from .persistence import id_is_generated
 from .rows import dict_to_entity, rows_to_dicts
 from .statement import Statement, build_delete, build_insert, build_update
 
@@ -138,7 +139,7 @@ class Model:
         cur = self._execute(stmt.sql, stmt.params)
         try:
             return_code = cur.rowcount
-            if entity.id is None and not type(entity).system_increment:
+            if entity.id is None and id_is_generated(type(entity)):
                 entity.id = cur.lastrowid
         finally:
             cur.close()

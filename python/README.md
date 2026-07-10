@@ -72,12 +72,44 @@ from modelet import AppEntity, Login, set_login
 set_login(Login("matt"))
 ```
 
+### Jakarta Persistence vocabulary
+
+Entities can be declared with the Jakarta Persistence annotation vocabulary
+(`modelet.persistence`), matching the Java tree one-to-one. Only the
+vocabulary is borrowed — the engine stays SQL-first:
+
+```python
+from modelet import Column, Entity, Enumerated, EnumType, Id, Table, Transient
+
+@Table("book")                                        # @Table(name = "book")
+@dataclass
+class Book(Entity):
+    title: str | None = Column("bookName")            # @Column(name = "bookName")
+    grade: Grade | None = Enumerated(EnumType.ORDINAL)  # @Enumerated(ORDINAL)
+    joined_row_count: int | None = Transient()        # @Transient
+
+@Table("account")
+@dataclass
+class Account(Entity):
+    account_no: str | None = Id()   # @Id without @GeneratedValue:
+    owner: str | None = None        # application supplies the key itself
+```
+
+- `Id()` markers replace `key_names`; multiple `Id()` fields form a composite
+  key, and UPDATE/DELETE criteria always bind key values as placeholders.
+- `Id(generated=True)` (or `GeneratedValue()`) means the database generates
+  the key and Modelet writes it back after insert. `Id()` alone means the
+  application supplies it (the annotation-era `system_increment`).
+- `Enumerated(EnumType.STRING)` stores the member name (the default, even
+  unannotated); `EnumType.ORDINAL` stores the member's position.
+- Without any annotations, the class-attribute conventions below apply
+  unchanged.
+
 ### Column mapping
 
 Field names match columns case-insensitively, ignoring underscores — a
-`bookName` column fills a `book_name` field automatically. For write-side
-mapping to legacy column names, use metadata (names mirror Jakarta
-Persistence):
+`bookName` column fills a `book_name` field automatically. `Column(...)` above
+is sugar for dataclass field metadata; the raw form also works:
 
 ```python
 book_name: str | None = field(default=None, metadata={"column": "bookName"})

@@ -11,6 +11,7 @@ import java.util.Set;
 import modelet.entity.AbstractEntity;
 import modelet.entity.Entity;
 import modelet.entity.EntityHelper;
+import modelet.entity.EntityMetadata;
 
 import org.apache.commons.beanutils.MethodUtils;
 
@@ -41,9 +42,9 @@ public class ModelUtil {
   }
   
   public static StatementSet buildPreparedCreateStatement(Entity entity) {
-  	
+
   	StringBuffer stmt = new StringBuffer();
-    stmt.append("INSERT INTO ").append(entity.getTableName()).append(" (");
+    stmt.append("INSERT INTO ").append(EntityMetadata.of(entity.getClass()).resolveTableName(entity)).append(" (");
 
     StringBuffer fieldNames = new StringBuffer();
     StringBuffer fieldMarks = new StringBuffer();
@@ -69,7 +70,7 @@ public class ModelUtil {
   public static StatementSet buildPreparedUpdateStatement(Entity entity) {
 
     StringBuffer stmt = new StringBuffer();
-    stmt.append("UPDATE ").append(entity.getTableName()).append(" set ");
+    stmt.append("UPDATE ").append(EntityMetadata.of(entity.getClass()).resolveTableName(entity)).append(" set ");
 
     Map<String, Object> fieldsAndValues = EntityHelper.convert(entity);
     Set entries = fieldsAndValues.entrySet();
@@ -91,7 +92,7 @@ public class ModelUtil {
 
     StringBuffer stmt = new StringBuffer();
     List keyValues = new ArrayList();
-    stmt.append("DELETE FROM ").append(entity.getTableName()).append(" where ");
+    stmt.append("DELETE FROM ").append(EntityMetadata.of(entity.getClass()).resolveTableName(entity)).append(" where ");
     stmt.append(assembleKeyCriteria(entity, keyValues));
 
     return new StatementSet(stmt.toString(), keyValues.toArray());
@@ -100,22 +101,25 @@ public class ModelUtil {
   /**
    * Key values are appended to fieldValues and referenced with '?' placeholders, so they are always
    * bound as prepared statement parameters instead of being concatenated into the SQL text.
+   * Key fields come from @Id markers when present, otherwise from getKeyNames(); column names
+   * honor @Column mappings.
    */
   private static String assembleKeyCriteria(Entity entity, List fieldValues) {
 
+    EntityMetadata metadata = EntityMetadata.of(entity.getClass());
     StringBuffer keyStmt = new StringBuffer();
-    List keyEntries = entity.getKeyNames();
+    List keyEntries = metadata.resolveKeyNames(entity);
     for (Iterator k=keyEntries.iterator(); k.hasNext();) {
       String key = (String) k.next();
-      keyStmt.append(key).append("=?");
+      keyStmt.append(metadata.columnOf(key)).append("=?");
       if (k.hasNext())
         keyStmt.append(" and ");
-      fieldValues.add(getKeyParamValue(entity, key));
+      fieldValues.add(getKeyParamValue(entity, key, metadata));
     }
     return keyStmt.toString();
   }
 
-  private static Object getKeyParamValue(Entity entity, String key) {
+  private static Object getKeyParamValue(Entity entity, String key, EntityMetadata metadata) {
 
     String methodName = makeGetter(key);
     try {
@@ -123,7 +127,7 @@ public class ModelUtil {
       if (rs instanceof Date)
         rs = new Timestamp(((Date) rs).getTime());
       else if (rs != null && rs.getClass().isEnum())
-        rs = rs.toString();
+        rs = metadata.convertEnumValue(key, rs);
       return rs;
     } catch (Exception e) {
       throw new RuntimeException(e);

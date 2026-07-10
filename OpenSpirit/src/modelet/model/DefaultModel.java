@@ -33,7 +33,7 @@ import modelet.context.Login;
 import modelet.context.UserInfoHolder;
 import modelet.entity.AppEntity;
 import modelet.entity.Entity;
-import modelet.entity.SystemIncrementEntity;
+import modelet.entity.EntityMetadata;
 import modelet.entity.TxnMode;
 import modelet.model.dataroller.DataRoller;
 import modelet.model.dataroller.EntityDataRoller;
@@ -147,9 +147,10 @@ public class DefaultModel implements Model {
 	private int insert(final Entity entity) {
 
 	  int returnCode = 0;
+	  final EntityMetadata metadata = EntityMetadata.of(entity.getClass());
 		final StatementSet stmtSet = ModelUtil.buildPreparedCreateStatement(entity);
     try {
-    	if (entity instanceof SystemIncrementEntity) {
+    	if (!metadata.isDbGeneratedId(entity)) {
     		returnCode = jdbcTemplate.update(stmtSet.getSql(), stmtSet.getParams());
     	}
     	else if (entity.getId() != null) {
@@ -158,16 +159,16 @@ public class DefaultModel implements Model {
     	else {
 	      KeyHolder keyHolder = new GeneratedKeyHolder();
 	      returnCode = jdbcTemplate.update(new PreparedStatementCreator() {
-	
+
 	        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-	        	
+
 	          LOG.info("Model INFO :" + stmtSet.getSql() + " param : " + Arrays.toString(stmtSet.getParams()));
-	          PreparedStatement ps = connection.prepareStatement(stmtSet.getSql(), new String[] { "id" });
+	          PreparedStatement ps = connection.prepareStatement(stmtSet.getSql(), new String[] { metadata.idColumnName() });
 	          appendParam(ps, stmtSet.getParams());
 	          return ps;
 	        }
 	      }, keyHolder);
-	
+
 	      long keyValue = keyHolder.getKey().longValue();
 	      entity.setId(keyValue);
     	}

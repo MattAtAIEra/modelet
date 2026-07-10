@@ -11,11 +11,25 @@ from .entity import AppEntity, Entity, TxnMode
 from .exceptions import ModelException
 from .model import Model
 from .paging import PageContainer, PagingElement
+from .persistence import (
+    Column,
+    Enumerated,
+    EnumType,
+    GeneratedValue,
+    Id,
+    Table,
+    Transient,
+)
 
 __all__ = [
     "AppEntity",
+    "Column",
     "Dialect",
     "Entity",
+    "Enumerated",
+    "EnumType",
+    "GeneratedValue",
+    "Id",
     "Login",
     "Model",
     "ModelException",
@@ -23,6 +37,8 @@ __all__ = [
     "PageContainer",
     "PagingElement",
     "SqliteDialect",
+    "Table",
+    "Transient",
     "TxnMode",
     "get_login",
     "reset_login",
