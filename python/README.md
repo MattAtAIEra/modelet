@@ -74,11 +74,13 @@ from modelet import AppEntity, Login, set_login
 set_login(Login("matt"))
 ```
 
-### Jakarta Persistence vocabulary
+### Entity declaration vocabulary
 
-Entities can be declared with the Jakarta Persistence annotation vocabulary
-(`modelet.persistence`), matching the Java tree one-to-one. Only the
-vocabulary is borrowed — the engine stays SQL-first:
+Entity metadata is declared through the `modelet.persistence` helpers. Their
+names are borrowed from the Jakarta Persistence (JPA) annotations used by the
+Java original, so an entity declaration reads line-for-line the same in both
+languages — but only the vocabulary is borrowed: the engine stays SQL-first,
+and no Java spec is involved:
 
 ```python
 from modelet import Column, Entity, Enumerated, EnumType, Id, Table, Transient
