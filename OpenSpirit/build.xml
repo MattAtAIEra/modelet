@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <project name="open-spirit" basedir="." default="core-jar">
 
+	<property name="compile.version" value="1.8" />
 	<property name="native.encoding" value="utf-8" />
 	<property name="src.dir" value="${basedir}/src" />
 	<property name="bin.dir" value="${basedir}/bin" />
@@ -18,7 +19,7 @@
 	</path>
 
 	<target name="compile">
-		<javac srcdir="${src.dir}" destdir="${bin.dir}">
+		<javac srcdir="${src.dir}" destdir="${bin.dir}" target="${compile.version}" debug="true" source="${compile.version}">
 			<classpath refid="project.classpath" />
 		</javac>
 	</target>
@@ -30,8 +31,8 @@
     </delete>
   </target>
 
-	<target name="core-jar" depends="compile,native2ascii">
-		<jar jarfile="${dist.dir}/modelet-2.0.2.jar" manifest="${dist.dir}/MANIFEST.MF">
+	<target name="core-jar" depends="native2ascii,compile">
+		<jar jarfile="${dist.dir}/modelet-2.1.0.jar" manifest="${dist.dir}/MANIFEST.MF">
 			<fileset dir="${bin.dir}" includes="modelet/**">
 			</fileset>
 		</jar>

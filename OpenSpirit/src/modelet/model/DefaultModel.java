@@ -15,6 +15,20 @@ import java.util.SortedMap;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import modelet.context.Login;
 import modelet.context.UserInfoHolder;
 import modelet.entity.AppEntity;
@@ -28,28 +42,13 @@ import modelet.model.paging.DefaultPageContainer;
 import modelet.model.paging.PageContainer;
 import modelet.model.paging.PagingElement;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 @Component("defaultModel")
 @Transactional(readOnly = true)
 @Primary
 public class DefaultModel implements Model {
 
 	private static final Log LOG = LogFactory.getLog(DefaultModel.class);
-  private static final Logger EXP_LOG = Logger.getLogger("exceptionLog");
+  private static final Log EXP_LOG = LogFactory.getLog("exceptionLog");
   
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
