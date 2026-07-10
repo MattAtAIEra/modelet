@@ -27,7 +27,7 @@ import modelet.util.ReflactionUtil;
  * no proxy, no session cache.
  *
  * Every lookup falls back to the original convention methods, so entities written before
- * Modelet 2.2 behave exactly as they always did:
+ * Modelet 3.0 behave exactly as they always did:
  *
  * <ul>
  * <li>{@code @Table(name)} falls back to {@link Entity#getTableName()}</li>

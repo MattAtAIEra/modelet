@@ -12,7 +12,7 @@ INSERT / UPDATE / DELETE 由框架代勞。
 
 | Path | Language | Description |
 |------|----------|-------------|
-| `OpenSpirit/` | Java 17+ | The original framework (2006–), built on Spring JDBC. Produces `modelet-2.2.x.jar` via `ant core-jar`. |
+| `OpenSpirit/` | Java 17+ | The original framework (2006–), built on Spring JDBC. Produces `modelet-3.0.x.jar` via `ant core-jar`. |
 | `python/` | Python 3.10+ | `pymodelet`, a faithful port of the same philosophy on DB-API 2.0 with dataclass entities. Zero runtime dependencies. |
 
 The two trees are independent — each has its own build and tests — but they
@@ -22,7 +22,7 @@ them.
 
 ## Jakarta Persistence vocabulary
 
-Since Modelet 2.2, entities can be declared with the Jakarta Persistence
+Since Modelet 3.0, entities can be declared with the Jakarta Persistence
 annotation vocabulary — `@Table`, `@Id`, `@Column`, `@Transient`,
 `@Enumerated`, `@GeneratedValue` — in **both** languages. Only the vocabulary
 is borrowed: the engine stays SQL-first (no JPQL, no EntityManager, no

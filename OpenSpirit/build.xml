@@ -33,7 +33,7 @@
   </target>
 
 	<target name="core-jar" depends="native2ascii,compile">
-		<jar jarfile="${dist.dir}/modelet-2.2.0.jar" manifest="${dist.dir}/MANIFEST.MF">
+		<jar jarfile="${dist.dir}/modelet-3.0.0.jar" manifest="${dist.dir}/MANIFEST.MF">
 			<fileset dir="${bin.dir}" includes="modelet/**">
 			</fileset>
 		</jar>

@@ -1,6 +1,8 @@
 # pymodelet
 
-Python port of [Modelet](../README.md) — the SQL-first micro ORM from 2006.
+Python port of [Modelet](https://github.com/MattAtAIEra/modelet) — the
+SQL-first micro ORM created by Matt in 2006. See [TRIBUTE.md](TRIBUTE.md)
+for the story and the debt this port owes to the original.
 
 The founding idea, unchanged: **queries belong to SQL, writes belong to the
 framework.** Anyone with ANSI SQL experience (and a subquery or two) can build
@@ -125,6 +127,19 @@ row_count: int | None = field(default=None, metadata={"transient": True})
 | `exclusive_fields` | `()` | `getExclusiveFields()` |
 | `system_increment` | `False` | `SystemIncrementEntity` |
 | `allow_null_value` | `False` | `isAllowNullValue()` |
+
+### Relationships, the SQL-first way
+
+There is no `@OneToMany`, no lazy loading, no cascade configuration — the
+foreign key IS the relationship, and SQL already speaks it fluently. See
+[`examples/one_to_many.py`](examples/one_to_many.py) for the complete
+pattern: children by WHERE clause, parent+child in one JOIN landing on a
+read-shape entity with a `Transient()` column, aggregation with GROUP BY,
+and explicit parent-with-children deletion in one transaction.
+
+```bash
+PYTHONPATH=src python3 examples/one_to_many.py
+```
 
 ## Tests
 
