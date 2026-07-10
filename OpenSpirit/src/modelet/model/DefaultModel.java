@@ -53,8 +53,10 @@ public class DefaultModel implements Model {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 
-	private boolean txnSuccessful = true;
-  private String txnErrorStack = null;
+	// this bean is a shared singleton; transaction state must be per-thread or concurrent
+	// requests would observe each other's failures
+	private final ThreadLocal<Boolean> txnSuccessful = new ThreadLocal<Boolean>();
+  private final ThreadLocal<String> txnErrorStack = new ThreadLocal<String>();
   private boolean swallowException = false;
   
   public boolean isSwallowException() {
@@ -66,19 +68,20 @@ public class DefaultModel implements Model {
   }
 
   public String getTxnErrorStack() {
-		return txnErrorStack;
+		return txnErrorStack.get();
 	}
 
 	private void setTxnErrorStack(String txnErrorStack) {
-		this.txnErrorStack = txnErrorStack;
+		this.txnErrorStack.set(txnErrorStack);
 	}
 
 	public boolean isTxnSuccessful() {
-		return txnSuccessful;
+		Boolean successful = txnSuccessful.get();
+		return successful == null || successful.booleanValue();
 	}
 
 	private void setTxnSuccessful(boolean txnSuccessful) {
-		this.txnSuccessful = txnSuccessful;
+		this.txnSuccessful.set(Boolean.valueOf(txnSuccessful));
 	}
 
 	@Transactional(readOnly = false)
@@ -194,34 +197,22 @@ public class DefaultModel implements Model {
 	  try {
 	    LOG.info("Model INFO :" + stmtSet.getSql() + " param : " + Arrays.toString(stmtSet.getParams()));
       returnCode = jdbcTemplate.update(stmtSet.getSql(), stmtSet.getParams());
-      LOG.info("UPDATE returnCode : [" + returnCode + "]");
+      LOG.info("statement returnCode : [" + returnCode + "]");
     }
     catch (DataAccessException e) {
       e.printStackTrace();
       setTxnSuccessful(false);
       logSqlError(e, stmtSet.getSql(), stmtSet.getParams());
       logExceptionStack(e);
-      throw new ModelException("Error occured while updaeing data!", e);
+      throw new ModelException("Error occurred while executing statement!", e);
     }
     return returnCode;
 	}
 	
 	private int delete(Entity entity) {
-		
-	  int returnCode = 0;
-		String sql = ModelUtil.buildDeleteStatement(entity);
-		try {
-			returnCode = jdbcTemplate.update(sql);
-			LOG.info("DELETE returnCode : [" + returnCode + "]");
-		}
-		catch (DataAccessException e) {
-    	e.printStackTrace();
-    	setTxnSuccessful(false);
-    	logSqlError(e, sql);
-    	logExceptionStack(e);
-    	throw new ModelException("Error occured while updaeing data!", e);
-    }
-		return returnCode;
+
+		StatementSet stmtSet = ModelUtil.buildPreparedDeleteStatement(entity);
+		return executeStatementSet(stmtSet);
 	}
 	
 	public <E extends Entity> E findOne(String sql, Object[] params, Class<E> clazz) {

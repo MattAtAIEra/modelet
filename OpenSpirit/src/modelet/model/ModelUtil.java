@@ -1,6 +1,8 @@
 package modelet.model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -79,10 +81,53 @@ public class ModelUtil {
     }
     stmt.deleteCharAt(stmt.length()-1);
     stmt.append(" where ");
-    stmt.append(assembleKeyStatement(entity));
-    
+    stmt.append(assembleKeyCriteria(entity, fieldValues));
+
     StatementSet statementSet = new StatementSet(stmt.toString(), fieldValues.toArray());
     return statementSet;
+  }
+
+  public static StatementSet buildPreparedDeleteStatement(Entity entity) {
+
+    StringBuffer stmt = new StringBuffer();
+    List keyValues = new ArrayList();
+    stmt.append("DELETE FROM ").append(entity.getTableName()).append(" where ");
+    stmt.append(assembleKeyCriteria(entity, keyValues));
+
+    return new StatementSet(stmt.toString(), keyValues.toArray());
+  }
+
+  /**
+   * Key values are appended to fieldValues and referenced with '?' placeholders, so they are always
+   * bound as prepared statement parameters instead of being concatenated into the SQL text.
+   */
+  private static String assembleKeyCriteria(Entity entity, List fieldValues) {
+
+    StringBuffer keyStmt = new StringBuffer();
+    List keyEntries = entity.getKeyNames();
+    for (Iterator k=keyEntries.iterator(); k.hasNext();) {
+      String key = (String) k.next();
+      keyStmt.append(key).append("=?");
+      if (k.hasNext())
+        keyStmt.append(" and ");
+      fieldValues.add(getKeyParamValue(entity, key));
+    }
+    return keyStmt.toString();
+  }
+
+  private static Object getKeyParamValue(Entity entity, String key) {
+
+    String methodName = makeGetter(key);
+    try {
+      Object rs = MethodUtils.invokeMethod(entity, methodName, null);
+      if (rs instanceof Date)
+        rs = new Timestamp(((Date) rs).getTime());
+      else if (rs != null && rs.getClass().isEnum())
+        rs = rs.toString();
+      return rs;
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
   
 //  public static String buildCreateStatement(Entity entity) {
@@ -125,21 +170,30 @@ public class ModelUtil {
 //    return stmt.toString();
 //  }
   
+  /**
+   * @deprecated key values are concatenated into the SQL text, which is vulnerable to SQL injection
+   * when a key value contains untrusted input. Use {@link #buildPreparedDeleteStatement(Entity)} instead.
+   */
+  @Deprecated
   public static String buildDeleteStatement(Entity entity) {
 
     StringBuffer stmt = new StringBuffer();
     try {
-      
+
       stmt.append("DELETE FROM ").append(entity.getTableName()).append(" where ");
       stmt.append(assembleKeyStatement(entity));
-      
+
     } catch (Exception e) {
       e.printStackTrace();
     }
-    
+
     return stmt.toString();
   }
-  
+
+  /**
+   * @deprecated see {@link #buildDeleteStatement(Entity)}; use {@link #assembleKeyCriteria(Entity, List)} instead.
+   */
+  @Deprecated
   private static String assembleKeyStatement(Entity entity) {
   
     StringBuffer keyStmt = new StringBuffer();

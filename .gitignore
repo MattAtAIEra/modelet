@@ -1,0 +1,6 @@
+OpenSpirit/bin/
+OpenSpirit/dist/*.jar
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
