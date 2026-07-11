@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Modelet vs MyBatis &amp; Hibernate — an honest comparison</title>
-<meta name="description" content="Hibernate hides all your SQL, MyBatis makes you write all of it, Modelet splits the work where it belongs. An honest, dimension-by-dimension comparison.">
-<link rel="canonical" href="https://mattataiera.github.io/modelet/compare-java.html">
+<title>Modelet vs MyBatis &amp; Hibernate — 정직한 비교</title>
+<meta name="description" content="Hibernate는 SQL을 숨기고, MyBatis는 전부 쓰게 합니다. Modelet은 일을 마땅한 곳에서 나눕니다. 차원별 정직한 비교.">
+<link rel="canonical" href="https://mattataiera.github.io/modelet/ko/compare-java.html">
 <link rel="alternate" hreflang="en" href="https://mattataiera.github.io/modelet/compare-java.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://mattataiera.github.io/modelet/zh/compare-java.html">
 <link rel="alternate" hreflang="ja" href="https://mattataiera.github.io/modelet/ja/compare-java.html">
@@ -140,11 +140,11 @@
 <body>
 <nav>
   <div class="wrap nav-in">
-    <a class="brand" href="index.html"><span class="dot"></span>Modelet <span class="back" data-i18n="nav.back">← back</span></a>
+    <a class="brand" href="index.html"><span class="dot"></span>Modelet <span class="back" data-i18n="nav.back">← 홈으로</span></a>
     <div class="nav-links">
-      <a href="#answers" class="hide-sm" data-i18n="nav.answers">Three answers</a>
-      <a href="#table" class="hide-sm" data-i18n="nav.table">Side by side</a>
-      <a href="#writes" data-i18n="nav.writes">The write side</a>
+      <a href="#answers" class="hide-sm" data-i18n="nav.answers">세 가지 답</a>
+      <a href="#table" class="hide-sm" data-i18n="nav.table">항목별 비교</a>
+      <a href="#writes" data-i18n="nav.writes">쓰기 측</a>
       <a href="https://github.com/MattAtAIEra/modelet">GitHub</a>
     </div>
     <div class="ctrl">
@@ -162,32 +162,32 @@
 
 <header class="hero">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="hero.eyebrow">Java · Head-to-head</span>
+    <span class="eyebrow" data-i18n="hero.eyebrow">Java · 정면 비교</span>
     <h1 class="title" data-i18n-html="hero.h1"><span class="grad">Modelet</span> vs MyBatis &amp; Hibernate</h1>
-    <p class="tagline" data-i18n="hero.tagline">Hibernate hides all your SQL. MyBatis makes you write all of it. Modelet splits the work where it belongs.</p>
-    <p class="lede" data-i18n="hero.lede">All three answer the same question — how does an object meet a row? They just disagree about who writes the SQL. Here is the honest comparison.</p>
+    <p class="tagline" data-i18n="hero.tagline">Hibernate는 SQL을 전부 숨기고, MyBatis는 SQL을 전부 쓰게 합니다. Modelet은 일을 마땅한 곳에서 나눕니다.</p>
+    <p class="lede" data-i18n="hero.lede">셋 모두 같은 질문에 답합니다 —— 객체는 어떻게 행과 만나는가. 다른 것은 단 하나, SQL을 누가 쓰느냐입니다. 정직한 비교를 담았습니다.</p>
   </div>
 </header>
 
 <section id="answers">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="ans.eyebrow">Three philosophies</span>
-    <h2 class="sec" data-i18n="ans.h2">Who writes your SQL?</h2>
+    <span class="eyebrow" data-i18n="ans.eyebrow">세 가지 철학</span>
+    <h2 class="sec" data-i18n="ans.h2">당신의 SQL, 누가 씁니까?</h2>
     <div class="cards">
       <div class="pcard">
         <div class="who">Hibernate</div>
-        <h3 data-i18n="ans.hib.t">Hides all SQL</h3>
-        <p data-i18n="ans.hib.d">You describe mappings and relations; the framework derives SQL at flush time. Powerful for complex domain graphs — at the price of HQL/JPQL, session lifecycles, lazy proxies and dirty-checking surprises.</p>
+        <h3 data-i18n="ans.hib.t">SQL을 전부 숨긴다</h3>
+        <p data-i18n="ans.hib.d">매핑과 관계를 기술하면 프레임워크가 flush 시점에 SQL을 도출합니다. 복잡한 도메인 그래프에는 강력하지만 —— 대가는 HQL/JPQL, 세션 생명주기, lazy 프록시, dirty checking의 기습입니다.</p>
       </div>
       <div class="pcard">
         <div class="who">MyBatis</div>
-        <h3 data-i18n="ans.mb.t">Makes you write all SQL</h3>
-        <p data-i18n="ans.mb.d">Full control: every SELECT — and every INSERT, UPDATE, DELETE — is written by hand in mapper XML or annotations, plus a resultMap per shape. Honest, but the write side is pure toil.</p>
+        <h3 data-i18n="ans.mb.t">SQL을 전부 쓰게 한다</h3>
+        <p data-i18n="ans.mb.d">완전한 통제: 모든 SELECT는 물론 —— 모든 INSERT, UPDATE, DELETE까지 —— mapper XML이나 애너테이션에 손으로 쓰고, 결과 형태마다 resultMap을 만듭니다. 정직하지만, 쓰기 측은 순전한 노역입니다.</p>
       </div>
       <div class="pcard win">
         <div class="who">Modelet</div>
-        <h3 data-i18n="ans.mod.t">You write only the queries</h3>
-        <p data-i18n="ans.mod.d">SELECTs are plain ANSI SQL in your code. The write side is generated from the entity's TxnMode state — key written back, audit fields stamped. ~2,000 lines; read it in an afternoon.</p>
+        <h3 data-i18n="ans.mod.t">당신은 쿼리만 쓴다</h3>
+        <p data-i18n="ans.mod.d">SELECT는 코드 속 순수 ANSI SQL입니다. 쓰기 측은 엔티티의 TxnMode 상태로부터 생성되고 —— 키는 되써지고, 감사 필드는 자동으로 채워집니다. 약 2,000줄, 한나절이면 다 읽습니다.</p>
       </div>
     </div>
   </div>
@@ -195,54 +195,54 @@
 
 <section id="table" class="band">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="tbl.eyebrow">Side by side</span>
-    <h2 class="sec" data-i18n="tbl.h2">The comparison, dimension by dimension</h2>
+    <span class="eyebrow" data-i18n="tbl.eyebrow">항목별 비교</span>
+    <h2 class="sec" data-i18n="tbl.h2">차원 하나하나, 나란히 비교</h2>
     <div class="tblwrap">
       <table class="cmp">
         <thead>
           <tr><th></th><th class="hl">Modelet</th><th>MyBatis</th><th>Hibernate</th></tr>
         </thead>
         <tbody>
-          <tr><th data-i18n="r1">Query language</th>
-            <td class="hl" data-i18n="r1a">ANSI SQL, right in your code</td>
-            <td data-i18n="r1b">SQL in mapper XML / annotations</td>
+          <tr><th data-i18n="r1">쿼리 언어</th>
+            <td class="hl" data-i18n="r1a">코드에 바로 쓰는 ANSI SQL</td>
+            <td data-i18n="r1b">mapper XML / 애너테이션 속 SQL</td>
             <td data-i18n="r1c">HQL / JPQL / Criteria API</td></tr>
           <tr><th data-i18n="r2">INSERT / UPDATE / DELETE</th>
-            <td class="hl" data-i18n="r2a">Generated from the entity — saveOrUpdate via TxnMode</td>
-            <td data-i18n="r2b">Hand-written, every statement, every column</td>
-            <td data-i18n="r2c">Generated by dirty checking at flush time</td></tr>
-          <tr><th data-i18n="r3">Mapping configuration</th>
-            <td class="hl" data-i18n="r3a">Convention + optional JPA annotations</td>
-            <td data-i18n="r3b">resultMap per result shape</td>
-            <td data-i18n="r3c">Full entity &amp; relation mappings</td></tr>
-          <tr><th data-i18n="r4">Runtime model</th>
-            <td class="hl" data-i18n="r4a">Stateless — no session, no proxies</td>
-            <td data-i18n="r4b">Thin SqlSession</td>
-            <td data-i18n="r4c">Session, L1/L2 cache, lazy proxies</td></tr>
-          <tr><th data-i18n="r5">What you see is what runs</th>
-            <td class="hl" data-i18n="r5a">Yes — the SQL is in your code</td>
-            <td data-i18n="r5b">Mostly — dynamic SQL assembled from tags</td>
-            <td data-i18n="r5c">No — SQL derived at flush; N+1 surprises</td></tr>
-          <tr><th data-i18n="r6">Pagination</th>
-            <td class="hl" data-i18n="r6a">Built-in PageContainer; LIMIT/OFFSET pushed to the DB, O(page) memory</td>
-            <td data-i18n="r6b">RowBounds pages in memory; physical paging needs a plugin</td>
+            <td class="hl" data-i18n="r2a">엔티티에서 자동 생성 —— TxnMode 기반 saveOrUpdate</td>
+            <td data-i18n="r2b">손으로 작성, 모든 문장·모든 컬럼</td>
+            <td data-i18n="r2c">flush 시 dirty checking이 생성</td></tr>
+          <tr><th data-i18n="r3">매핑 설정</th>
+            <td class="hl" data-i18n="r3a">관례 + 선택적 JPA 애너테이션</td>
+            <td data-i18n="r3b">결과 형태마다 resultMap</td>
+            <td data-i18n="r3c">엔티티·관계 전체 매핑</td></tr>
+          <tr><th data-i18n="r4">런타임 모델</th>
+            <td class="hl" data-i18n="r4a">무상태 —— 세션도 프록시도 없음</td>
+            <td data-i18n="r4b">얇은 SqlSession</td>
+            <td data-i18n="r4c">Session, L1/L2 캐시, lazy 프록시</td></tr>
+          <tr><th data-i18n="r5">보이는 대로 실행</th>
+            <td class="hl" data-i18n="r5a">예 —— SQL이 코드 안에 있음</td>
+            <td data-i18n="r5b">대체로 —— 동적 SQL은 태그로 조립</td>
+            <td data-i18n="r5c">아니오 —— flush 시 SQL 도출; N+1 기습</td></tr>
+          <tr><th data-i18n="r6">페이징</th>
+            <td class="hl" data-i18n="r6a">내장 PageContainer; LIMIT/OFFSET을 DB로 내림, 메모리 O(페이지)</td>
+            <td data-i18n="r6b">RowBounds는 메모리 페이징; 물리 페이징은 플러그인 필요</td>
             <td data-i18n="r6c">setFirstResult / setMaxResults</td></tr>
-          <tr><th data-i18n="r7">Audit fields</th>
-            <td class="hl" data-i18n="r7a">Built-in — AppEntity stamps creator / dates</td>
-            <td data-i18n="r7b">Manual, or a custom interceptor</td>
-            <td data-i18n="r7c">Listeners / Envers configuration</td></tr>
-          <tr><th data-i18n="r8">JPA annotations</th>
-            <td class="hl" data-i18n="r8a">Compatible vocabulary — @Table, @Id, @Column…</td>
-            <td data-i18n="r8b">Not supported</td>
-            <td data-i18n="r8c">Native — it is the JPA provider</td></tr>
-          <tr><th data-i18n="r9">Learning curve</th>
-            <td class="hl" data-i18n="r9a">Hours: ANSI SQL plus one save()</td>
-            <td data-i18n="r9b">Days: mapper config + dynamic SQL tags</td>
-            <td data-i18n="r9c">Weeks: session, cascade, cache, lazy loading</td></tr>
-          <tr><th data-i18n="r10">Footprint</th>
-            <td class="hl" data-i18n="r10a">~2,000 lines of source</td>
-            <td data-i18n="r10b">Moderate</td>
-            <td data-i18n="r10c">Very large</td></tr>
+          <tr><th data-i18n="r7">감사 필드</th>
+            <td class="hl" data-i18n="r7a">내장 —— AppEntity가 작성자/일시 기록</td>
+            <td data-i18n="r7b">수동, 또는 인터셉터 자작</td>
+            <td data-i18n="r7c">리스너 / Envers 설정</td></tr>
+          <tr><th data-i18n="r8">JPA 애너테이션</th>
+            <td class="hl" data-i18n="r8a">호환 어휘 —— @Table, @Id, @Column…</td>
+            <td data-i18n="r8b">미지원</td>
+            <td data-i18n="r8c">네이티브 —— 그 자체가 JPA 구현체</td></tr>
+          <tr><th data-i18n="r9">학습 곡선</th>
+            <td class="hl" data-i18n="r9a">몇 시간: ANSI SQL과 save() 하나</td>
+            <td data-i18n="r9b">며칠: mapper 설정 + 동적 SQL 태그</td>
+            <td data-i18n="r9c">몇 주: 세션, 캐스케이드, 캐시, 지연 로딩</td></tr>
+          <tr><th data-i18n="r10">규모</th>
+            <td class="hl" data-i18n="r10a">소스 약 2,000줄</td>
+            <td data-i18n="r10b">중간</td>
+            <td data-i18n="r10c">매우 큼</td></tr>
         </tbody>
       </table>
     </div>
@@ -251,9 +251,9 @@
 
 <section id="writes">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="wr.eyebrow">The decisive difference</span>
-    <h2 class="sec" data-i18n="wr.h2">The write side is where lives diverge</h2>
-    <p class="sec-lede" data-i18n="wr.lede">Same requirement in all three: insert a book, then raise its price. Watch who does the typing.</p>
+    <span class="eyebrow" data-i18n="wr.eyebrow">결정적 차이</span>
+    <h2 class="sec" data-i18n="wr.h2">인생이 갈리는 곳, 쓰기 측</h2>
+    <p class="sec-lede" data-i18n="wr.lede">세 프레임워크 모두 같은 요구사항: 책을 등록하고, 값을 올립니다. 누가 타이핑하는지 보세요.</p>
     <div class="three">
       <div class="codewin">
         <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Modelet</span><span class="lang">2 lines per write</span></div>
@@ -286,28 +286,28 @@ book.<span class="fn">setPrice</span>(<span class="kw">new</span> BigDecimal(<sp
 <span class="com">// detached instance? use merge(). outside the session? LazyInitializationException.</span></pre>
       </div>
     </div>
-    <p class="cap" data-i18n="wr.cap">A new column in MyBatis touches the table, the XML insert, the XML update and the mapper. In Modelet it touches the table and the entity field — the SQL regenerates itself.</p>
+    <p class="cap" data-i18n="wr.cap">MyBatis에서 컬럼 하나를 추가하면 테이블, XML insert, XML update, mapper까지 손대야 합니다. Modelet은 테이블과 엔티티 필드만 —— SQL은 스스로 다시 자랍니다.</p>
   </div>
 </section>
 
 <section id="when" class="band">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="wh.eyebrow">Honest notes</span>
-    <h2 class="sec" data-i18n="wh.h2">When the others win</h2>
+    <span class="eyebrow" data-i18n="wh.eyebrow">정직한 메모</span>
+    <h2 class="sec" data-i18n="wh.h2">다른 쪽이 이기는 경우</h2>
     <div class="when">
-      <div class="row"><span class="name">Hibernate</span><p data-i18n="wh.hib">A deep domain model with complex object graphs, vendor portability and second-level caching — and a team already fluent in JPA. That is Hibernate's home turf.</p></div>
-      <div class="row"><span class="name">MyBatis</span><p data-i18n="wh.mb">You need hand-tuned SQL on the write side too — bulk upserts, vendor hints, stored procedures — or its dynamic SQL tags (&lt;if&gt;, &lt;foreach&gt;) fit your query patterns.</p></div>
-      <div class="row"><span class="name">Modelet</span><p data-i18n="wh.mod">Your team is fluent in SQL and wants to ship on day one: queries stay in SQL you control, writes generate themselves, and the whole framework fits in your head.</p></div>
+      <div class="row"><span class="name">Hibernate</span><p data-i18n="wh.hib">깊은 도메인 모델, 복잡한 객체 그래프, 벤더 이식성과 2차 캐시 —— 그리고 이미 JPA에 능숙한 팀. 그곳은 Hibernate의 홈그라운드입니다.</p></div>
+      <div class="row"><span class="name">MyBatis</span><p data-i18n="wh.mb">쓰기 측까지 손으로 튜닝한 SQL이 필요할 때 —— 대량 upsert, 벤더 힌트, 저장 프로시저 —— 또는 동적 SQL 태그(&lt;if&gt;, &lt;foreach&gt;)가 쿼리 패턴에 맞을 때.</p></div>
+      <div class="row"><span class="name">Modelet</span><p data-i18n="wh.mod">팀이 SQL에 능숙하고 첫날부터 배포하고 싶다면: 쿼리는 당신이 통제하는 SQL로 남고, 쓰기는 저절로 생성되며, 프레임워크 전체가 머리에 들어옵니다.</p></div>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot-in">
-    <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">Modelet · Queries belong to SQL, writes belong to the framework</span></a>
+    <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">Modelet · 쿼리는 SQL에게, 쓰기는 프레임워크에게</span></a>
     <div class="foot-links">
-      <a href="index.html" data-i18n="foot.home">Home</a>
-      <a href="compare-python.html" data-i18n="foot.py">Python comparison</a>
+      <a href="index.html" data-i18n="foot.home">홈</a>
+      <a href="compare-python.html" data-i18n="foot.py">Python 비교</a>
       <a href="https://github.com/MattAtAIEra/modelet">Repository</a>
     </div>
   </div>
@@ -315,7 +315,7 @@ book.<span class="fn">setPrice</span>(<span class="kw">new</span> BigDecimal(<sp
 
 <script>
 (function(){
-  var PAGE='compare-java.html', LANG='en';
+  var PAGE='compare-java.html', LANG='ko';
   var root=document.documentElement;
   var themeBtn=document.getElementById('themeBtn');
   var langSel=document.getElementById('langSel');

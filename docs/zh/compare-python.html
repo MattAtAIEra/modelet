@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>pymodelet vs the SQL-first field — an honest comparison</title>
-<meta name="description" content="Every SQL-first tool in the Python ecosystem takes care of the read side. pymodelet makes even the writes effortless — SQL gives you entities you can save right back, with insert/update/delete decided automatically.">
-<link rel="canonical" href="https://mattataiera.github.io/modelet/compare-python.html">
+<title>pymodelet vs SQL-first 陣營 — 誠實比較</title>
+<meta name="description" content="Python 生態系的每一個 SQL-first 工具都照顧到了讀取面。pymodelet 連寫入都讓你輕鬆自在 —— 下 SQL 得到 entity、直接儲存、自動判斷新增修改刪除。">
+<link rel="canonical" href="https://mattataiera.github.io/modelet/zh/compare-python.html">
 <link rel="alternate" hreflang="en" href="https://mattataiera.github.io/modelet/compare-python.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://mattataiera.github.io/modelet/zh/compare-python.html">
 <link rel="alternate" hreflang="ja" href="https://mattataiera.github.io/modelet/ja/compare-python.html">
@@ -137,11 +137,11 @@
 <body>
 <nav>
   <div class="wrap nav-in">
-    <a class="brand" href="index.html"><span class="dot"></span>pymodelet <span class="back" data-i18n="nav.back">← back</span></a>
+    <a class="brand" href="index.html"><span class="dot"></span>pymodelet <span class="back" data-i18n="nav.back">← 回主頁</span></a>
     <div class="nav-links">
-      <a href="#field" class="hide-sm" data-i18n="nav.field">The field</a>
-      <a href="#table" class="hide-sm" data-i18n="nav.table">Side by side</a>
-      <a href="#writes" data-i18n="nav.writes">The write side</a>
+      <a href="#field" class="hide-sm" data-i18n="nav.field">競爭者們</a>
+      <a href="#table" class="hide-sm" data-i18n="nav.table">逐項對照</a>
+      <a href="#writes" data-i18n="nav.writes">寫入面</a>
       <a href="https://github.com/MattAtAIEra/modelet/tree/master/python">GitHub</a>
     </div>
     <div class="ctrl">
@@ -159,38 +159,38 @@
 
 <header class="hero">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="hero.eyebrow">Python · Head-to-head</span>
-    <h1 class="title" data-i18n-html="hero.h1"><span class="grad">pymodelet</span> vs the SQL-first field</h1>
-    <p class="tagline" data-i18n="hero.tagline">Every SQL-first tool in the Python ecosystem takes care of the read side. pymodelet makes even the writes effortless.</p>
-    <p class="subline" data-i18n="hero.sub">pymodelet is currently the only package where you run SQL to get a list of entities, save that same list right back — and insert, update or delete is decided automatically.</p>
-    <p class="lede" data-i18n="hero.lede">Here is what still sets pymodelet apart.</p>
+    <span class="eyebrow" data-i18n="hero.eyebrow">Python · 正面對決</span>
+    <h1 class="title" data-i18n-html="hero.h1"><span class="grad">pymodelet</span> vs SQL-first 陣營</h1>
+    <p class="tagline" data-i18n="hero.tagline">Python 生態系的每一個 SQL-first 工具都照顧到了讀取面。pymodelet 連寫入都讓你輕鬆自在。</p>
+    <p class="subline" data-i18n="hero.sub">pymodelet 是目前唯一讓你下 SQL 得到 list of entity,再把 list of entity 直接儲存,自動判斷新增、修改、刪除的套件。</p>
+    <p class="lede" data-i18n="hero.lede">以下是 pymodelet 依然與眾不同的地方。</p>
   </div>
 </header>
 
 <section id="field">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="fld.eyebrow">The field</span>
-    <h2 class="sec" data-i18n="fld.h2">Four SQL-first packages at a glance</h2>
+    <span class="eyebrow" data-i18n="fld.eyebrow">競爭者們</span>
+    <h2 class="sec" data-i18n="fld.h2">四個 SQL-first 套件簡介</h2>
     <div class="cards">
       <div class="pcard win">
         <div class="who">pymodelet</div>
-        <h3 data-i18n="fld.pm.t">Reads and writes, both answered</h3>
-        <p data-i18n="fld.pm.d">Plain SQL in, typed entities out — on any DB-API 2.0 driver, zero dependencies. And the part nobody else does: saveOrUpdate generates every INSERT / UPDATE / DELETE from the entity, writes the key back, stamps audit fields.</p>
+        <h3 data-i18n="fld.pm.t">讀與寫,都有答案</h3>
+        <p data-i18n="fld.pm.d">純 SQL 進、型別化 entity 出 —— 站在任何 DB-API 2.0 驅動上,零依賴。還有別人都沒做的那一塊:saveOrUpdate 從 entity 自動產生每一句 INSERT / UPDATE / DELETE,回填主鍵、蓋上稽核欄位。</p>
       </div>
       <div class="pcard">
         <div class="who">psycopg 3 · row_factory</div>
-        <h3 data-i18n="fld.pg.t">Beautiful reads, PostgreSQL only</h3>
-        <p data-i18n="fld.pg.d">class_row maps SELECTs into dataclasses with zero extra packages — the cleanest read path there is, if you are on PostgreSQL. Every write statement is still yours to compose, and the key comes back only if you remember RETURNING.</p>
+        <h3 data-i18n="fld.pg.t">漂亮的讀取,僅限 PostgreSQL</h3>
+        <p data-i18n="fld.pg.d">class_row 把 SELECT 直接映射成 dataclass,一個額外套件都不用 —— 若你用 PostgreSQL,這是最乾淨的讀取路徑。但每一句寫入語句仍要自己組,主鍵也得記得寫 RETURNING 才拿得回來。</p>
       </div>
       <div class="pcard">
         <div class="who">aiosql</div>
-        <h3 data-i18n="fld.aio.t">SQL files as functions</h3>
-        <p data-i18n="fld.aio.d">Queries live in .sql files and become callable functions — the most elegant way to manage the read side. But writes are hand-authored one by one, and rows come back as rows: turning them into typed entities is your job.</p>
+        <h3 data-i18n="fld.aio.t">SQL 檔案即函式</h3>
+        <p data-i18n="fld.aio.d">查詢住在 .sql 檔裡、變成可呼叫的函式 —— 管理讀取面最優雅的方式。但寫入語句要一句一句手寫,查回來的是 row 不是 entity:轉型是你的工作。</p>
       </div>
       <div class="pcard">
         <div class="who">SQLAlchemy Core + Pydantic</div>
-        <h3 data-i18n="fld.sa.t">Solid plumbing, manual mapping</h3>
-        <p data-i18n="fld.sa.d">text() queries over a battle-tested pool, entities validated by Pydantic. But the mapping is manual per query — UserEntity(**row._mapping) — and the write side is exactly where you left it: unwritten.</p>
+        <h3 data-i18n="fld.sa.t">管線紮實,映射手動</h3>
+        <p data-i18n="fld.sa.d">text() 查詢跑在久經沙場的連線池上,entity 交給 Pydantic 驗證。但映射是每條查詢手動一次 —— UserEntity(**row._mapping) —— 寫入面則原封不動:還沒寫。</p>
       </div>
     </div>
   </div>
@@ -198,69 +198,69 @@
 
 <section id="table" class="band">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="tbl.eyebrow">Side by side</span>
-    <h2 class="sec" data-i18n="tbl.h2">The comparison, dimension by dimension</h2>
+    <span class="eyebrow" data-i18n="tbl.eyebrow">逐項對照</span>
+    <h2 class="sec" data-i18n="tbl.h2">一個維度一個維度地比</h2>
     <div class="tblwrap">
       <table class="cmp">
         <thead>
           <tr><th></th><th class="hl">pymodelet</th><th>psycopg row_factory</th><th>aiosql</th><th>SA Core + Pydantic</th></tr>
         </thead>
         <tbody>
-          <tr><th data-i18n="r1">Queries</th>
-            <td class="hl" data-i18n="r1a">Plain SQL in code</td>
-            <td data-i18n="r1b">Plain SQL in code</td>
-            <td data-i18n="r1c">SQL in .sql files</td>
-            <td data-i18n="r1d">SQL via text()</td></tr>
+          <tr><th data-i18n="r1">查詢</th>
+            <td class="hl" data-i18n="r1a">程式碼裡的純 SQL</td>
+            <td data-i18n="r1b">程式碼裡的純 SQL</td>
+            <td data-i18n="r1c">.sql 檔裡的 SQL</td>
+            <td data-i18n="r1d">text() 包的 SQL</td></tr>
           <tr><th data-i18n="r2">Row → entity</th>
-            <td class="hl" data-i18n="r2a">Automatic — case-insensitive match, Enum / Decimal / datetime coercion</td>
-            <td data-i18n="r2b">class_row(dataclass), exact column names</td>
-            <td data-i18n="r2c">Rows come back as rows; conversion is DIY</td>
-            <td data-i18n="r2d">Manual — Entity(**row._mapping) per query</td></tr>
+            <td class="hl" data-i18n="r2a">自動 —— 不分大小寫配對,Enum / Decimal / datetime 自動轉型</td>
+            <td data-i18n="r2b">class_row(dataclass),欄位名須完全一致</td>
+            <td data-i18n="r2c">回來的是 row;轉型自己來</td>
+            <td data-i18n="r2d">手動 —— 每條查詢 Entity(**row._mapping)</td></tr>
           <tr><th data-i18n="r3">INSERT / UPDATE / DELETE</th>
-            <td class="hl" data-i18n="r3a">Generated — save() with saveOrUpdate semantics</td>
-            <td data-i18n="r3b">Hand-written, every statement</td>
-            <td data-i18n="r3c">Hand-written, every statement, in .sql</td>
-            <td data-i18n="r3d">Hand-written, every statement</td></tr>
-          <tr><th data-i18n="r4">Generated key write-back</th>
-            <td class="hl" data-i18n="r4a">Automatic after insert</td>
-            <td data-i18n="r4b">Manual — RETURNING clause</td>
-            <td data-i18n="r4c">Manual</td>
-            <td data-i18n="r4d">Manual</td></tr>
-          <tr><th data-i18n="r5">Databases</th>
-            <td class="hl" data-i18n="r5a">Any DB-API 2.0 driver — SQLite, MySQL, PostgreSQL dialects</td>
-            <td data-i18n="r5b">PostgreSQL only</td>
-            <td data-i18n="r5c">Many drivers</td>
-            <td data-i18n="r5d">Any SQLAlchemy engine</td></tr>
-          <tr><th data-i18n="r6">Dependencies</th>
-            <td class="hl" data-i18n="r6a">Zero</td>
+            <td class="hl" data-i18n="r3a">自動產生 —— save() 即 saveOrUpdate</td>
+            <td data-i18n="r3b">手寫,每一句</td>
+            <td data-i18n="r3c">手寫,每一句,寫在 .sql</td>
+            <td data-i18n="r3d">手寫,每一句</td></tr>
+          <tr><th data-i18n="r4">主鍵回填</th>
+            <td class="hl" data-i18n="r4a">insert 後自動</td>
+            <td data-i18n="r4b">手動 —— 要寫 RETURNING</td>
+            <td data-i18n="r4c">手動</td>
+            <td data-i18n="r4d">手動</td></tr>
+          <tr><th data-i18n="r5">資料庫</th>
+            <td class="hl" data-i18n="r5a">任何 DB-API 2.0 驅動 —— SQLite、MySQL、PostgreSQL 方言</td>
+            <td data-i18n="r5b">僅 PostgreSQL</td>
+            <td data-i18n="r5c">多種驅動</td>
+            <td data-i18n="r5d">任何 SQLAlchemy engine</td></tr>
+          <tr><th data-i18n="r6">依賴</th>
+            <td class="hl" data-i18n="r6a">零</td>
             <td data-i18n="r6b">psycopg</td>
             <td data-i18n="r6c">aiosql</td>
             <td data-i18n="r6d">SQLAlchemy + Pydantic</td></tr>
-          <tr><th data-i18n="r7">Deep pagination</th>
-            <td class="hl" data-i18n="r7a">Built-in PageContainer — O(page), page 50,000 costs like page 1</td>
-            <td data-i18n="r7b">DIY</td>
-            <td data-i18n="r7c">DIY</td>
-            <td data-i18n="r7d">DIY</td></tr>
-          <tr><th data-i18n="r8">Audit fields</th>
-            <td class="hl" data-i18n="r8a">Built-in — AppEntity + contextvars login</td>
-            <td data-i18n="r8b">DIY</td>
-            <td data-i18n="r8c">DIY</td>
-            <td data-i18n="r8d">DIY</td></tr>
-          <tr><th data-i18n="r9">Transactions</th>
-            <td class="hl" data-i18n="r9a">with model.txn(): — rollback on error</td>
-            <td data-i18n="r9b">Manual commit / rollback</td>
-            <td data-i18n="r9c">Manual commit / rollback</td>
+          <tr><th data-i18n="r7">深頁分頁</th>
+            <td class="hl" data-i18n="r7a">內建 PageContainer —— O(頁),第 5 萬頁和第 1 頁一樣便宜</td>
+            <td data-i18n="r7b">自己做</td>
+            <td data-i18n="r7c">自己做</td>
+            <td data-i18n="r7d">自己做</td></tr>
+          <tr><th data-i18n="r8">稽核欄位</th>
+            <td class="hl" data-i18n="r8a">內建 —— AppEntity + contextvars 登入情境</td>
+            <td data-i18n="r8b">自己做</td>
+            <td data-i18n="r8c">自己做</td>
+            <td data-i18n="r8d">自己做</td></tr>
+          <tr><th data-i18n="r9">交易</th>
+            <td class="hl" data-i18n="r9a">with model.txn(): —— 出錯自動 rollback</td>
+            <td data-i18n="r9b">手動 commit / rollback</td>
+            <td data-i18n="r9c">手動 commit / rollback</td>
             <td data-i18n="r9d">engine.begin()</td></tr>
-          <tr><th data-i18n="r10">Java twin</th>
-            <td class="hl" data-i18n="r10a">Yes — same concepts and JPA-style vocabulary as Modelet (Java), 1:1</td>
+          <tr><th data-i18n="r10">Java 雙生</th>
+            <td class="hl" data-i18n="r10a">有 —— 與 Modelet(Java)概念與 JPA 式詞彙一比一</td>
             <td data-i18n="r10b">—</td>
             <td data-i18n="r10c">—</td>
             <td data-i18n="r10d">—</td></tr>
-          <tr><th data-i18n="r11">Size</th>
-            <td class="hl" data-i18n="r11a">~600 lines, read in one sitting</td>
-            <td data-i18n="r11b">Built into the driver</td>
-            <td data-i18n="r11c">&lt; 1,000 lines</td>
-            <td data-i18n="r11d">Large library</td></tr>
+          <tr><th data-i18n="r11">規模</th>
+            <td class="hl" data-i18n="r11a">約 600 行,一口氣讀完</td>
+            <td data-i18n="r11b">驅動內建</td>
+            <td data-i18n="r11c">不到 1,000 行</td>
+            <td data-i18n="r11d">大型函式庫</td></tr>
         </tbody>
       </table>
     </div>
@@ -269,9 +269,9 @@
 
 <section id="writes">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="wr.eyebrow">The decisive difference</span>
-    <h2 class="sec" data-i18n="wr.h2">pymodelet: effortless reads and writes, readable code, fewer AI tokens</h2>
-    <p class="sec-lede" data-i18n="wr.lede">Same requirement: insert a user, then change the email. The read-side tools all make you author both statements. pymodelet makes them disappear.</p>
+    <span class="eyebrow" data-i18n="wr.eyebrow">決定性差異</span>
+    <h2 class="sec" data-i18n="wr.h2">pymodelet 讓讀寫都便利,程式更易讀,AI 省 token</h2>
+    <p class="sec-lede" data-i18n="wr.lede">同一個需求:新增一位使用者,然後改 email。讀取派的工具都要你把兩句 SQL 寫出來;pymodelet 讓它們直接消失。</p>
     <div class="two">
       <div class="codewin">
         <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">aiosql — users.sql + Python</span><span class="lang">every statement, by hand</span></div>
@@ -297,16 +297,16 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
 <span class="com"># delete? user.txn_mode = TxnMode.DELETE; model.save(user)</span></pre>
       </div>
     </div>
-    <p class="cap" data-i18n="wr.cap">Add a column: in aiosql that touches the table, the INSERT, the UPDATE and every call site that names the fields. In pymodelet it touches the table and one dataclass field — the SQL regenerates itself. Multiply by every table in your schema.</p>
+    <p class="cap" data-i18n="wr.cap">加一個欄位:在 aiosql 要動資料表、INSERT、UPDATE,還有每個點名欄位的呼叫處。在 pymodelet 只要動資料表和一個 dataclass 欄位 —— SQL 自己重新長出來。再乘上你 schema 裡的每一張表。</p>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot-in">
-    <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">pymodelet · Queries belong to SQL, writes belong to the framework</span></a>
+    <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">pymodelet · 查詢交給 SQL,寫入交給框架</span></a>
     <div class="foot-links">
-      <a href="index.html" data-i18n="foot.home">Home</a>
-      <a href="compare-java.html" data-i18n="foot.java">Java comparison</a>
+      <a href="index.html" data-i18n="foot.home">主頁</a>
+      <a href="compare-java.html" data-i18n="foot.java">Java 比較</a>
       <a href="https://github.com/MattAtAIEra/modelet/tree/master/python">Repository</a>
       <a href="https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md">Tribute</a>
     </div>
@@ -315,7 +315,7 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
 
 <script>
 (function(){
-  var PAGE='compare-python.html', LANG='en';
+  var PAGE='compare-python.html', LANG='zh';
   var root=document.documentElement;
   var themeBtn=document.getElementById('themeBtn');
   var langSel=document.getElementById('langSel');

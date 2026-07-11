@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Modelet vs MyBatis &amp; Hibernate — an honest comparison</title>
-<meta name="description" content="Hibernate hides all your SQL, MyBatis makes you write all of it, Modelet splits the work where it belongs. An honest, dimension-by-dimension comparison.">
-<link rel="canonical" href="https://mattataiera.github.io/modelet/compare-java.html">
+<title>Modelet vs MyBatis 與 Hibernate — 誠實比較</title>
+<meta name="description" content="Hibernate 把 SQL 全藏起來,MyBatis 要你把 SQL 全寫完,Modelet 把工作切在該切的地方。逐維度的誠實比較。">
+<link rel="canonical" href="https://mattataiera.github.io/modelet/zh/compare-java.html">
 <link rel="alternate" hreflang="en" href="https://mattataiera.github.io/modelet/compare-java.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://mattataiera.github.io/modelet/zh/compare-java.html">
 <link rel="alternate" hreflang="ja" href="https://mattataiera.github.io/modelet/ja/compare-java.html">
@@ -140,11 +140,11 @@
 <body>
 <nav>
   <div class="wrap nav-in">
-    <a class="brand" href="index.html"><span class="dot"></span>Modelet <span class="back" data-i18n="nav.back">← back</span></a>
+    <a class="brand" href="index.html"><span class="dot"></span>Modelet <span class="back" data-i18n="nav.back">← 回主頁</span></a>
     <div class="nav-links">
-      <a href="#answers" class="hide-sm" data-i18n="nav.answers">Three answers</a>
-      <a href="#table" class="hide-sm" data-i18n="nav.table">Side by side</a>
-      <a href="#writes" data-i18n="nav.writes">The write side</a>
+      <a href="#answers" class="hide-sm" data-i18n="nav.answers">三種答案</a>
+      <a href="#table" class="hide-sm" data-i18n="nav.table">逐項對照</a>
+      <a href="#writes" data-i18n="nav.writes">寫入面</a>
       <a href="https://github.com/MattAtAIEra/modelet">GitHub</a>
     </div>
     <div class="ctrl">
@@ -162,32 +162,32 @@
 
 <header class="hero">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="hero.eyebrow">Java · Head-to-head</span>
-    <h1 class="title" data-i18n-html="hero.h1"><span class="grad">Modelet</span> vs MyBatis &amp; Hibernate</h1>
-    <p class="tagline" data-i18n="hero.tagline">Hibernate hides all your SQL. MyBatis makes you write all of it. Modelet splits the work where it belongs.</p>
-    <p class="lede" data-i18n="hero.lede">All three answer the same question — how does an object meet a row? They just disagree about who writes the SQL. Here is the honest comparison.</p>
+    <span class="eyebrow" data-i18n="hero.eyebrow">Java · 正面對決</span>
+    <h1 class="title" data-i18n-html="hero.h1"><span class="grad">Modelet</span> vs MyBatis 與 Hibernate</h1>
+    <p class="tagline" data-i18n="hero.tagline">Hibernate 把 SQL 全藏起來,MyBatis 要你把 SQL 全寫完。Modelet 把工作切在該切的地方。</p>
+    <p class="lede" data-i18n="hero.lede">三者回答的是同一個問題 —— 物件如何對上資料列?分歧只在:SQL 該由誰來寫。以下是誠實的比較。</p>
   </div>
 </header>
 
 <section id="answers">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="ans.eyebrow">Three philosophies</span>
-    <h2 class="sec" data-i18n="ans.h2">Who writes your SQL?</h2>
+    <span class="eyebrow" data-i18n="ans.eyebrow">三種哲學</span>
+    <h2 class="sec" data-i18n="ans.h2">你的 SQL,誰來寫?</h2>
     <div class="cards">
       <div class="pcard">
         <div class="who">Hibernate</div>
-        <h3 data-i18n="ans.hib.t">Hides all SQL</h3>
-        <p data-i18n="ans.hib.d">You describe mappings and relations; the framework derives SQL at flush time. Powerful for complex domain graphs — at the price of HQL/JPQL, session lifecycles, lazy proxies and dirty-checking surprises.</p>
+        <h3 data-i18n="ans.hib.t">把 SQL 全部藏起來</h3>
+        <p data-i18n="ans.hib.d">你描述 mapping 與關聯,框架在 flush 時推導出 SQL。對複雜的領域物件圖很強大 —— 代價是 HQL/JPQL、Session 生命週期、lazy proxy 與 dirty checking 的意外。</p>
       </div>
       <div class="pcard">
         <div class="who">MyBatis</div>
-        <h3 data-i18n="ans.mb.t">Makes you write all SQL</h3>
-        <p data-i18n="ans.mb.d">Full control: every SELECT — and every INSERT, UPDATE, DELETE — is written by hand in mapper XML or annotations, plus a resultMap per shape. Honest, but the write side is pure toil.</p>
+        <h3 data-i18n="ans.mb.t">要你把 SQL 全部寫完</h3>
+        <p data-i18n="ans.mb.d">完全掌控:每一句 SELECT —— 連同每一句 INSERT、UPDATE、DELETE —— 都要在 mapper XML 或註解裡手寫,外加每種結果形狀一份 resultMap。誠實,但寫入面純屬苦工。</p>
       </div>
       <div class="pcard win">
         <div class="who">Modelet</div>
-        <h3 data-i18n="ans.mod.t">You write only the queries</h3>
-        <p data-i18n="ans.mod.d">SELECTs are plain ANSI SQL in your code. The write side is generated from the entity's TxnMode state — key written back, audit fields stamped. ~2,000 lines; read it in an afternoon.</p>
+        <h3 data-i18n="ans.mod.t">你只寫查詢</h3>
+        <p data-i18n="ans.mod.d">SELECT 就是程式碼裡的 ANSI SQL。寫入面由 entity 的 TxnMode 狀態自動產生 —— 主鍵回填、稽核欄位自動蓋上。約 2,000 行,一個下午讀得完。</p>
       </div>
     </div>
   </div>
@@ -195,54 +195,54 @@
 
 <section id="table" class="band">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="tbl.eyebrow">Side by side</span>
-    <h2 class="sec" data-i18n="tbl.h2">The comparison, dimension by dimension</h2>
+    <span class="eyebrow" data-i18n="tbl.eyebrow">逐項對照</span>
+    <h2 class="sec" data-i18n="tbl.h2">一個維度一個維度地比</h2>
     <div class="tblwrap">
       <table class="cmp">
         <thead>
           <tr><th></th><th class="hl">Modelet</th><th>MyBatis</th><th>Hibernate</th></tr>
         </thead>
         <tbody>
-          <tr><th data-i18n="r1">Query language</th>
-            <td class="hl" data-i18n="r1a">ANSI SQL, right in your code</td>
-            <td data-i18n="r1b">SQL in mapper XML / annotations</td>
+          <tr><th data-i18n="r1">查詢語言</th>
+            <td class="hl" data-i18n="r1a">ANSI SQL,直接寫在程式碼裡</td>
+            <td data-i18n="r1b">SQL 寫在 mapper XML / 註解</td>
             <td data-i18n="r1c">HQL / JPQL / Criteria API</td></tr>
           <tr><th data-i18n="r2">INSERT / UPDATE / DELETE</th>
-            <td class="hl" data-i18n="r2a">Generated from the entity — saveOrUpdate via TxnMode</td>
-            <td data-i18n="r2b">Hand-written, every statement, every column</td>
-            <td data-i18n="r2c">Generated by dirty checking at flush time</td></tr>
-          <tr><th data-i18n="r3">Mapping configuration</th>
-            <td class="hl" data-i18n="r3a">Convention + optional JPA annotations</td>
-            <td data-i18n="r3b">resultMap per result shape</td>
-            <td data-i18n="r3c">Full entity &amp; relation mappings</td></tr>
-          <tr><th data-i18n="r4">Runtime model</th>
-            <td class="hl" data-i18n="r4a">Stateless — no session, no proxies</td>
-            <td data-i18n="r4b">Thin SqlSession</td>
-            <td data-i18n="r4c">Session, L1/L2 cache, lazy proxies</td></tr>
-          <tr><th data-i18n="r5">What you see is what runs</th>
-            <td class="hl" data-i18n="r5a">Yes — the SQL is in your code</td>
-            <td data-i18n="r5b">Mostly — dynamic SQL assembled from tags</td>
-            <td data-i18n="r5c">No — SQL derived at flush; N+1 surprises</td></tr>
-          <tr><th data-i18n="r6">Pagination</th>
-            <td class="hl" data-i18n="r6a">Built-in PageContainer; LIMIT/OFFSET pushed to the DB, O(page) memory</td>
-            <td data-i18n="r6b">RowBounds pages in memory; physical paging needs a plugin</td>
+            <td class="hl" data-i18n="r2a">由 entity 自動產生 —— TxnMode 驅動的 saveOrUpdate</td>
+            <td data-i18n="r2b">手寫,每一句、每一欄</td>
+            <td data-i18n="r2c">flush 時由 dirty checking 產生</td></tr>
+          <tr><th data-i18n="r3">Mapping 設定</th>
+            <td class="hl" data-i18n="r3a">慣例優先 + 選用 JPA 註解</td>
+            <td data-i18n="r3b">每種結果形狀一份 resultMap</td>
+            <td data-i18n="r3c">完整的 entity 與關聯 mapping</td></tr>
+          <tr><th data-i18n="r4">執行期模型</th>
+            <td class="hl" data-i18n="r4a">無狀態 —— 沒有 session、沒有 proxy</td>
+            <td data-i18n="r4b">輕薄的 SqlSession</td>
+            <td data-i18n="r4c">Session、一二級快取、lazy proxy</td></tr>
+          <tr><th data-i18n="r5">所見即所執行</th>
+            <td class="hl" data-i18n="r5a">是 —— SQL 就在你的程式碼裡</td>
+            <td data-i18n="r5b">大致是 —— 動態 SQL 由標籤組出</td>
+            <td data-i18n="r5c">否 —— SQL 在 flush 時推導;N+1 突襲</td></tr>
+          <tr><th data-i18n="r6">分頁</th>
+            <td class="hl" data-i18n="r6a">內建 PageContainer;LIMIT/OFFSET 下推資料庫,記憶體 O(頁)</td>
+            <td data-i18n="r6b">RowBounds 在記憶體分頁;實體分頁要裝外掛</td>
             <td data-i18n="r6c">setFirstResult / setMaxResults</td></tr>
-          <tr><th data-i18n="r7">Audit fields</th>
-            <td class="hl" data-i18n="r7a">Built-in — AppEntity stamps creator / dates</td>
-            <td data-i18n="r7b">Manual, or a custom interceptor</td>
-            <td data-i18n="r7c">Listeners / Envers configuration</td></tr>
-          <tr><th data-i18n="r8">JPA annotations</th>
-            <td class="hl" data-i18n="r8a">Compatible vocabulary — @Table, @Id, @Column…</td>
-            <td data-i18n="r8b">Not supported</td>
-            <td data-i18n="r8c">Native — it is the JPA provider</td></tr>
-          <tr><th data-i18n="r9">Learning curve</th>
-            <td class="hl" data-i18n="r9a">Hours: ANSI SQL plus one save()</td>
-            <td data-i18n="r9b">Days: mapper config + dynamic SQL tags</td>
-            <td data-i18n="r9c">Weeks: session, cascade, cache, lazy loading</td></tr>
-          <tr><th data-i18n="r10">Footprint</th>
-            <td class="hl" data-i18n="r10a">~2,000 lines of source</td>
-            <td data-i18n="r10b">Moderate</td>
-            <td data-i18n="r10c">Very large</td></tr>
+          <tr><th data-i18n="r7">稽核欄位</th>
+            <td class="hl" data-i18n="r7a">內建 —— AppEntity 自動蓋 creator / 日期</td>
+            <td data-i18n="r7b">手動,或自寫 interceptor</td>
+            <td data-i18n="r7c">Listener / Envers 設定</td></tr>
+          <tr><th data-i18n="r8">JPA 註解</th>
+            <td class="hl" data-i18n="r8a">相容詞彙 —— @Table、@Id、@Column…</td>
+            <td data-i18n="r8b">不支援</td>
+            <td data-i18n="r8c">原生 —— 它就是 JPA 實作</td></tr>
+          <tr><th data-i18n="r9">學習曲線</th>
+            <td class="hl" data-i18n="r9a">數小時:ANSI SQL 加一個 save()</td>
+            <td data-i18n="r9b">數天:mapper 設定 + 動態 SQL 標籤</td>
+            <td data-i18n="r9c">數週:session、cascade、快取、lazy loading</td></tr>
+          <tr><th data-i18n="r10">程式碼規模</th>
+            <td class="hl" data-i18n="r10a">約 2,000 行原始碼</td>
+            <td data-i18n="r10b">中等</td>
+            <td data-i18n="r10c">非常龐大</td></tr>
         </tbody>
       </table>
     </div>
@@ -251,9 +251,9 @@
 
 <section id="writes">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="wr.eyebrow">The decisive difference</span>
-    <h2 class="sec" data-i18n="wr.h2">The write side is where lives diverge</h2>
-    <p class="sec-lede" data-i18n="wr.lede">Same requirement in all three: insert a book, then raise its price. Watch who does the typing.</p>
+    <span class="eyebrow" data-i18n="wr.eyebrow">決定性差異</span>
+    <h2 class="sec" data-i18n="wr.h2">寫入面,是人生分歧的地方</h2>
+    <p class="sec-lede" data-i18n="wr.lede">同一個需求:新增一本書,然後調價。看看是誰在打字。</p>
     <div class="three">
       <div class="codewin">
         <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Modelet</span><span class="lang">2 lines per write</span></div>
@@ -286,28 +286,28 @@ book.<span class="fn">setPrice</span>(<span class="kw">new</span> BigDecimal(<sp
 <span class="com">// detached instance? use merge(). outside the session? LazyInitializationException.</span></pre>
       </div>
     </div>
-    <p class="cap" data-i18n="wr.cap">A new column in MyBatis touches the table, the XML insert, the XML update and the mapper. In Modelet it touches the table and the entity field — the SQL regenerates itself.</p>
+    <p class="cap" data-i18n="wr.cap">在 MyBatis 加一個欄位,要動資料表、XML 的 insert、XML 的 update、還有 mapper。在 Modelet 只要動資料表和 entity 欄位 —— SQL 自己重新長出來。</p>
   </div>
 </section>
 
 <section id="when" class="band">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="wh.eyebrow">Honest notes</span>
-    <h2 class="sec" data-i18n="wh.h2">When the others win</h2>
+    <span class="eyebrow" data-i18n="wh.eyebrow">誠實備註</span>
+    <h2 class="sec" data-i18n="wh.h2">什麼時候該選別人</h2>
     <div class="when">
-      <div class="row"><span class="name">Hibernate</span><p data-i18n="wh.hib">A deep domain model with complex object graphs, vendor portability and second-level caching — and a team already fluent in JPA. That is Hibernate's home turf.</p></div>
-      <div class="row"><span class="name">MyBatis</span><p data-i18n="wh.mb">You need hand-tuned SQL on the write side too — bulk upserts, vendor hints, stored procedures — or its dynamic SQL tags (&lt;if&gt;, &lt;foreach&gt;) fit your query patterns.</p></div>
-      <div class="row"><span class="name">Modelet</span><p data-i18n="wh.mod">Your team is fluent in SQL and wants to ship on day one: queries stay in SQL you control, writes generate themselves, and the whole framework fits in your head.</p></div>
+      <div class="row"><span class="name">Hibernate</span><p data-i18n="wh.hib">深層領域模型、複雜物件圖、跨資料庫可攜性與二級快取 —— 而且團隊已經熟 JPA。那是 Hibernate 的主場。</p></div>
+      <div class="row"><span class="name">MyBatis</span><p data-i18n="wh.mb">連寫入面都需要手工調校的 SQL —— 批次 upsert、廠商 hint、預存程序 —— 或者它的動態 SQL 標籤(&lt;if&gt;、&lt;foreach&gt;)正好貼合你的查詢模式。</p></div>
+      <div class="row"><span class="name">Modelet</span><p data-i18n="wh.mod">團隊熟 SQL、想第一天就交付:查詢留在你掌控的 SQL 裡,寫入自動產生,整個框架裝得進腦袋。</p></div>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot-in">
-    <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">Modelet · Queries belong to SQL, writes belong to the framework</span></a>
+    <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">Modelet · 查詢交給 SQL,寫入交給框架</span></a>
     <div class="foot-links">
-      <a href="index.html" data-i18n="foot.home">Home</a>
-      <a href="compare-python.html" data-i18n="foot.py">Python comparison</a>
+      <a href="index.html" data-i18n="foot.home">主頁</a>
+      <a href="compare-python.html" data-i18n="foot.py">Python 比較</a>
       <a href="https://github.com/MattAtAIEra/modelet">Repository</a>
     </div>
   </div>
@@ -315,7 +315,7 @@ book.<span class="fn">setPrice</span>(<span class="kw">new</span> BigDecimal(<sp
 
 <script>
 (function(){
-  var PAGE='compare-java.html', LANG='en';
+  var PAGE='compare-java.html', LANG='zh';
   var root=document.documentElement;
   var themeBtn=document.getElementById('themeBtn');
   var langSel=document.getElementById('langSel');

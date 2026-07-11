@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Modelet vs MyBatis &amp; Hibernate — an honest comparison</title>
-<meta name="description" content="Hibernate hides all your SQL, MyBatis makes you write all of it, Modelet splits the work where it belongs. An honest, dimension-by-dimension comparison.">
-<link rel="canonical" href="https://mattataiera.github.io/modelet/compare-java.html">
+<title>Modelet vs. MyBatis &amp; Hibernate — ein ehrlicher Vergleich</title>
+<meta name="description" content="Hibernate versteckt dein SQL, MyBatis lässt dich alles schreiben, Modelet teilt die Arbeit richtig. Ein ehrlicher Vergleich, Dimension für Dimension.">
+<link rel="canonical" href="https://mattataiera.github.io/modelet/de/compare-java.html">
 <link rel="alternate" hreflang="en" href="https://mattataiera.github.io/modelet/compare-java.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://mattataiera.github.io/modelet/zh/compare-java.html">
 <link rel="alternate" hreflang="ja" href="https://mattataiera.github.io/modelet/ja/compare-java.html">
@@ -140,11 +140,11 @@
 <body>
 <nav>
   <div class="wrap nav-in">
-    <a class="brand" href="index.html"><span class="dot"></span>Modelet <span class="back" data-i18n="nav.back">← back</span></a>
+    <a class="brand" href="index.html"><span class="dot"></span>Modelet <span class="back" data-i18n="nav.back">← zurück</span></a>
     <div class="nav-links">
-      <a href="#answers" class="hide-sm" data-i18n="nav.answers">Three answers</a>
-      <a href="#table" class="hide-sm" data-i18n="nav.table">Side by side</a>
-      <a href="#writes" data-i18n="nav.writes">The write side</a>
+      <a href="#answers" class="hide-sm" data-i18n="nav.answers">Drei Antworten</a>
+      <a href="#table" class="hide-sm" data-i18n="nav.table">Im Vergleich</a>
+      <a href="#writes" data-i18n="nav.writes">Die Schreibseite</a>
       <a href="https://github.com/MattAtAIEra/modelet">GitHub</a>
     </div>
     <div class="ctrl">
@@ -162,32 +162,32 @@
 
 <header class="hero">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="hero.eyebrow">Java · Head-to-head</span>
-    <h1 class="title" data-i18n-html="hero.h1"><span class="grad">Modelet</span> vs MyBatis &amp; Hibernate</h1>
-    <p class="tagline" data-i18n="hero.tagline">Hibernate hides all your SQL. MyBatis makes you write all of it. Modelet splits the work where it belongs.</p>
-    <p class="lede" data-i18n="hero.lede">All three answer the same question — how does an object meet a row? They just disagree about who writes the SQL. Here is the honest comparison.</p>
+    <span class="eyebrow" data-i18n="hero.eyebrow">Java · Direktvergleich</span>
+    <h1 class="title" data-i18n-html="hero.h1"><span class="grad">Modelet</span> vs. MyBatis &amp; Hibernate</h1>
+    <p class="tagline" data-i18n="hero.tagline">Hibernate versteckt dein ganzes SQL. MyBatis lässt dich alles selbst schreiben. Modelet teilt die Arbeit dort, wo sie hingehört.</p>
+    <p class="lede" data-i18n="hero.lede">Alle drei beantworten dieselbe Frage — wie trifft ein Objekt auf eine Zeile? Sie sind sich nur uneins, wer das SQL schreibt. Hier der ehrliche Vergleich.</p>
   </div>
 </header>
 
 <section id="answers">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="ans.eyebrow">Three philosophies</span>
-    <h2 class="sec" data-i18n="ans.h2">Who writes your SQL?</h2>
+    <span class="eyebrow" data-i18n="ans.eyebrow">Drei Philosophien</span>
+    <h2 class="sec" data-i18n="ans.h2">Wer schreibt dein SQL?</h2>
     <div class="cards">
       <div class="pcard">
         <div class="who">Hibernate</div>
-        <h3 data-i18n="ans.hib.t">Hides all SQL</h3>
-        <p data-i18n="ans.hib.d">You describe mappings and relations; the framework derives SQL at flush time. Powerful for complex domain graphs — at the price of HQL/JPQL, session lifecycles, lazy proxies and dirty-checking surprises.</p>
+        <h3 data-i18n="ans.hib.t">Versteckt alles SQL</h3>
+        <p data-i18n="ans.hib.d">Du beschreibst Mappings und Relationen; das Framework leitet SQL beim Flush ab. Stark für komplexe Domänengraphen — zum Preis von HQL/JPQL, Session-Lebenszyklen, Lazy-Proxies und Dirty-Checking-Überraschungen.</p>
       </div>
       <div class="pcard">
         <div class="who">MyBatis</div>
-        <h3 data-i18n="ans.mb.t">Makes you write all SQL</h3>
-        <p data-i18n="ans.mb.d">Full control: every SELECT — and every INSERT, UPDATE, DELETE — is written by hand in mapper XML or annotations, plus a resultMap per shape. Honest, but the write side is pure toil.</p>
+        <h3 data-i18n="ans.mb.t">Lässt dich alles SQL schreiben</h3>
+        <p data-i18n="ans.mb.d">Volle Kontrolle: jedes SELECT — und jedes INSERT, UPDATE, DELETE — wird von Hand in Mapper-XML oder Annotationen geschrieben, plus eine resultMap pro Ergebnisform. Ehrlich, aber die Schreibseite ist reine Fron.</p>
       </div>
       <div class="pcard win">
         <div class="who">Modelet</div>
-        <h3 data-i18n="ans.mod.t">You write only the queries</h3>
-        <p data-i18n="ans.mod.d">SELECTs are plain ANSI SQL in your code. The write side is generated from the entity's TxnMode state — key written back, audit fields stamped. ~2,000 lines; read it in an afternoon.</p>
+        <h3 data-i18n="ans.mod.t">Du schreibst nur die Abfragen</h3>
+        <p data-i18n="ans.mod.d">SELECTs sind pures ANSI-SQL in deinem Code. Die Schreibseite wird aus dem TxnMode-Zustand der Entität generiert — Schlüssel zurückgeschrieben, Audit-Felder gesetzt. ~2.000 Zeilen; an einem Nachmittag gelesen.</p>
       </div>
     </div>
   </div>
@@ -195,54 +195,54 @@
 
 <section id="table" class="band">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="tbl.eyebrow">Side by side</span>
-    <h2 class="sec" data-i18n="tbl.h2">The comparison, dimension by dimension</h2>
+    <span class="eyebrow" data-i18n="tbl.eyebrow">Im Vergleich</span>
+    <h2 class="sec" data-i18n="tbl.h2">Der Vergleich, Dimension für Dimension</h2>
     <div class="tblwrap">
       <table class="cmp">
         <thead>
           <tr><th></th><th class="hl">Modelet</th><th>MyBatis</th><th>Hibernate</th></tr>
         </thead>
         <tbody>
-          <tr><th data-i18n="r1">Query language</th>
-            <td class="hl" data-i18n="r1a">ANSI SQL, right in your code</td>
-            <td data-i18n="r1b">SQL in mapper XML / annotations</td>
+          <tr><th data-i18n="r1">Abfragesprache</th>
+            <td class="hl" data-i18n="r1a">ANSI-SQL, direkt im Code</td>
+            <td data-i18n="r1b">SQL in Mapper-XML / Annotationen</td>
             <td data-i18n="r1c">HQL / JPQL / Criteria API</td></tr>
           <tr><th data-i18n="r2">INSERT / UPDATE / DELETE</th>
-            <td class="hl" data-i18n="r2a">Generated from the entity — saveOrUpdate via TxnMode</td>
-            <td data-i18n="r2b">Hand-written, every statement, every column</td>
-            <td data-i18n="r2c">Generated by dirty checking at flush time</td></tr>
-          <tr><th data-i18n="r3">Mapping configuration</th>
-            <td class="hl" data-i18n="r3a">Convention + optional JPA annotations</td>
-            <td data-i18n="r3b">resultMap per result shape</td>
-            <td data-i18n="r3c">Full entity &amp; relation mappings</td></tr>
-          <tr><th data-i18n="r4">Runtime model</th>
-            <td class="hl" data-i18n="r4a">Stateless — no session, no proxies</td>
-            <td data-i18n="r4b">Thin SqlSession</td>
-            <td data-i18n="r4c">Session, L1/L2 cache, lazy proxies</td></tr>
-          <tr><th data-i18n="r5">What you see is what runs</th>
-            <td class="hl" data-i18n="r5a">Yes — the SQL is in your code</td>
-            <td data-i18n="r5b">Mostly — dynamic SQL assembled from tags</td>
-            <td data-i18n="r5c">No — SQL derived at flush; N+1 surprises</td></tr>
-          <tr><th data-i18n="r6">Pagination</th>
-            <td class="hl" data-i18n="r6a">Built-in PageContainer; LIMIT/OFFSET pushed to the DB, O(page) memory</td>
-            <td data-i18n="r6b">RowBounds pages in memory; physical paging needs a plugin</td>
+            <td class="hl" data-i18n="r2a">Aus der Entität generiert — saveOrUpdate per TxnMode</td>
+            <td data-i18n="r2b">Handgeschrieben, jedes Statement, jede Spalte</td>
+            <td data-i18n="r2c">Per Dirty Checking beim Flush generiert</td></tr>
+          <tr><th data-i18n="r3">Mapping-Konfiguration</th>
+            <td class="hl" data-i18n="r3a">Konvention + optionale JPA-Annotationen</td>
+            <td data-i18n="r3b">resultMap pro Ergebnisform</td>
+            <td data-i18n="r3c">Volle Entitäts- &amp; Relationsmappings</td></tr>
+          <tr><th data-i18n="r4">Laufzeitmodell</th>
+            <td class="hl" data-i18n="r4a">Zustandslos — keine Session, keine Proxies</td>
+            <td data-i18n="r4b">Dünne SqlSession</td>
+            <td data-i18n="r4c">Session, L1/L2-Cache, Lazy-Proxies</td></tr>
+          <tr><th data-i18n="r5">Was du siehst, läuft auch</th>
+            <td class="hl" data-i18n="r5a">Ja — das SQL steht in deinem Code</td>
+            <td data-i18n="r5b">Meist — dynamisches SQL aus Tags montiert</td>
+            <td data-i18n="r5c">Nein — SQL beim Flush abgeleitet; N+1-Überraschungen</td></tr>
+          <tr><th data-i18n="r6">Paginierung</th>
+            <td class="hl" data-i18n="r6a">Eingebauter PageContainer; LIMIT/OFFSET in die DB verlagert, O(Seite) Speicher</td>
+            <td data-i18n="r6b">RowBounds paginiert im Speicher; physisch nur per Plugin</td>
             <td data-i18n="r6c">setFirstResult / setMaxResults</td></tr>
-          <tr><th data-i18n="r7">Audit fields</th>
-            <td class="hl" data-i18n="r7a">Built-in — AppEntity stamps creator / dates</td>
-            <td data-i18n="r7b">Manual, or a custom interceptor</td>
-            <td data-i18n="r7c">Listeners / Envers configuration</td></tr>
-          <tr><th data-i18n="r8">JPA annotations</th>
-            <td class="hl" data-i18n="r8a">Compatible vocabulary — @Table, @Id, @Column…</td>
-            <td data-i18n="r8b">Not supported</td>
-            <td data-i18n="r8c">Native — it is the JPA provider</td></tr>
-          <tr><th data-i18n="r9">Learning curve</th>
-            <td class="hl" data-i18n="r9a">Hours: ANSI SQL plus one save()</td>
-            <td data-i18n="r9b">Days: mapper config + dynamic SQL tags</td>
-            <td data-i18n="r9c">Weeks: session, cascade, cache, lazy loading</td></tr>
-          <tr><th data-i18n="r10">Footprint</th>
-            <td class="hl" data-i18n="r10a">~2,000 lines of source</td>
-            <td data-i18n="r10b">Moderate</td>
-            <td data-i18n="r10c">Very large</td></tr>
+          <tr><th data-i18n="r7">Audit-Felder</th>
+            <td class="hl" data-i18n="r7a">Eingebaut — AppEntity stempelt Ersteller / Daten</td>
+            <td data-i18n="r7b">Manuell oder eigener Interceptor</td>
+            <td data-i18n="r7c">Listener- / Envers-Konfiguration</td></tr>
+          <tr><th data-i18n="r8">JPA-Annotationen</th>
+            <td class="hl" data-i18n="r8a">Kompatibles Vokabular — @Table, @Id, @Column…</td>
+            <td data-i18n="r8b">Nicht unterstützt</td>
+            <td data-i18n="r8c">Nativ — es ist der JPA-Provider</td></tr>
+          <tr><th data-i18n="r9">Lernkurve</th>
+            <td class="hl" data-i18n="r9a">Stunden: ANSI-SQL plus ein save()</td>
+            <td data-i18n="r9b">Tage: Mapper-Konfig + dynamische SQL-Tags</td>
+            <td data-i18n="r9c">Wochen: Session, Cascade, Cache, Lazy Loading</td></tr>
+          <tr><th data-i18n="r10">Umfang</th>
+            <td class="hl" data-i18n="r10a">~2.000 Zeilen Quellcode</td>
+            <td data-i18n="r10b">Mittel</td>
+            <td data-i18n="r10c">Sehr groß</td></tr>
         </tbody>
       </table>
     </div>
@@ -251,9 +251,9 @@
 
 <section id="writes">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="wr.eyebrow">The decisive difference</span>
-    <h2 class="sec" data-i18n="wr.h2">The write side is where lives diverge</h2>
-    <p class="sec-lede" data-i18n="wr.lede">Same requirement in all three: insert a book, then raise its price. Watch who does the typing.</p>
+    <span class="eyebrow" data-i18n="wr.eyebrow">Der entscheidende Unterschied</span>
+    <h2 class="sec" data-i18n="wr.h2">Auf der Schreibseite trennen sich die Wege</h2>
+    <p class="sec-lede" data-i18n="wr.lede">Dieselbe Anforderung in allen dreien: ein Buch anlegen, dann den Preis erhöhen. Schau, wer tippt.</p>
     <div class="three">
       <div class="codewin">
         <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Modelet</span><span class="lang">2 lines per write</span></div>
@@ -286,28 +286,28 @@ book.<span class="fn">setPrice</span>(<span class="kw">new</span> BigDecimal(<sp
 <span class="com">// detached instance? use merge(). outside the session? LazyInitializationException.</span></pre>
       </div>
     </div>
-    <p class="cap" data-i18n="wr.cap">A new column in MyBatis touches the table, the XML insert, the XML update and the mapper. In Modelet it touches the table and the entity field — the SQL regenerates itself.</p>
+    <p class="cap" data-i18n="wr.cap">Eine neue Spalte berührt in MyBatis die Tabelle, das XML-Insert, das XML-Update und den Mapper. In Modelet nur Tabelle und Entitätsfeld — das SQL erzeugt sich neu.</p>
   </div>
 </section>
 
 <section id="when" class="band">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="wh.eyebrow">Honest notes</span>
-    <h2 class="sec" data-i18n="wh.h2">When the others win</h2>
+    <span class="eyebrow" data-i18n="wh.eyebrow">Ehrliche Anmerkungen</span>
+    <h2 class="sec" data-i18n="wh.h2">Wann die anderen gewinnen</h2>
     <div class="when">
-      <div class="row"><span class="name">Hibernate</span><p data-i18n="wh.hib">A deep domain model with complex object graphs, vendor portability and second-level caching — and a team already fluent in JPA. That is Hibernate's home turf.</p></div>
-      <div class="row"><span class="name">MyBatis</span><p data-i18n="wh.mb">You need hand-tuned SQL on the write side too — bulk upserts, vendor hints, stored procedures — or its dynamic SQL tags (&lt;if&gt;, &lt;foreach&gt;) fit your query patterns.</p></div>
-      <div class="row"><span class="name">Modelet</span><p data-i18n="wh.mod">Your team is fluent in SQL and wants to ship on day one: queries stay in SQL you control, writes generate themselves, and the whole framework fits in your head.</p></div>
+      <div class="row"><span class="name">Hibernate</span><p data-i18n="wh.hib">Ein tiefes Domänenmodell mit komplexen Objektgraphen, Vendor-Portabilität und Second-Level-Cache — und ein Team, das JPA fließend spricht. Das ist Hibernates Heimspiel.</p></div>
+      <div class="row"><span class="name">MyBatis</span><p data-i18n="wh.mb">Du brauchst auch auf der Schreibseite handoptimiertes SQL — Bulk-Upserts, Vendor-Hints, Stored Procedures — oder die dynamischen SQL-Tags (&lt;if&gt;, &lt;foreach&gt;) passen zu deinen Abfragemustern.</p></div>
+      <div class="row"><span class="name">Modelet</span><p data-i18n="wh.mod">Dein Team spricht fließend SQL und will am ersten Tag liefern: Abfragen bleiben in deinem SQL, Schreibvorgänge generieren sich selbst, und das ganze Framework passt in den Kopf.</p></div>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot-in">
-    <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">Modelet · Queries belong to SQL, writes belong to the framework</span></a>
+    <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">Modelet · Abfragen gehören zu SQL, Schreibvorgänge zum Framework</span></a>
     <div class="foot-links">
-      <a href="index.html" data-i18n="foot.home">Home</a>
-      <a href="compare-python.html" data-i18n="foot.py">Python comparison</a>
+      <a href="index.html" data-i18n="foot.home">Startseite</a>
+      <a href="compare-python.html" data-i18n="foot.py">Python-Vergleich</a>
       <a href="https://github.com/MattAtAIEra/modelet">Repository</a>
     </div>
   </div>
@@ -315,7 +315,7 @@ book.<span class="fn">setPrice</span>(<span class="kw">new</span> BigDecimal(<sp
 
 <script>
 (function(){
-  var PAGE='compare-java.html', LANG='en';
+  var PAGE='compare-java.html', LANG='de';
   var root=document.documentElement;
   var themeBtn=document.getElementById('themeBtn');
   var langSel=document.getElementById('langSel');

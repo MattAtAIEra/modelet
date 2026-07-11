@@ -82,6 +82,22 @@ book.txn_mode = TxnMode.DELETE
 model.save(book)
 ```
 
+## Website
+
+The GitHub Pages site (`docs/`, served at
+https://mattataiera.github.io/modelet/) is **generated** — do not edit it
+directly. Edit the templates in `site-src/` (text lives in each page's I18N
+dictionary), then rebuild:
+
+```bash
+node scripts/build-i18n.mjs
+```
+
+This pre-renders every page in five languages (`/` English, `/zh/`, `/ja/`,
+`/de/`, `/ko/`) with translated titles and meta descriptions, canonical +
+hreflang links, plus `sitemap.xml` and `robots.txt` — one crawlable URL per
+language, as multilingual SEO requires.
+
 ## Testing
 
 - Java: unit tests in `OpenSpirit/test-src` (JUnit 4; most cases need a

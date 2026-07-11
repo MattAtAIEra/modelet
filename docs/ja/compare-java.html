@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Modelet vs MyBatis &amp; Hibernate — an honest comparison</title>
-<meta name="description" content="Hibernate hides all your SQL, MyBatis makes you write all of it, Modelet splits the work where it belongs. An honest, dimension-by-dimension comparison.">
-<link rel="canonical" href="https://mattataiera.github.io/modelet/compare-java.html">
+<title>Modelet vs MyBatis &amp; Hibernate — 率直な比較</title>
+<meta name="description" content="Hibernate は SQL をすべて隠し、MyBatis はすべて書かせる。Modelet は仕事を然るべき場所で分割します。観点ごとの率直な比較。">
+<link rel="canonical" href="https://mattataiera.github.io/modelet/ja/compare-java.html">
 <link rel="alternate" hreflang="en" href="https://mattataiera.github.io/modelet/compare-java.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://mattataiera.github.io/modelet/zh/compare-java.html">
 <link rel="alternate" hreflang="ja" href="https://mattataiera.github.io/modelet/ja/compare-java.html">
@@ -140,11 +140,11 @@
 <body>
 <nav>
   <div class="wrap nav-in">
-    <a class="brand" href="index.html"><span class="dot"></span>Modelet <span class="back" data-i18n="nav.back">← back</span></a>
+    <a class="brand" href="index.html"><span class="dot"></span>Modelet <span class="back" data-i18n="nav.back">← ホームへ</span></a>
     <div class="nav-links">
-      <a href="#answers" class="hide-sm" data-i18n="nav.answers">Three answers</a>
-      <a href="#table" class="hide-sm" data-i18n="nav.table">Side by side</a>
-      <a href="#writes" data-i18n="nav.writes">The write side</a>
+      <a href="#answers" class="hide-sm" data-i18n="nav.answers">三つの答え</a>
+      <a href="#table" class="hide-sm" data-i18n="nav.table">項目別比較</a>
+      <a href="#writes" data-i18n="nav.writes">書き込み側</a>
       <a href="https://github.com/MattAtAIEra/modelet">GitHub</a>
     </div>
     <div class="ctrl">
@@ -162,32 +162,32 @@
 
 <header class="hero">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="hero.eyebrow">Java · Head-to-head</span>
+    <span class="eyebrow" data-i18n="hero.eyebrow">Java · 直接対決</span>
     <h1 class="title" data-i18n-html="hero.h1"><span class="grad">Modelet</span> vs MyBatis &amp; Hibernate</h1>
-    <p class="tagline" data-i18n="hero.tagline">Hibernate hides all your SQL. MyBatis makes you write all of it. Modelet splits the work where it belongs.</p>
-    <p class="lede" data-i18n="hero.lede">All three answer the same question — how does an object meet a row? They just disagree about who writes the SQL. Here is the honest comparison.</p>
+    <p class="tagline" data-i18n="hero.tagline">Hibernate は SQL をすべて隠し、MyBatis は SQL をすべて書かせる。Modelet は仕事を然るべき場所で分割します。</p>
+    <p class="lede" data-i18n="hero.lede">三者が答えるのは同じ問い —— オブジェクトはどう行と出会うのか。違いはただ一つ、SQL を誰が書くか。以下、率直な比較です。</p>
   </div>
 </header>
 
 <section id="answers">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="ans.eyebrow">Three philosophies</span>
-    <h2 class="sec" data-i18n="ans.h2">Who writes your SQL?</h2>
+    <span class="eyebrow" data-i18n="ans.eyebrow">三つの哲学</span>
+    <h2 class="sec" data-i18n="ans.h2">あなたの SQL、誰が書く?</h2>
     <div class="cards">
       <div class="pcard">
         <div class="who">Hibernate</div>
-        <h3 data-i18n="ans.hib.t">Hides all SQL</h3>
-        <p data-i18n="ans.hib.d">You describe mappings and relations; the framework derives SQL at flush time. Powerful for complex domain graphs — at the price of HQL/JPQL, session lifecycles, lazy proxies and dirty-checking surprises.</p>
+        <h3 data-i18n="ans.hib.t">SQL をすべて隠す</h3>
+        <p data-i18n="ans.hib.d">マッピングと関連を記述すれば、フレームワークが flush 時に SQL を導出します。複雑なドメイングラフには強力 —— その代償は HQL/JPQL、セッションのライフサイクル、lazy プロキシ、dirty checking の不意打ちです。</p>
       </div>
       <div class="pcard">
         <div class="who">MyBatis</div>
-        <h3 data-i18n="ans.mb.t">Makes you write all SQL</h3>
-        <p data-i18n="ans.mb.d">Full control: every SELECT — and every INSERT, UPDATE, DELETE — is written by hand in mapper XML or annotations, plus a resultMap per shape. Honest, but the write side is pure toil.</p>
+        <h3 data-i18n="ans.mb.t">SQL をすべて書かせる</h3>
+        <p data-i18n="ans.mb.d">完全な制御:すべての SELECT も —— そしてすべての INSERT、UPDATE、DELETE も —— mapper XML かアノテーションに手書きし、結果の形ごとに resultMap を用意します。誠実ですが、書き込み側は純然たる苦役です。</p>
       </div>
       <div class="pcard win">
         <div class="who">Modelet</div>
-        <h3 data-i18n="ans.mod.t">You write only the queries</h3>
-        <p data-i18n="ans.mod.d">SELECTs are plain ANSI SQL in your code. The write side is generated from the entity's TxnMode state — key written back, audit fields stamped. ~2,000 lines; read it in an afternoon.</p>
+        <h3 data-i18n="ans.mod.t">書くのはクエリだけ</h3>
+        <p data-i18n="ans.mod.d">SELECT はコード内の素の ANSI SQL。書き込み側はエンティティの TxnMode 状態から生成され、主キーは書き戻され、監査項目も自動付与。約 2,000 行、半日で読み切れます。</p>
       </div>
     </div>
   </div>
@@ -195,54 +195,54 @@
 
 <section id="table" class="band">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="tbl.eyebrow">Side by side</span>
-    <h2 class="sec" data-i18n="tbl.h2">The comparison, dimension by dimension</h2>
+    <span class="eyebrow" data-i18n="tbl.eyebrow">項目別比較</span>
+    <h2 class="sec" data-i18n="tbl.h2">観点ごとに、並べて比べる</h2>
     <div class="tblwrap">
       <table class="cmp">
         <thead>
           <tr><th></th><th class="hl">Modelet</th><th>MyBatis</th><th>Hibernate</th></tr>
         </thead>
         <tbody>
-          <tr><th data-i18n="r1">Query language</th>
-            <td class="hl" data-i18n="r1a">ANSI SQL, right in your code</td>
-            <td data-i18n="r1b">SQL in mapper XML / annotations</td>
+          <tr><th data-i18n="r1">クエリ言語</th>
+            <td class="hl" data-i18n="r1a">ANSI SQL をコードに直書き</td>
+            <td data-i18n="r1b">mapper XML / アノテーション内の SQL</td>
             <td data-i18n="r1c">HQL / JPQL / Criteria API</td></tr>
           <tr><th data-i18n="r2">INSERT / UPDATE / DELETE</th>
-            <td class="hl" data-i18n="r2a">Generated from the entity — saveOrUpdate via TxnMode</td>
-            <td data-i18n="r2b">Hand-written, every statement, every column</td>
-            <td data-i18n="r2c">Generated by dirty checking at flush time</td></tr>
-          <tr><th data-i18n="r3">Mapping configuration</th>
-            <td class="hl" data-i18n="r3a">Convention + optional JPA annotations</td>
-            <td data-i18n="r3b">resultMap per result shape</td>
-            <td data-i18n="r3c">Full entity &amp; relation mappings</td></tr>
-          <tr><th data-i18n="r4">Runtime model</th>
-            <td class="hl" data-i18n="r4a">Stateless — no session, no proxies</td>
-            <td data-i18n="r4b">Thin SqlSession</td>
-            <td data-i18n="r4c">Session, L1/L2 cache, lazy proxies</td></tr>
-          <tr><th data-i18n="r5">What you see is what runs</th>
-            <td class="hl" data-i18n="r5a">Yes — the SQL is in your code</td>
-            <td data-i18n="r5b">Mostly — dynamic SQL assembled from tags</td>
-            <td data-i18n="r5c">No — SQL derived at flush; N+1 surprises</td></tr>
-          <tr><th data-i18n="r6">Pagination</th>
-            <td class="hl" data-i18n="r6a">Built-in PageContainer; LIMIT/OFFSET pushed to the DB, O(page) memory</td>
-            <td data-i18n="r6b">RowBounds pages in memory; physical paging needs a plugin</td>
+            <td class="hl" data-i18n="r2a">エンティティから自動生成 —— TxnMode による saveOrUpdate</td>
+            <td data-i18n="r2b">手書き。全文・全カラム</td>
+            <td data-i18n="r2c">flush 時に dirty checking が生成</td></tr>
+          <tr><th data-i18n="r3">マッピング設定</th>
+            <td class="hl" data-i18n="r3a">規約 + 任意の JPA アノテーション</td>
+            <td data-i18n="r3b">結果の形ごとに resultMap</td>
+            <td data-i18n="r3c">エンティティと関連の完全なマッピング</td></tr>
+          <tr><th data-i18n="r4">実行時モデル</th>
+            <td class="hl" data-i18n="r4a">ステートレス —— セッションもプロキシもなし</td>
+            <td data-i18n="r4b">薄い SqlSession</td>
+            <td data-i18n="r4c">Session、L1/L2 キャッシュ、lazy プロキシ</td></tr>
+          <tr><th data-i18n="r5">見たままが実行される</th>
+            <td class="hl" data-i18n="r5a">はい —— SQL はコードの中に</td>
+            <td data-i18n="r5b">概ね —— 動的 SQL はタグから組み立て</td>
+            <td data-i18n="r5c">いいえ —— SQL は flush 時に導出。N+1 の奇襲</td></tr>
+          <tr><th data-i18n="r6">ページング</th>
+            <td class="hl" data-i18n="r6a">内蔵 PageContainer。LIMIT/OFFSET を DB に委譲、メモリは O(ページ)</td>
+            <td data-i18n="r6b">RowBounds はメモリ内ページング。物理ページングはプラグイン頼み</td>
             <td data-i18n="r6c">setFirstResult / setMaxResults</td></tr>
-          <tr><th data-i18n="r7">Audit fields</th>
-            <td class="hl" data-i18n="r7a">Built-in — AppEntity stamps creator / dates</td>
-            <td data-i18n="r7b">Manual, or a custom interceptor</td>
-            <td data-i18n="r7c">Listeners / Envers configuration</td></tr>
-          <tr><th data-i18n="r8">JPA annotations</th>
-            <td class="hl" data-i18n="r8a">Compatible vocabulary — @Table, @Id, @Column…</td>
-            <td data-i18n="r8b">Not supported</td>
-            <td data-i18n="r8c">Native — it is the JPA provider</td></tr>
-          <tr><th data-i18n="r9">Learning curve</th>
-            <td class="hl" data-i18n="r9a">Hours: ANSI SQL plus one save()</td>
-            <td data-i18n="r9b">Days: mapper config + dynamic SQL tags</td>
-            <td data-i18n="r9c">Weeks: session, cascade, cache, lazy loading</td></tr>
-          <tr><th data-i18n="r10">Footprint</th>
-            <td class="hl" data-i18n="r10a">~2,000 lines of source</td>
-            <td data-i18n="r10b">Moderate</td>
-            <td data-i18n="r10c">Very large</td></tr>
+          <tr><th data-i18n="r7">監査項目</th>
+            <td class="hl" data-i18n="r7a">内蔵 —— AppEntity が作成者・日時を付与</td>
+            <td data-i18n="r7b">手動、または自作インターセプター</td>
+            <td data-i18n="r7c">リスナー / Envers の設定</td></tr>
+          <tr><th data-i18n="r8">JPA アノテーション</th>
+            <td class="hl" data-i18n="r8a">互換語彙 —— @Table、@Id、@Column…</td>
+            <td data-i18n="r8b">非対応</td>
+            <td data-i18n="r8c">ネイティブ —— それ自体が JPA 実装</td></tr>
+          <tr><th data-i18n="r9">学習コスト</th>
+            <td class="hl" data-i18n="r9a">数時間:ANSI SQL と save() ひとつ</td>
+            <td data-i18n="r9b">数日:mapper 設定 + 動的 SQL タグ</td>
+            <td data-i18n="r9c">数週間:セッション、カスケード、キャッシュ、遅延ロード</td></tr>
+          <tr><th data-i18n="r10">規模</th>
+            <td class="hl" data-i18n="r10a">ソース約 2,000 行</td>
+            <td data-i18n="r10b">中程度</td>
+            <td data-i18n="r10c">非常に大きい</td></tr>
         </tbody>
       </table>
     </div>
@@ -251,9 +251,9 @@
 
 <section id="writes">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="wr.eyebrow">The decisive difference</span>
-    <h2 class="sec" data-i18n="wr.h2">The write side is where lives diverge</h2>
-    <p class="sec-lede" data-i18n="wr.lede">Same requirement in all three: insert a book, then raise its price. Watch who does the typing.</p>
+    <span class="eyebrow" data-i18n="wr.eyebrow">決定的な違い</span>
+    <h2 class="sec" data-i18n="wr.h2">人生が分かれるのは、書き込み側</h2>
+    <p class="sec-lede" data-i18n="wr.lede">要件は同じ:本を 1 冊登録し、値上げする。誰がタイプしているかを見てください。</p>
     <div class="three">
       <div class="codewin">
         <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Modelet</span><span class="lang">2 lines per write</span></div>
@@ -286,28 +286,28 @@ book.<span class="fn">setPrice</span>(<span class="kw">new</span> BigDecimal(<sp
 <span class="com">// detached instance? use merge(). outside the session? LazyInitializationException.</span></pre>
       </div>
     </div>
-    <p class="cap" data-i18n="wr.cap">A new column in MyBatis touches the table, the XML insert, the XML update and the mapper. In Modelet it touches the table and the entity field — the SQL regenerates itself.</p>
+    <p class="cap" data-i18n="wr.cap">MyBatis でカラムを 1 つ足すと、テーブル、XML の insert、XML の update、mapper に手が入ります。Modelet ならテーブルとエンティティのフィールドだけ —— SQL は自動的に生え変わります。</p>
   </div>
 </section>
 
 <section id="when" class="band">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="wh.eyebrow">Honest notes</span>
-    <h2 class="sec" data-i18n="wh.h2">When the others win</h2>
+    <span class="eyebrow" data-i18n="wh.eyebrow">率直な注記</span>
+    <h2 class="sec" data-i18n="wh.h2">他が勝つ場面</h2>
     <div class="when">
-      <div class="row"><span class="name">Hibernate</span><p data-i18n="wh.hib">A deep domain model with complex object graphs, vendor portability and second-level caching — and a team already fluent in JPA. That is Hibernate's home turf.</p></div>
-      <div class="row"><span class="name">MyBatis</span><p data-i18n="wh.mb">You need hand-tuned SQL on the write side too — bulk upserts, vendor hints, stored procedures — or its dynamic SQL tags (&lt;if&gt;, &lt;foreach&gt;) fit your query patterns.</p></div>
-      <div class="row"><span class="name">Modelet</span><p data-i18n="wh.mod">Your team is fluent in SQL and wants to ship on day one: queries stay in SQL you control, writes generate themselves, and the whole framework fits in your head.</p></div>
+      <div class="row"><span class="name">Hibernate</span><p data-i18n="wh.hib">深いドメインモデル、複雑なオブジェクトグラフ、ベンダー可搬性と二次キャッシュ —— そして JPA に習熟したチーム。そこは Hibernate のホームです。</p></div>
+      <div class="row"><span class="name">MyBatis</span><p data-i18n="wh.mb">書き込み側まで手調整の SQL が要る場合 —— バルク upsert、ベンダーヒント、ストアドプロシージャ —— あるいは動的 SQL タグ(&lt;if&gt;、&lt;foreach&gt;)がクエリパターンに合う場合。</p></div>
+      <div class="row"><span class="name">Modelet</span><p data-i18n="wh.mod">チームが SQL に習熟していて、初日から出荷したいなら:クエリは自分の SQL のまま、書き込みは自動生成、フレームワーク全体が頭に収まります。</p></div>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot-in">
-    <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">Modelet · Queries belong to SQL, writes belong to the framework</span></a>
+    <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">Modelet · クエリは SQL に、書き込みはフレームワークに</span></a>
     <div class="foot-links">
-      <a href="index.html" data-i18n="foot.home">Home</a>
-      <a href="compare-python.html" data-i18n="foot.py">Python comparison</a>
+      <a href="index.html" data-i18n="foot.home">ホーム</a>
+      <a href="compare-python.html" data-i18n="foot.py">Python 比較</a>
       <a href="https://github.com/MattAtAIEra/modelet">Repository</a>
     </div>
   </div>
@@ -315,7 +315,7 @@ book.<span class="fn">setPrice</span>(<span class="kw">new</span> BigDecimal(<sp
 
 <script>
 (function(){
-  var PAGE='compare-java.html', LANG='en';
+  var PAGE='compare-java.html', LANG='ja';
   var root=document.documentElement;
   var themeBtn=document.getElementById('themeBtn');
   var langSel=document.getElementById('langSel');
