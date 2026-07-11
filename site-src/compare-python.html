@@ -121,6 +121,19 @@
   .cap{margin-top:22px;color:var(--muted);font-size:.98rem;border-left:3px solid var(--accent);padding-left:16px;max-width:760px}
 
 
+  .cta-band{position:relative;overflow:hidden;border-top:1px solid var(--border);
+    background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+  .cta-band::before{content:"";position:absolute;inset:auto -10% -55% 20%;height:420px;
+    background:radial-gradient(55% 55% at 60% 40%,color-mix(in srgb,var(--accent) 26%,transparent),transparent 70%);
+    pointer-events:none;filter:blur(8px)}
+  .cta-in{position:relative;text-align:center;max-width:760px;margin:0 auto}
+  .cta-in .eyebrow{color:var(--accent)}
+  .cta-h{font-size:clamp(1.5rem,3.2vw,2.15rem);letter-spacing:-.02em;font-weight:800;
+    margin:14px auto 0;max-width:720px;line-height:1.32}
+  .cta-btn{display:inline-flex;align-items:center;gap:9px;margin-top:30px;font-weight:600;font-size:1.02rem;
+    padding:14px 28px;border-radius:12px;border:1px solid transparent;background:var(--grad);color:#fff;
+    box-shadow:0 6px 24px color-mix(in srgb,var(--accent) 42%,transparent)}
+  .cta-btn:hover{text-decoration:none;filter:brightness(1.06)}
   footer{border-top:1px solid var(--border);padding:44px 0;color:var(--muted);font-size:.92rem}
   .foot-in{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
   .foot-links{display:flex;gap:20px;flex-wrap:wrap}
@@ -294,6 +307,14 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
   </div>
 </section>
 
+<section id="cta" class="cta-band">
+  <div class="wrap cta-in">
+    <div class="eyebrow" data-i18n="cta.eyebrow">Get started</div>
+    <h2 class="cta-h" data-i18n="cta.msg">Let your AI enjoy the satisfaction of clean code, too — readable, maintainable, not just fewer tokens.</h2>
+    <a class="cta-btn" href="https://github.com/MattAtAIEra/modelet/tree/master/python" data-i18n="cta.btn">View the source on GitHub →</a>
+  </div>
+</section>
+
 <footer>
   <div class="wrap foot-in">
     <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">pymodelet · Queries belong to SQL, writes belong to the framework</span></a>
@@ -309,6 +330,7 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
 <script>
   var I18N = {
     en:{
+      "cta.eyebrow":"Get started","cta.msg":"Let your AI enjoy the satisfaction of clean code, too — readable, maintainable, not just fewer tokens.","cta.btn":"View the source on GitHub →",
       "meta.title":"pymodelet vs the SQL-first field — an honest comparison","meta.desc":"Every SQL-first tool in the Python ecosystem takes care of the read side. pymodelet makes even the writes effortless — SQL gives you entities you can save right back, with insert/update/delete decided automatically.",
       "nav.back":"← back","nav.field":"The field","nav.table":"Side by side","nav.writes":"The write side",
       "hero.eyebrow":"Python · Head-to-head",
@@ -340,6 +362,7 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "foot.home":"Home","foot.java":"Java comparison"
     },
     zh:{
+      "cta.eyebrow":"開始使用","cta.msg":"讓你的 AI 也可以享受乾淨程式帶來的成就感,好懂好維護,不只是省掉 token。","cta.btn":"在 GitHub 上查看原始碼 →",
       "meta.title":"pymodelet vs SQL-first 陣營 — 誠實比較","meta.desc":"Python 生態系的每一個 SQL-first 工具都照顧到了讀取面。pymodelet 連寫入都讓你輕鬆自在 —— 下 SQL 得到 entity、直接儲存、自動判斷新增修改刪除。",
       "nav.back":"← 回主頁","nav.field":"競爭者們","nav.table":"逐項對照","nav.writes":"寫入面",
       "hero.eyebrow":"Python · 正面對決",
@@ -371,6 +394,7 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "foot.home":"主頁","foot.java":"Java 比較"
     },
     ja:{
+      "cta.eyebrow":"はじめる","cta.msg":"あなたの AI にも、きれいなコードがもたらす達成感を —— 読みやすく、保守しやすく、ただトークンを節約するだけではなく。","cta.btn":"GitHub でソースを見る →",
       "meta.title":"pymodelet vs SQL-first 勢 — 率直な比較","meta.desc":"Python エコシステムの SQL-first ツールはどれも読み取り側の面倒を見てくれます。pymodelet は書き込みまで楽に —— SQL でエンティティを取得し、そのまま保存、追加・更新・削除は自動判定。",
       "nav.back":"← ホームへ","nav.field":"競合たち","nav.table":"項目別比較","nav.writes":"書き込み側",
       "hero.eyebrow":"Python · 直接対決",
@@ -402,6 +426,7 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "foot.home":"ホーム","foot.java":"Java 比較"
     },
     de:{
+      "cta.eyebrow":"Loslegen","cta.msg":"Lass auch deine KI die Befriedigung von sauberem Code erleben — lesbar, wartbar, nicht bloß weniger Tokens.","cta.btn":"Quellcode auf GitHub ansehen →",
       "meta.title":"pymodelet vs. das SQL-first-Feld — ein ehrlicher Vergleich","meta.desc":"Jedes SQL-first-Tool im Python-Ökosystem kümmert sich um die Leseseite. Mit pymodelet werden selbst die Schreibvorgänge mühelos — SQL liefert Entitäten, die du direkt zurückspeicherst.",
       "nav.back":"← zurück","nav.field":"Das Feld","nav.table":"Im Vergleich","nav.writes":"Die Schreibseite",
       "hero.eyebrow":"Python · Direktvergleich",
@@ -433,6 +458,7 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "foot.home":"Startseite","foot.java":"Java-Vergleich"
     },
     ko:{
+      "cta.eyebrow":"시작하기","cta.msg":"당신의 AI도 깔끔한 코드가 주는 성취감을 누리게 하세요 —— 읽기 쉽고, 유지보수하기 쉽게, 단지 토큰을 아끼는 것을 넘어.","cta.btn":"GitHub에서 소스 보기 →",
       "meta.title":"pymodelet vs SQL-first 진영 — 정직한 비교","meta.desc":"Python 생태계의 모든 SQL-first 도구는 읽기 측을 챙깁니다. pymodelet은 쓰기까지 편안하게 —— SQL로 엔티티를 받고 그대로 저장하면 추가·수정·삭제 자동 판별.",
       "nav.back":"← 홈으로","nav.field":"경쟁자들","nav.table":"항목별 비교","nav.writes":"쓰기 측",
       "hero.eyebrow":"Python · 정면 비교",
