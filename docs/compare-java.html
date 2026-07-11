@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modelet vs MyBatis & Hibernate</title>
+<meta name="description" content="An honest comparison: Hibernate hides all your SQL, MyBatis makes you write all of it, Modelet splits the work where it belongs.">
+<style>
+  :root{
+    --bg:#fbfaf8; --surface:#ffffff; --surface-2:#f4f3ef;
+    --text:#1a1a2e; --muted:#5c5c72; --border:#e7e5df;
+    --primary:#4f46e5; --accent:#7c3aed; --heritage:#c2620a;
+    --code-bg:#f6f5f1; --code-text:#2a2a3a;
+    --kw:#7c3aed; --str:#0f766e; --com:#94929e; --fn:#b4530a;
+    --grad:linear-gradient(120deg,#4f46e5,#7c3aed 55%,#c026d3);
+    --maxw:1080px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0c0c12; --surface:#14141d; --surface-2:#181824;
+      --text:#e9e9f2; --muted:#a0a0ba; --border:#26263440;
+      --primary:#818cf8; --accent:#a78bfa; --heritage:#fbbf24;
+      --code-bg:#111119; --code-text:#d6d6e6;
+      --kw:#c4b5fd; --str:#5eead4; --com:#6b6b82; --fn:#fdba74;
+      --grad:linear-gradient(120deg,#818cf8,#a78bfa 55%,#e879f9);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#fbfaf8; --surface:#ffffff; --surface-2:#f4f3ef;
+    --text:#1a1a2e; --muted:#5c5c72; --border:#e7e5df;
+    --primary:#4f46e5; --accent:#7c3aed; --heritage:#c2620a;
+    --code-bg:#f6f5f1; --code-text:#2a2a3a;
+    --kw:#7c3aed; --str:#0f766e; --com:#94929e; --fn:#b4530a;
+    --grad:linear-gradient(120deg,#4f46e5,#7c3aed 55%,#c026d3);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0c0c12; --surface:#14141d; --surface-2:#181824;
+    --text:#e9e9f2; --muted:#a0a0ba; --border:#26263440;
+    --primary:#818cf8; --accent:#a78bfa; --heritage:#fbbf24;
+    --code-bg:#111119; --code-text:#d6d6e6;
+    --kw:#c4b5fd; --str:#5eead4; --com:#6b6b82; --fn:#fdba74;
+    --grad:linear-gradient(120deg,#818cf8,#a78bfa 55%,#e879f9);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:system-ui,-apple-system,"Segoe UI","Noto Sans","Noto Sans JP","Noto Sans KR",sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased}
+  code,pre{font-family:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace}
+  a{color:var(--primary);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);
+    background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--border)}
+  .nav-in{display:flex;align-items:center;gap:16px;height:60px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;color:var(--text)}
+  .brand:hover{text-decoration:none}
+  .brand .dot{width:22px;height:22px;border-radius:7px;background:var(--grad);
+    box-shadow:0 2px 10px color-mix(in srgb,var(--accent) 45%,transparent)}
+  .brand .back{color:var(--muted);font-weight:500;font-size:.9rem}
+  .nav-links{margin-left:auto;display:flex;gap:20px;align-items:center}
+  .nav-links a{color:var(--muted);font-size:.92rem;font-weight:500}
+  .nav-links a:hover{color:var(--text);text-decoration:none}
+  .ctrl{display:flex;gap:8px;align-items:center}
+  .lang-sel{appearance:none;cursor:pointer;background:var(--surface);border:1px solid var(--border);
+    color:var(--text);border-radius:8px;padding:7px 30px 7px 12px;font-size:.86rem;font-weight:600;
+    background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+    background-position:calc(100% - 15px) 52%,calc(100% - 10px) 52%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+  .theme-btn{cursor:pointer;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+    border-radius:8px;width:36px;height:36px;font-size:1rem;display:grid;place-items:center}
+  @media(max-width:780px){.nav-links a.hide-sm{display:none}}
+
+  header.hero{position:relative;overflow:hidden;padding:76px 0 64px;border-bottom:1px solid var(--border)}
+  .hero::before{content:"";position:absolute;inset:-40% 0 auto -10%;height:480px;
+    background:radial-gradient(60% 60% at 30% 20%,color-mix(in srgb,var(--accent) 20%,transparent),transparent 70%);
+    pointer-events:none;filter:blur(8px)}
+  .eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  h1.title{font-size:clamp(2rem,5vw,3.3rem);line-height:1.08;margin:16px 0 0;letter-spacing:-.03em;font-weight:800}
+  .title .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tagline{margin:18px 0 0;font-size:clamp(1.05rem,2.2vw,1.3rem);font-weight:600;max-width:820px}
+  .lede{margin:18px 0 0;max-width:700px;color:var(--muted);font-size:1.04rem}
+
+  section{padding:72px 0}
+  .band{background:var(--surface-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  h2.sec{font-size:clamp(1.6rem,3.2vw,2.15rem);letter-spacing:-.02em;margin:12px 0 0;font-weight:800}
+  .sec-lede{color:var(--muted);max-width:680px;margin:14px 0 0;font-size:1.04rem}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:42px}
+  @media(max-width:860px){.cards{grid-template-columns:1fr}}
+  .pcard{border:1px solid var(--border);border-radius:16px;padding:26px;background:var(--surface)}
+  .pcard.win{border-color:color-mix(in srgb,var(--accent) 45%,transparent);
+    background:color-mix(in srgb,var(--accent) 6%,var(--surface));position:relative}
+  .pcard h3{margin:0 0 8px;font-size:1.1rem}
+  .pcard .who{font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  .pcard.win .who{color:var(--accent)}
+  .pcard p{margin:8px 0 0;color:var(--muted);font-size:.95rem}
+
+  .tblwrap{overflow-x:auto;margin-top:42px;border:1px solid var(--border);border-radius:14px;background:var(--surface)}
+  table.cmp{border-collapse:collapse;width:100%;min-width:820px;font-size:.9rem}
+  .cmp th,.cmp td{padding:13px 16px;border-bottom:1px solid var(--border);vertical-align:top;text-align:left}
+  .cmp thead th{background:var(--surface-2);font-size:.84rem;letter-spacing:.02em}
+  .cmp tbody th{font-weight:600;color:var(--muted);font-size:.86rem;min-width:150px}
+  .cmp tr:last-child th,.cmp tr:last-child td{border-bottom:none}
+  .cmp td.hl{background:color-mix(in srgb,var(--accent) 7%,transparent);font-weight:600}
+  .cmp thead th.hl{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+
+  .codewin{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--code-bg)}
+  .codewin .bar{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--border);
+    background:color-mix(in srgb,var(--surface) 60%,transparent)}
+  .codewin .bar .lbl{margin-left:6px;font-size:.82rem;font-weight:600;color:var(--muted)}
+  .codewin .bar .lang{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--accent);
+    background:color-mix(in srgb,var(--accent) 12%,transparent);padding:3px 9px;border-radius:6px}
+  .dots{display:flex;gap:6px}.dots i{width:11px;height:11px;border-radius:50%;display:block;opacity:.5}
+  .dots i:nth-child(1){background:#ef4444}.dots i:nth-child(2){background:#eab308}.dots i:nth-child(3){background:#22c55e}
+  pre.code{margin:0;padding:18px;overflow-x:auto;font-size:.83rem;line-height:1.6;color:var(--code-text)}
+  .kw{color:var(--kw)}.str{color:var(--str)}.com{color:var(--com);font-style:italic}.fn{color:var(--fn)}
+  .three{display:grid;grid-template-columns:1fr;gap:20px;margin-top:38px}
+  .cap{margin-top:22px;color:var(--muted);font-size:.98rem;border-left:3px solid var(--accent);padding-left:16px;max-width:760px}
+
+  .when{display:grid;grid-template-columns:1fr;gap:14px;margin-top:38px;max-width:860px}
+  .when .row{border:1px solid var(--border);border-radius:12px;padding:18px 22px;background:var(--surface);
+    display:grid;grid-template-columns:130px 1fr;gap:16px;align-items:start}
+  @media(max-width:560px){.when .row{grid-template-columns:1fr}}
+  .when .name{font-weight:700;font-size:.95rem}
+  .when p{margin:0;color:var(--muted);font-size:.95rem}
+
+  footer{border-top:1px solid var(--border);padding:44px 0;color:var(--muted);font-size:.92rem}
+  .foot-in{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+  .foot-links{display:flex;gap:20px;flex-wrap:wrap}
+  .foot-links a{color:var(--muted)}.foot-links a:hover{color:var(--text)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html"><span class="dot"></span>Modelet <span class="back" data-i18n="nav.back">← back</span></a>
+    <div class="nav-links">
+      <a href="#answers" class="hide-sm" data-i18n="nav.answers">Three answers</a>
+      <a href="#table" class="hide-sm" data-i18n="nav.table">Side by side</a>
+      <a href="#writes" data-i18n="nav.writes">The write side</a>
+      <a href="https://github.com/MattAtAIEra/modelet">GitHub</a>
+    </div>
+    <div class="ctrl">
+      <select class="lang-sel" id="langSel" aria-label="Language">
+        <option value="en">English</option>
+        <option value="zh">繁體中文</option>
+        <option value="ja">日本語</option>
+        <option value="de">Deutsch</option>
+        <option value="ko">한국어</option>
+      </select>
+      <button class="theme-btn" id="themeBtn" aria-label="Theme">◐</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="hero.eyebrow">Java · Head-to-head</span>
+    <h1 class="title" data-i18n-html="hero.h1"><span class="grad">Modelet</span> vs MyBatis &amp; Hibernate</h1>
+    <p class="tagline" data-i18n="hero.tagline">Hibernate hides all your SQL. MyBatis makes you write all of it. Modelet splits the work where it belongs.</p>
+    <p class="lede" data-i18n="hero.lede">All three answer the same question — how does an object meet a row? They just disagree about who writes the SQL. Here is the honest comparison.</p>
+  </div>
+</header>
+
+<section id="answers">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="ans.eyebrow">Three philosophies</span>
+    <h2 class="sec" data-i18n="ans.h2">Who writes your SQL?</h2>
+    <div class="cards">
+      <div class="pcard">
+        <div class="who">Hibernate</div>
+        <h3 data-i18n="ans.hib.t">Hides all SQL</h3>
+        <p data-i18n="ans.hib.d">You describe mappings and relations; the framework derives SQL at flush time. Powerful for complex domain graphs — at the price of HQL/JPQL, session lifecycles, lazy proxies and dirty-checking surprises.</p>
+      </div>
+      <div class="pcard">
+        <div class="who">MyBatis</div>
+        <h3 data-i18n="ans.mb.t">Makes you write all SQL</h3>
+        <p data-i18n="ans.mb.d">Full control: every SELECT — and every INSERT, UPDATE, DELETE — is written by hand in mapper XML or annotations, plus a resultMap per shape. Honest, but the write side is pure toil.</p>
+      </div>
+      <div class="pcard win">
+        <div class="who">Modelet</div>
+        <h3 data-i18n="ans.mod.t">You write only the queries</h3>
+        <p data-i18n="ans.mod.d">SELECTs are plain ANSI SQL in your code. The write side is generated from the entity's TxnMode state — key written back, audit fields stamped. ~2,000 lines; read it in an afternoon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="table" class="band">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="tbl.eyebrow">Side by side</span>
+    <h2 class="sec" data-i18n="tbl.h2">The comparison, dimension by dimension</h2>
+    <div class="tblwrap">
+      <table class="cmp">
+        <thead>
+          <tr><th></th><th class="hl">Modelet</th><th>MyBatis</th><th>Hibernate</th></tr>
+        </thead>
+        <tbody>
+          <tr><th data-i18n="r1">Query language</th>
+            <td class="hl" data-i18n="r1a">ANSI SQL, right in your code</td>
+            <td data-i18n="r1b">SQL in mapper XML / annotations</td>
+            <td data-i18n="r1c">HQL / JPQL / Criteria API</td></tr>
+          <tr><th data-i18n="r2">INSERT / UPDATE / DELETE</th>
+            <td class="hl" data-i18n="r2a">Generated from the entity — saveOrUpdate via TxnMode</td>
+            <td data-i18n="r2b">Hand-written, every statement, every column</td>
+            <td data-i18n="r2c">Generated by dirty checking at flush time</td></tr>
+          <tr><th data-i18n="r3">Mapping configuration</th>
+            <td class="hl" data-i18n="r3a">Convention + optional JPA annotations</td>
+            <td data-i18n="r3b">resultMap per result shape</td>
+            <td data-i18n="r3c">Full entity &amp; relation mappings</td></tr>
+          <tr><th data-i18n="r4">Runtime model</th>
+            <td class="hl" data-i18n="r4a">Stateless — no session, no proxies</td>
+            <td data-i18n="r4b">Thin SqlSession</td>
+            <td data-i18n="r4c">Session, L1/L2 cache, lazy proxies</td></tr>
+          <tr><th data-i18n="r5">What you see is what runs</th>
+            <td class="hl" data-i18n="r5a">Yes — the SQL is in your code</td>
+            <td data-i18n="r5b">Mostly — dynamic SQL assembled from tags</td>
+            <td data-i18n="r5c">No — SQL derived at flush; N+1 surprises</td></tr>
+          <tr><th data-i18n="r6">Pagination</th>
+            <td class="hl" data-i18n="r6a">Built-in PageContainer; LIMIT/OFFSET pushed to the DB, O(page) memory</td>
+            <td data-i18n="r6b">RowBounds pages in memory; physical paging needs a plugin</td>
+            <td data-i18n="r6c">setFirstResult / setMaxResults</td></tr>
+          <tr><th data-i18n="r7">Audit fields</th>
+            <td class="hl" data-i18n="r7a">Built-in — AppEntity stamps creator / dates</td>
+            <td data-i18n="r7b">Manual, or a custom interceptor</td>
+            <td data-i18n="r7c">Listeners / Envers configuration</td></tr>
+          <tr><th data-i18n="r8">JPA annotations</th>
+            <td class="hl" data-i18n="r8a">Compatible vocabulary — @Table, @Id, @Column…</td>
+            <td data-i18n="r8b">Not supported</td>
+            <td data-i18n="r8c">Native — it is the JPA provider</td></tr>
+          <tr><th data-i18n="r9">Learning curve</th>
+            <td class="hl" data-i18n="r9a">Hours: ANSI SQL plus one save()</td>
+            <td data-i18n="r9b">Days: mapper config + dynamic SQL tags</td>
+            <td data-i18n="r9c">Weeks: session, cascade, cache, lazy loading</td></tr>
+          <tr><th data-i18n="r10">Footprint</th>
+            <td class="hl" data-i18n="r10a">~2,000 lines of source</td>
+            <td data-i18n="r10b">Moderate</td>
+            <td data-i18n="r10c">Very large</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="writes">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="wr.eyebrow">The decisive difference</span>
+    <h2 class="sec" data-i18n="wr.h2">The write side is where lives diverge</h2>
+    <p class="sec-lede" data-i18n="wr.lede">Same requirement in all three: insert a book, then raise its price. Watch who does the typing.</p>
+    <div class="three">
+      <div class="codewin">
+        <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Modelet</span><span class="lang">2 lines per write</span></div>
+<pre class="code">Book book = <span class="kw">new</span> <span class="fn">Book</span>();
+book.<span class="fn">setTitle</span>(<span class="str">"Modelet in Action"</span>);
+model.<span class="fn">save</span>(book);                  <span class="com">// INSERT — id written back, audit stamped</span>
+
+book.<span class="fn">setPrice</span>(<span class="kw">new</span> BigDecimal(<span class="str">"499"</span>));
+model.<span class="fn">save</span>(book);                  <span class="com">// UPDATE — same call, TxnMode decides</span></pre>
+      </div>
+      <div class="codewin">
+        <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">MyBatis</span><span class="lang">every column, by hand</span></div>
+<pre class="code"><span class="com">&lt;!-- BookMapper.xml — you write and maintain every statement --&gt;</span>
+<span class="kw">&lt;insert</span> id=<span class="str">"insertBook"</span> useGeneratedKeys=<span class="str">"true"</span> keyProperty=<span class="str">"id"</span><span class="kw">&gt;</span>
+  INSERT INTO book (bookName, price) VALUES (#{title}, #{price})
+<span class="kw">&lt;/insert&gt;</span>
+<span class="kw">&lt;update</span> id=<span class="str">"updateBook"</span><span class="kw">&gt;</span>
+  UPDATE book SET bookName = #{title}, price = #{price} WHERE id = #{id}
+<span class="kw">&lt;/update&gt;</span>
+
+<span class="com">// Java — plus a mapper interface to keep in sync</span>
+bookMapper.<span class="fn">insertBook</span>(book);
+bookMapper.<span class="fn">updateBook</span>(book);</pre>
+      </div>
+      <div class="codewin">
+        <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Hibernate</span><span class="lang">state machine you must learn</span></div>
+<pre class="code">session.<span class="fn">persist</span>(book);             <span class="com">// transient → managed</span>
+book.<span class="fn">setPrice</span>(<span class="kw">new</span> BigDecimal(<span class="str">"499"</span>));
+<span class="com">// no save call — dirty checking emits an UPDATE at flush… eventually.</span>
+<span class="com">// detached instance? use merge(). outside the session? LazyInitializationException.</span></pre>
+      </div>
+    </div>
+    <p class="cap" data-i18n="wr.cap">A new column in MyBatis touches the table, the XML insert, the XML update and the mapper. In Modelet it touches the table and the entity field — the SQL regenerates itself.</p>
+  </div>
+</section>
+
+<section id="when" class="band">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="wh.eyebrow">Honest notes</span>
+    <h2 class="sec" data-i18n="wh.h2">When the others win</h2>
+    <div class="when">
+      <div class="row"><span class="name">Hibernate</span><p data-i18n="wh.hib">A deep domain model with complex object graphs, vendor portability and second-level caching — and a team already fluent in JPA. That is Hibernate's home turf.</p></div>
+      <div class="row"><span class="name">MyBatis</span><p data-i18n="wh.mb">You need hand-tuned SQL on the write side too — bulk upserts, vendor hints, stored procedures — or its dynamic SQL tags (&lt;if&gt;, &lt;foreach&gt;) fit your query patterns.</p></div>
+      <div class="row"><span class="name">Modelet</span><p data-i18n="wh.mod">Your team is fluent in SQL and wants to ship on day one: queries stay in SQL you control, writes generate themselves, and the whole framework fits in your head.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <a class="brand" href="index.html"><span class="dot"></span><span data-i18n="foot.tagline">Modelet · Queries belong to SQL, writes belong to the framework</span></a>
+    <div class="foot-links">
+      <a href="index.html" data-i18n="foot.home">Home</a>
+      <a href="compare-python.html" data-i18n="foot.py">Python comparison</a>
+      <a href="https://github.com/MattAtAIEra/modelet">Repository</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var I18N = {
+    en:{
+      "nav.back":"← back","nav.answers":"Three answers","nav.table":"Side by side","nav.writes":"The write side",
+      "hero.eyebrow":"Java · Head-to-head",
+      "hero.h1":"<span class=\"grad\">Modelet</span> vs MyBatis &amp; Hibernate",
+      "hero.tagline":"Hibernate hides all your SQL. MyBatis makes you write all of it. Modelet splits the work where it belongs.",
+      "hero.lede":"All three answer the same question — how does an object meet a row? They just disagree about who writes the SQL. Here is the honest comparison.",
+      "ans.eyebrow":"Three philosophies","ans.h2":"Who writes your SQL?",
+      "ans.hib.t":"Hides all SQL","ans.hib.d":"You describe mappings and relations; the framework derives SQL at flush time. Powerful for complex domain graphs — at the price of HQL/JPQL, session lifecycles, lazy proxies and dirty-checking surprises.",
+      "ans.mb.t":"Makes you write all SQL","ans.mb.d":"Full control: every SELECT — and every INSERT, UPDATE, DELETE — is written by hand in mapper XML or annotations, plus a resultMap per shape. Honest, but the write side is pure toil.",
+      "ans.mod.t":"You write only the queries","ans.mod.d":"SELECTs are plain ANSI SQL in your code. The write side is generated from the entity's TxnMode state — key written back, audit fields stamped. ~2,000 lines; read it in an afternoon.",
+      "tbl.eyebrow":"Side by side","tbl.h2":"The comparison, dimension by dimension",
+      "r1":"Query language","r1a":"ANSI SQL, right in your code","r1b":"SQL in mapper XML / annotations","r1c":"HQL / JPQL / Criteria API",
+      "r2":"INSERT / UPDATE / DELETE","r2a":"Generated from the entity — saveOrUpdate via TxnMode","r2b":"Hand-written, every statement, every column","r2c":"Generated by dirty checking at flush time",
+      "r3":"Mapping configuration","r3a":"Convention + optional JPA annotations","r3b":"resultMap per result shape","r3c":"Full entity & relation mappings",
+      "r4":"Runtime model","r4a":"Stateless — no session, no proxies","r4b":"Thin SqlSession","r4c":"Session, L1/L2 cache, lazy proxies",
+      "r5":"What you see is what runs","r5a":"Yes — the SQL is in your code","r5b":"Mostly — dynamic SQL assembled from tags","r5c":"No — SQL derived at flush; N+1 surprises",
+      "r6":"Pagination","r6a":"Built-in PageContainer; LIMIT/OFFSET pushed to the DB, O(page) memory","r6b":"RowBounds pages in memory; physical paging needs a plugin","r6c":"setFirstResult / setMaxResults",
+      "r7":"Audit fields","r7a":"Built-in — AppEntity stamps creator / dates","r7b":"Manual, or a custom interceptor","r7c":"Listeners / Envers configuration",
+      "r8":"JPA annotations","r8a":"Compatible vocabulary — @Table, @Id, @Column…","r8b":"Not supported","r8c":"Native — it is the JPA provider",
+      "r9":"Learning curve","r9a":"Hours: ANSI SQL plus one save()","r9b":"Days: mapper config + dynamic SQL tags","r9c":"Weeks: session, cascade, cache, lazy loading",
+      "r10":"Footprint","r10a":"~2,000 lines of source","r10b":"Moderate","r10c":"Very large",
+      "wr.eyebrow":"The decisive difference","wr.h2":"The write side is where lives diverge",
+      "wr.lede":"Same requirement in all three: insert a book, then raise its price. Watch who does the typing.",
+      "wr.cap":"A new column in MyBatis touches the table, the XML insert, the XML update and the mapper. In Modelet it touches the table and the entity field — the SQL regenerates itself.",
+      "wh.eyebrow":"Honest notes","wh.h2":"When the others win",
+      "wh.hib":"A deep domain model with complex object graphs, vendor portability and second-level caching — and a team already fluent in JPA. That is Hibernate's home turf.",
+      "wh.mb":"You need hand-tuned SQL on the write side too — bulk upserts, vendor hints, stored procedures — or its dynamic SQL tags (<if>, <foreach>) fit your query patterns.",
+      "wh.mod":"Your team is fluent in SQL and wants to ship on day one: queries stay in SQL you control, writes generate themselves, and the whole framework fits in your head.",
+      "foot.tagline":"Modelet · Queries belong to SQL, writes belong to the framework",
+      "foot.home":"Home","foot.py":"Python comparison"
+    },
+    zh:{
+      "nav.back":"← 回主頁","nav.answers":"三種答案","nav.table":"逐項對照","nav.writes":"寫入面",
+      "hero.eyebrow":"Java · 正面對決",
+      "hero.h1":"<span class=\"grad\">Modelet</span> vs MyBatis 與 Hibernate",
+      "hero.tagline":"Hibernate 把 SQL 全藏起來,MyBatis 要你把 SQL 全寫完。Modelet 把工作切在該切的地方。",
+      "hero.lede":"三者回答的是同一個問題 —— 物件如何對上資料列?分歧只在:SQL 該由誰來寫。以下是誠實的比較。",
+      "ans.eyebrow":"三種哲學","ans.h2":"你的 SQL,誰來寫?",
+      "ans.hib.t":"把 SQL 全部藏起來","ans.hib.d":"你描述 mapping 與關聯,框架在 flush 時推導出 SQL。對複雜的領域物件圖很強大 —— 代價是 HQL/JPQL、Session 生命週期、lazy proxy 與 dirty checking 的意外。",
+      "ans.mb.t":"要你把 SQL 全部寫完","ans.mb.d":"完全掌控:每一句 SELECT —— 連同每一句 INSERT、UPDATE、DELETE —— 都要在 mapper XML 或註解裡手寫,外加每種結果形狀一份 resultMap。誠實,但寫入面純屬苦工。",
+      "ans.mod.t":"你只寫查詢","ans.mod.d":"SELECT 就是程式碼裡的 ANSI SQL。寫入面由 entity 的 TxnMode 狀態自動產生 —— 主鍵回填、稽核欄位自動蓋上。約 2,000 行,一個下午讀得完。",
+      "tbl.eyebrow":"逐項對照","tbl.h2":"一個維度一個維度地比",
+      "r1":"查詢語言","r1a":"ANSI SQL,直接寫在程式碼裡","r1b":"SQL 寫在 mapper XML / 註解","r1c":"HQL / JPQL / Criteria API",
+      "r2":"INSERT / UPDATE / DELETE","r2a":"由 entity 自動產生 —— TxnMode 驅動的 saveOrUpdate","r2b":"手寫,每一句、每一欄","r2c":"flush 時由 dirty checking 產生",
+      "r3":"Mapping 設定","r3a":"慣例優先 + 選用 JPA 註解","r3b":"每種結果形狀一份 resultMap","r3c":"完整的 entity 與關聯 mapping",
+      "r4":"執行期模型","r4a":"無狀態 —— 沒有 session、沒有 proxy","r4b":"輕薄的 SqlSession","r4c":"Session、一二級快取、lazy proxy",
+      "r5":"所見即所執行","r5a":"是 —— SQL 就在你的程式碼裡","r5b":"大致是 —— 動態 SQL 由標籤組出","r5c":"否 —— SQL 在 flush 時推導;N+1 突襲",
+      "r6":"分頁","r6a":"內建 PageContainer;LIMIT/OFFSET 下推資料庫,記憶體 O(頁)","r6b":"RowBounds 在記憶體分頁;實體分頁要裝外掛","r6c":"setFirstResult / setMaxResults",
+      "r7":"稽核欄位","r7a":"內建 —— AppEntity 自動蓋 creator / 日期","r7b":"手動,或自寫 interceptor","r7c":"Listener / Envers 設定",
+      "r8":"JPA 註解","r8a":"相容詞彙 —— @Table、@Id、@Column…","r8b":"不支援","r8c":"原生 —— 它就是 JPA 實作",
+      "r9":"學習曲線","r9a":"數小時:ANSI SQL 加一個 save()","r9b":"數天:mapper 設定 + 動態 SQL 標籤","r9c":"數週:session、cascade、快取、lazy loading",
+      "r10":"程式碼規模","r10a":"約 2,000 行原始碼","r10b":"中等","r10c":"非常龐大",
+      "wr.eyebrow":"決定性差異","wr.h2":"寫入面,是人生分歧的地方",
+      "wr.lede":"同一個需求:新增一本書,然後調價。看看是誰在打字。",
+      "wr.cap":"在 MyBatis 加一個欄位,要動資料表、XML 的 insert、XML 的 update、還有 mapper。在 Modelet 只要動資料表和 entity 欄位 —— SQL 自己重新長出來。",
+      "wh.eyebrow":"誠實備註","wh.h2":"什麼時候該選別人",
+      "wh.hib":"深層領域模型、複雜物件圖、跨資料庫可攜性與二級快取 —— 而且團隊已經熟 JPA。那是 Hibernate 的主場。",
+      "wh.mb":"連寫入面都需要手工調校的 SQL —— 批次 upsert、廠商 hint、預存程序 —— 或者它的動態 SQL 標籤(<if>、<foreach>)正好貼合你的查詢模式。",
+      "wh.mod":"團隊熟 SQL、想第一天就交付:查詢留在你掌控的 SQL 裡,寫入自動產生,整個框架裝得進腦袋。",
+      "foot.tagline":"Modelet · 查詢交給 SQL,寫入交給框架",
+      "foot.home":"主頁","foot.py":"Python 比較"
+    },
+    ja:{
+      "nav.back":"← ホームへ","nav.answers":"三つの答え","nav.table":"項目別比較","nav.writes":"書き込み側",
+      "hero.eyebrow":"Java · 直接対決",
+      "hero.h1":"<span class=\"grad\">Modelet</span> vs MyBatis &amp; Hibernate",
+      "hero.tagline":"Hibernate は SQL をすべて隠し、MyBatis は SQL をすべて書かせる。Modelet は仕事を然るべき場所で分割します。",
+      "hero.lede":"三者が答えるのは同じ問い —— オブジェクトはどう行と出会うのか。違いはただ一つ、SQL を誰が書くか。以下、率直な比較です。",
+      "ans.eyebrow":"三つの哲学","ans.h2":"あなたの SQL、誰が書く?",
+      "ans.hib.t":"SQL をすべて隠す","ans.hib.d":"マッピングと関連を記述すれば、フレームワークが flush 時に SQL を導出します。複雑なドメイングラフには強力 —— その代償は HQL/JPQL、セッションのライフサイクル、lazy プロキシ、dirty checking の不意打ちです。",
+      "ans.mb.t":"SQL をすべて書かせる","ans.mb.d":"完全な制御:すべての SELECT も —— そしてすべての INSERT、UPDATE、DELETE も —— mapper XML かアノテーションに手書きし、結果の形ごとに resultMap を用意します。誠実ですが、書き込み側は純然たる苦役です。",
+      "ans.mod.t":"書くのはクエリだけ","ans.mod.d":"SELECT はコード内の素の ANSI SQL。書き込み側はエンティティの TxnMode 状態から生成され、主キーは書き戻され、監査項目も自動付与。約 2,000 行、半日で読み切れます。",
+      "tbl.eyebrow":"項目別比較","tbl.h2":"観点ごとに、並べて比べる",
+      "r1":"クエリ言語","r1a":"ANSI SQL をコードに直書き","r1b":"mapper XML / アノテーション内の SQL","r1c":"HQL / JPQL / Criteria API",
+      "r2":"INSERT / UPDATE / DELETE","r2a":"エンティティから自動生成 —— TxnMode による saveOrUpdate","r2b":"手書き。全文・全カラム","r2c":"flush 時に dirty checking が生成",
+      "r3":"マッピング設定","r3a":"規約 + 任意の JPA アノテーション","r3b":"結果の形ごとに resultMap","r3c":"エンティティと関連の完全なマッピング",
+      "r4":"実行時モデル","r4a":"ステートレス —— セッションもプロキシもなし","r4b":"薄い SqlSession","r4c":"Session、L1/L2 キャッシュ、lazy プロキシ",
+      "r5":"見たままが実行される","r5a":"はい —— SQL はコードの中に","r5b":"概ね —— 動的 SQL はタグから組み立て","r5c":"いいえ —— SQL は flush 時に導出。N+1 の奇襲",
+      "r6":"ページング","r6a":"内蔵 PageContainer。LIMIT/OFFSET を DB に委譲、メモリは O(ページ)","r6b":"RowBounds はメモリ内ページング。物理ページングはプラグイン頼み","r6c":"setFirstResult / setMaxResults",
+      "r7":"監査項目","r7a":"内蔵 —— AppEntity が作成者・日時を付与","r7b":"手動、または自作インターセプター","r7c":"リスナー / Envers の設定",
+      "r8":"JPA アノテーション","r8a":"互換語彙 —— @Table、@Id、@Column…","r8b":"非対応","r8c":"ネイティブ —— それ自体が JPA 実装",
+      "r9":"学習コスト","r9a":"数時間:ANSI SQL と save() ひとつ","r9b":"数日:mapper 設定 + 動的 SQL タグ","r9c":"数週間:セッション、カスケード、キャッシュ、遅延ロード",
+      "r10":"規模","r10a":"ソース約 2,000 行","r10b":"中程度","r10c":"非常に大きい",
+      "wr.eyebrow":"決定的な違い","wr.h2":"人生が分かれるのは、書き込み側",
+      "wr.lede":"要件は同じ:本を 1 冊登録し、値上げする。誰がタイプしているかを見てください。",
+      "wr.cap":"MyBatis でカラムを 1 つ足すと、テーブル、XML の insert、XML の update、mapper に手が入ります。Modelet ならテーブルとエンティティのフィールドだけ —— SQL は自動的に生え変わります。",
+      "wh.eyebrow":"率直な注記","wh.h2":"他が勝つ場面",
+      "wh.hib":"深いドメインモデル、複雑なオブジェクトグラフ、ベンダー可搬性と二次キャッシュ —— そして JPA に習熟したチーム。そこは Hibernate のホームです。",
+      "wh.mb":"書き込み側まで手調整の SQL が要る場合 —— バルク upsert、ベンダーヒント、ストアドプロシージャ —— あるいは動的 SQL タグ(<if>、<foreach>)がクエリパターンに合う場合。",
+      "wh.mod":"チームが SQL に習熟していて、初日から出荷したいなら:クエリは自分の SQL のまま、書き込みは自動生成、フレームワーク全体が頭に収まります。",
+      "foot.tagline":"Modelet · クエリは SQL に、書き込みはフレームワークに",
+      "foot.home":"ホーム","foot.py":"Python 比較"
+    },
+    de:{
+      "nav.back":"← zurück","nav.answers":"Drei Antworten","nav.table":"Im Vergleich","nav.writes":"Die Schreibseite",
+      "hero.eyebrow":"Java · Direktvergleich",
+      "hero.h1":"<span class=\"grad\">Modelet</span> vs. MyBatis &amp; Hibernate",
+      "hero.tagline":"Hibernate versteckt dein ganzes SQL. MyBatis lässt dich alles selbst schreiben. Modelet teilt die Arbeit dort, wo sie hingehört.",
+      "hero.lede":"Alle drei beantworten dieselbe Frage — wie trifft ein Objekt auf eine Zeile? Sie sind sich nur uneins, wer das SQL schreibt. Hier der ehrliche Vergleich.",
+      "ans.eyebrow":"Drei Philosophien","ans.h2":"Wer schreibt dein SQL?",
+      "ans.hib.t":"Versteckt alles SQL","ans.hib.d":"Du beschreibst Mappings und Relationen; das Framework leitet SQL beim Flush ab. Stark für komplexe Domänengraphen — zum Preis von HQL/JPQL, Session-Lebenszyklen, Lazy-Proxies und Dirty-Checking-Überraschungen.",
+      "ans.mb.t":"Lässt dich alles SQL schreiben","ans.mb.d":"Volle Kontrolle: jedes SELECT — und jedes INSERT, UPDATE, DELETE — wird von Hand in Mapper-XML oder Annotationen geschrieben, plus eine resultMap pro Ergebnisform. Ehrlich, aber die Schreibseite ist reine Fron.",
+      "ans.mod.t":"Du schreibst nur die Abfragen","ans.mod.d":"SELECTs sind pures ANSI-SQL in deinem Code. Die Schreibseite wird aus dem TxnMode-Zustand der Entität generiert — Schlüssel zurückgeschrieben, Audit-Felder gesetzt. ~2.000 Zeilen; an einem Nachmittag gelesen.",
+      "tbl.eyebrow":"Im Vergleich","tbl.h2":"Der Vergleich, Dimension für Dimension",
+      "r1":"Abfragesprache","r1a":"ANSI-SQL, direkt im Code","r1b":"SQL in Mapper-XML / Annotationen","r1c":"HQL / JPQL / Criteria API",
+      "r2":"INSERT / UPDATE / DELETE","r2a":"Aus der Entität generiert — saveOrUpdate per TxnMode","r2b":"Handgeschrieben, jedes Statement, jede Spalte","r2c":"Per Dirty Checking beim Flush generiert",
+      "r3":"Mapping-Konfiguration","r3a":"Konvention + optionale JPA-Annotationen","r3b":"resultMap pro Ergebnisform","r3c":"Volle Entitäts- & Relationsmappings",
+      "r4":"Laufzeitmodell","r4a":"Zustandslos — keine Session, keine Proxies","r4b":"Dünne SqlSession","r4c":"Session, L1/L2-Cache, Lazy-Proxies",
+      "r5":"Was du siehst, läuft auch","r5a":"Ja — das SQL steht in deinem Code","r5b":"Meist — dynamisches SQL aus Tags montiert","r5c":"Nein — SQL beim Flush abgeleitet; N+1-Überraschungen",
+      "r6":"Paginierung","r6a":"Eingebauter PageContainer; LIMIT/OFFSET in die DB verlagert, O(Seite) Speicher","r6b":"RowBounds paginiert im Speicher; physisch nur per Plugin","r6c":"setFirstResult / setMaxResults",
+      "r7":"Audit-Felder","r7a":"Eingebaut — AppEntity stempelt Ersteller / Daten","r7b":"Manuell oder eigener Interceptor","r7c":"Listener- / Envers-Konfiguration",
+      "r8":"JPA-Annotationen","r8a":"Kompatibles Vokabular — @Table, @Id, @Column…","r8b":"Nicht unterstützt","r8c":"Nativ — es ist der JPA-Provider",
+      "r9":"Lernkurve","r9a":"Stunden: ANSI-SQL plus ein save()","r9b":"Tage: Mapper-Konfig + dynamische SQL-Tags","r9c":"Wochen: Session, Cascade, Cache, Lazy Loading",
+      "r10":"Umfang","r10a":"~2.000 Zeilen Quellcode","r10b":"Mittel","r10c":"Sehr groß",
+      "wr.eyebrow":"Der entscheidende Unterschied","wr.h2":"Auf der Schreibseite trennen sich die Wege",
+      "wr.lede":"Dieselbe Anforderung in allen dreien: ein Buch anlegen, dann den Preis erhöhen. Schau, wer tippt.",
+      "wr.cap":"Eine neue Spalte berührt in MyBatis die Tabelle, das XML-Insert, das XML-Update und den Mapper. In Modelet nur Tabelle und Entitätsfeld — das SQL erzeugt sich neu.",
+      "wh.eyebrow":"Ehrliche Anmerkungen","wh.h2":"Wann die anderen gewinnen",
+      "wh.hib":"Ein tiefes Domänenmodell mit komplexen Objektgraphen, Vendor-Portabilität und Second-Level-Cache — und ein Team, das JPA fließend spricht. Das ist Hibernates Heimspiel.",
+      "wh.mb":"Du brauchst auch auf der Schreibseite handoptimiertes SQL — Bulk-Upserts, Vendor-Hints, Stored Procedures — oder die dynamischen SQL-Tags (<if>, <foreach>) passen zu deinen Abfragemustern.",
+      "wh.mod":"Dein Team spricht fließend SQL und will am ersten Tag liefern: Abfragen bleiben in deinem SQL, Schreibvorgänge generieren sich selbst, und das ganze Framework passt in den Kopf.",
+      "foot.tagline":"Modelet · Abfragen gehören zu SQL, Schreibvorgänge zum Framework",
+      "foot.home":"Startseite","foot.py":"Python-Vergleich"
+    },
+    ko:{
+      "nav.back":"← 홈으로","nav.answers":"세 가지 답","nav.table":"항목별 비교","nav.writes":"쓰기 측",
+      "hero.eyebrow":"Java · 정면 비교",
+      "hero.h1":"<span class=\"grad\">Modelet</span> vs MyBatis &amp; Hibernate",
+      "hero.tagline":"Hibernate는 SQL을 전부 숨기고, MyBatis는 SQL을 전부 쓰게 합니다. Modelet은 일을 마땅한 곳에서 나눕니다.",
+      "hero.lede":"셋 모두 같은 질문에 답합니다 —— 객체는 어떻게 행과 만나는가. 다른 것은 단 하나, SQL을 누가 쓰느냐입니다. 정직한 비교를 담았습니다.",
+      "ans.eyebrow":"세 가지 철학","ans.h2":"당신의 SQL, 누가 씁니까?",
+      "ans.hib.t":"SQL을 전부 숨긴다","ans.hib.d":"매핑과 관계를 기술하면 프레임워크가 flush 시점에 SQL을 도출합니다. 복잡한 도메인 그래프에는 강력하지만 —— 대가는 HQL/JPQL, 세션 생명주기, lazy 프록시, dirty checking의 기습입니다.",
+      "ans.mb.t":"SQL을 전부 쓰게 한다","ans.mb.d":"완전한 통제: 모든 SELECT는 물론 —— 모든 INSERT, UPDATE, DELETE까지 —— mapper XML이나 애너테이션에 손으로 쓰고, 결과 형태마다 resultMap을 만듭니다. 정직하지만, 쓰기 측은 순전한 노역입니다.",
+      "ans.mod.t":"당신은 쿼리만 쓴다","ans.mod.d":"SELECT는 코드 속 순수 ANSI SQL입니다. 쓰기 측은 엔티티의 TxnMode 상태로부터 생성되고 —— 키는 되써지고, 감사 필드는 자동으로 채워집니다. 약 2,000줄, 한나절이면 다 읽습니다.",
+      "tbl.eyebrow":"항목별 비교","tbl.h2":"차원 하나하나, 나란히 비교",
+      "r1":"쿼리 언어","r1a":"코드에 바로 쓰는 ANSI SQL","r1b":"mapper XML / 애너테이션 속 SQL","r1c":"HQL / JPQL / Criteria API",
+      "r2":"INSERT / UPDATE / DELETE","r2a":"엔티티에서 자동 생성 —— TxnMode 기반 saveOrUpdate","r2b":"손으로 작성, 모든 문장·모든 컬럼","r2c":"flush 시 dirty checking이 생성",
+      "r3":"매핑 설정","r3a":"관례 + 선택적 JPA 애너테이션","r3b":"결과 형태마다 resultMap","r3c":"엔티티·관계 전체 매핑",
+      "r4":"런타임 모델","r4a":"무상태 —— 세션도 프록시도 없음","r4b":"얇은 SqlSession","r4c":"Session, L1/L2 캐시, lazy 프록시",
+      "r5":"보이는 대로 실행","r5a":"예 —— SQL이 코드 안에 있음","r5b":"대체로 —— 동적 SQL은 태그로 조립","r5c":"아니오 —— flush 시 SQL 도출; N+1 기습",
+      "r6":"페이징","r6a":"내장 PageContainer; LIMIT/OFFSET을 DB로 내림, 메모리 O(페이지)","r6b":"RowBounds는 메모리 페이징; 물리 페이징은 플러그인 필요","r6c":"setFirstResult / setMaxResults",
+      "r7":"감사 필드","r7a":"내장 —— AppEntity가 작성자/일시 기록","r7b":"수동, 또는 인터셉터 자작","r7c":"리스너 / Envers 설정",
+      "r8":"JPA 애너테이션","r8a":"호환 어휘 —— @Table, @Id, @Column…","r8b":"미지원","r8c":"네이티브 —— 그 자체가 JPA 구현체",
+      "r9":"학습 곡선","r9a":"몇 시간: ANSI SQL과 save() 하나","r9b":"며칠: mapper 설정 + 동적 SQL 태그","r9c":"몇 주: 세션, 캐스케이드, 캐시, 지연 로딩",
+      "r10":"규모","r10a":"소스 약 2,000줄","r10b":"중간","r10c":"매우 큼",
+      "wr.eyebrow":"결정적 차이","wr.h2":"인생이 갈리는 곳, 쓰기 측",
+      "wr.lede":"세 프레임워크 모두 같은 요구사항: 책을 등록하고, 값을 올립니다. 누가 타이핑하는지 보세요.",
+      "wr.cap":"MyBatis에서 컬럼 하나를 추가하면 테이블, XML insert, XML update, mapper까지 손대야 합니다. Modelet은 테이블과 엔티티 필드만 —— SQL은 스스로 다시 자랍니다.",
+      "wh.eyebrow":"정직한 메모","wh.h2":"다른 쪽이 이기는 경우",
+      "wh.hib":"깊은 도메인 모델, 복잡한 객체 그래프, 벤더 이식성과 2차 캐시 —— 그리고 이미 JPA에 능숙한 팀. 그곳은 Hibernate의 홈그라운드입니다.",
+      "wh.mb":"쓰기 측까지 손으로 튜닝한 SQL이 필요할 때 —— 대량 upsert, 벤더 힌트, 저장 프로시저 —— 또는 동적 SQL 태그(<if>, <foreach>)가 쿼리 패턴에 맞을 때.",
+      "wh.mod":"팀이 SQL에 능숙하고 첫날부터 배포하고 싶다면: 쿼리는 당신이 통제하는 SQL로 남고, 쓰기는 저절로 생성되며, 프레임워크 전체가 머리에 들어옵니다.",
+      "foot.tagline":"Modelet · 쿼리는 SQL에게, 쓰기는 프레임워크에게",
+      "foot.home":"홈","foot.py":"Python 비교"
+    }
+  };
+
+  (function(){
+    var root=document.documentElement;
+    var themeBtn=document.getElementById('themeBtn');
+    var langSel=document.getElementById('langSel');
+    var savedTheme=null; try{savedTheme=localStorage.getItem('modelet-theme')}catch(e){}
+    if(savedTheme){root.setAttribute('data-theme',savedTheme)}
+    function curTheme(){var t=root.getAttribute('data-theme');return t?t:(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}
+    themeBtn.addEventListener('click',function(){
+      var n=curTheme()==='dark'?'light':'dark';root.setAttribute('data-theme',n);
+      try{localStorage.setItem('modelet-theme',n)}catch(e){}
+    });
+    function apply(lang){
+      var dict=I18N[lang]||I18N.en;
+      document.querySelectorAll('[data-i18n]').forEach(function(el){
+        var k=el.getAttribute('data-i18n');if(dict[k]!=null)el.textContent=dict[k];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+        var k=el.getAttribute('data-i18n-html');if(dict[k]!=null)el.innerHTML=dict[k];
+      });
+      root.setAttribute('lang',lang);langSel.value=lang;
+      try{localStorage.setItem('modelet-lang',lang)}catch(e){}
+    }
+    var savedLang=null; try{savedLang=localStorage.getItem('modelet-lang')}catch(e){}
+    if(!savedLang){var n=(navigator.language||'en').slice(0,2).toLowerCase();savedLang=I18N[n]?n:'en'}
+    apply(savedLang);
+    langSel.addEventListener('change',function(){apply(langSel.value)});
+  })();
+</script>
+</body>
+</html>

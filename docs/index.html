@@ -102,6 +102,10 @@
   .tag.sql{color:var(--str);background:color-mix(in srgb,var(--str) 14%,transparent)}
   .tag.fw{color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}
   .pcard p{margin:8px 0 0;color:var(--muted);font-size:.98rem}
+  a.pcard{display:block;color:inherit}
+  a.pcard:hover{text-decoration:none;border-color:var(--accent);
+    box-shadow:0 6px 24px color-mix(in srgb,var(--accent) 18%,transparent)}
+  .cmp-go{display:inline-block;margin-top:16px;color:var(--primary);font-weight:600;font-size:.95rem}
 
   /* scale stats */
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:42px}
@@ -164,6 +168,7 @@
       <a href="#scale" class="hide-sm" data-i18n="nav.scale">Scale</a>
       <a href="#flow" class="hide-sm" data-i18n="nav.flow">Flow</a>
       <a href="#quickstart" data-i18n="nav.quickstart">Quick Start</a>
+      <a href="#compare" class="hide-sm" data-i18n="nav.compare">Compare</a>
       <a href="https://github.com/MattAtAIEra/modelet">GitHub</a>
     </div>
     <div class="ctrl">
@@ -329,6 +334,26 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
   </div>
 </section>
 
+<section id="compare">
+  <div class="wrap">
+    <div class="eyebrow" data-i18n="cmp.eyebrow">Head-to-head</div>
+    <h2 class="sec" data-i18n="cmp.h2">How Modelet stacks up</h2>
+    <p class="sec-lede" data-i18n="cmp.lede">Honest, dimension-by-dimension comparisons against the frameworks you would otherwise reach for — including when they win.</p>
+    <div class="split">
+      <a class="pcard" href="compare-java.html">
+        <h3><span class="tag fw">Java</span><span data-i18n="cmp.java.t">vs MyBatis &amp; Hibernate</span></h3>
+        <p data-i18n="cmp.java.d">Hibernate hides all your SQL; MyBatis makes you write all of it. See where Modelet splits the work — and why the write side decides it.</p>
+        <span class="cmp-go" data-i18n="cmp.cta">Read the comparison →</span>
+      </a>
+      <a class="pcard" href="compare-python.html">
+        <h3><span class="tag sql">Python</span><span data-i18n="cmp.py.t">vs the SQL-first field</span></h3>
+        <p data-i18n="cmp.py.d">psycopg row factories, aiosql, SQLAlchemy Core + Pydantic — they all answer the read side. pymodelet also answers the write side.</p>
+        <span class="cmp-go" data-i18n="cmp.cta2">Read the comparison →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section id="heritage" class="heritage band">
   <div class="wrap">
     <div class="eyebrow" data-i18n="heritage.eyebrow">Heritage · 2006</div>
@@ -342,6 +367,8 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
   <div class="wrap foot-in">
     <span class="brand"><span class="dot"></span><span data-i18n="footer.tagline">Modelet · Queries belong to SQL, writes belong to the framework</span></span>
     <div class="foot-links">
+      <a href="compare-java.html" data-i18n="footer.cmpjava">Java comparison</a>
+      <a href="compare-python.html" data-i18n="footer.cmppy">Python comparison</a>
       <a href="https://github.com/MattAtAIEra/modelet">Repository</a>
       <a href="https://github.com/MattAtAIEra/modelet/tree/master/python">pymodelet</a>
       <a href="https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md">Tribute</a>
@@ -376,6 +403,12 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
       "heritage.eyebrow":"Heritage · 2006","heritage.h2":"A quiet but precise decision",
       "heritage.quote":"\"Don't fight SQL — <span class=\"hl\">respect it.</span>\" Two decades on, the Python community is rediscovering \"SQL-first\" as if it were new. Matt wrote it down in 2006.",
       "heritage.attrib":"Modelet was created by <b>Matt</b> in 2006 to flatten the ORM learning curve and speed his team's delivery. The full story is in <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md\">TRIBUTE.md</a>.",
+      "nav.compare":"Compare","cmp.eyebrow":"Head-to-head","cmp.h2":"How Modelet stacks up",
+      "cmp.lede":"Honest, dimension-by-dimension comparisons against the frameworks you would otherwise reach for — including when they win.",
+      "cmp.java.t":"vs MyBatis & Hibernate","cmp.java.d":"Hibernate hides all your SQL; MyBatis makes you write all of it. See where Modelet splits the work — and why the write side decides it.",
+      "cmp.py.t":"vs the SQL-first field","cmp.py.d":"psycopg row factories, aiosql, SQLAlchemy Core + Pydantic — they all answer the read side. pymodelet also answers the write side.",
+      "cmp.cta":"Read the comparison →","cmp.cta2":"Read the comparison →",
+      "footer.cmpjava":"Java comparison","footer.cmppy":"Python comparison",
       "footer.tagline":"Modelet · Queries belong to SQL, writes belong to the framework"
     },
     zh:{
@@ -402,6 +435,12 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
       "heritage.eyebrow":"傳承 · 2006","heritage.h2":"一個安靜卻精準的決定",
       "heritage.quote":"「不對抗 SQL,<span class=\"hl\">而是尊重它。</span>」二十年過去,Python 社群重新發現了「SQL-first」,彷彿它是新的 —— 而 Matt 在 2006 年就已經寫下了它。",
       "heritage.attrib":"Modelet 由 <b>Matt</b> 在 2006 年開創,只為了替團隊踏平 ORM 的學習曲線、加速交付。完整故事見 <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md\">TRIBUTE.md</a>。",
+      "nav.compare":"比較","cmp.eyebrow":"正面對決","cmp.h2":"Modelet 和誰比、比什麼",
+      "cmp.lede":"和你原本會選的框架,一個維度一個維度誠實地比 —— 連「什麼時候該選對方」也寫給你看。",
+      "cmp.java.t":"vs MyBatis 與 Hibernate","cmp.java.d":"Hibernate 把 SQL 全藏起來;MyBatis 要你把 SQL 全寫完。看 Modelet 把工作切在哪裡 —— 以及為什麼勝負在寫入面。",
+      "cmp.py.t":"vs SQL-first 陣營","cmp.py.d":"psycopg row factory、aiosql、SQLAlchemy Core + Pydantic —— 它們都回答了讀取面。pymodelet 連寫入面也一併回答。",
+      "cmp.cta":"閱讀完整比較 →","cmp.cta2":"閱讀完整比較 →",
+      "footer.cmpjava":"Java 比較","footer.cmppy":"Python 比較",
       "footer.tagline":"Modelet · 查詢交給 SQL,寫入交給框架"
     },
     ja:{
@@ -428,6 +467,12 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
       "heritage.eyebrow":"系譜 · 2006","heritage.h2":"静かで、しかし的確な決断",
       "heritage.quote":"「SQL と戦うな、<span class=\"hl\">敬え。</span>」20 年後、Python コミュニティは「SQL-first」をまるで新しいものかのように再発見しています —— Matt は 2006 年にそれを書き記していました。",
       "heritage.attrib":"Modelet は 2006 年に <b>Matt</b> が、ORM の学習コストを平らにし、チームの開発を加速するために作りました。全文は <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md\">TRIBUTE.md</a> に。",
+      "nav.compare":"比較","cmp.eyebrow":"直接対決","cmp.h2":"Modelet は何と、どう比べられるか",
+      "cmp.lede":"本来なら手に取るはずのフレームワークと、観点ごとに率直に比較 —— 「相手が勝つ場面」まで書いてあります。",
+      "cmp.java.t":"vs MyBatis & Hibernate","cmp.java.d":"Hibernate は SQL をすべて隠し、MyBatis はすべて書かせる。Modelet が仕事をどこで分割するか —— そしてなぜ勝負が書き込み側で決まるのかを。",
+      "cmp.py.t":"vs SQL-first 勢","cmp.py.d":"psycopg の row factory、aiosql、SQLAlchemy Core + Pydantic —— どれも読み取り側には答えました。pymodelet は書き込み側にも答えます。",
+      "cmp.cta":"比較を読む →","cmp.cta2":"比較を読む →",
+      "footer.cmpjava":"Java 比較","footer.cmppy":"Python 比較",
       "footer.tagline":"Modelet · クエリは SQL に、書き込みはフレームワークに"
     },
     de:{
@@ -454,6 +499,12 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
       "heritage.eyebrow":"Ursprung · 2006","heritage.h2":"Eine leise, aber präzise Entscheidung",
       "heritage.quote":"„Kämpfe nicht gegen SQL — <span class=\"hl\">respektiere es.</span>“ Zwei Jahrzehnte später entdeckt die Python-Community „SQL-first“ neu, als wäre es neu. Matt schrieb es 2006 nieder.",
       "heritage.attrib":"Modelet wurde 2006 von <b>Matt</b> geschaffen, um die ORM-Lernkurve zu ebnen und die Auslieferung seines Teams zu beschleunigen. Die ganze Geschichte steht in <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md\">TRIBUTE.md</a>.",
+      "nav.compare":"Vergleich","cmp.eyebrow":"Direktvergleich","cmp.h2":"Wie sich Modelet schlägt",
+      "cmp.lede":"Ehrliche Vergleiche, Dimension für Dimension, mit den Frameworks, zu denen du sonst greifen würdest — inklusive der Fälle, in denen sie gewinnen.",
+      "cmp.java.t":"vs. MyBatis & Hibernate","cmp.java.d":"Hibernate versteckt dein ganzes SQL; MyBatis lässt dich alles schreiben. Sieh, wo Modelet die Arbeit teilt — und warum die Schreibseite entscheidet.",
+      "cmp.py.t":"vs. das SQL-first-Feld","cmp.py.d":"psycopg Row-Factories, aiosql, SQLAlchemy Core + Pydantic — sie alle beantworten die Leseseite. pymodelet beantwortet auch die Schreibseite.",
+      "cmp.cta":"Zum Vergleich →","cmp.cta2":"Zum Vergleich →",
+      "footer.cmpjava":"Java-Vergleich","footer.cmppy":"Python-Vergleich",
       "footer.tagline":"Modelet · Abfragen gehören zu SQL, Schreibvorgänge zum Framework"
     },
     ko:{
@@ -480,6 +531,12 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
       "heritage.eyebrow":"유산 · 2006","heritage.h2":"조용하지만 정확한 결정",
       "heritage.quote":"“SQL과 싸우지 말고 —— <span class=\"hl\">존중하라.</span>” 20년이 지나, Python 커뮤니티는 ‘SQL-first’를 마치 새로운 것처럼 재발견하고 있습니다. Matt는 2006년에 이미 그것을 적어 두었습니다.",
       "heritage.attrib":"Modelet은 2006년 <b>Matt</b>가 ORM 학습 곡선을 평탄하게 하고 팀의 개발 속도를 높이기 위해 만들었습니다. 전체 이야기는 <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md\">TRIBUTE.md</a>에 있습니다.",
+      "nav.compare":"비교","cmp.eyebrow":"정면 비교","cmp.h2":"Modelet은 어디에 서 있는가",
+      "cmp.lede":"원래라면 손이 갔을 프레임워크들과 차원 하나하나 정직하게 비교합니다 —— 상대가 이기는 경우까지 적어 두었습니다.",
+      "cmp.java.t":"vs MyBatis & Hibernate","cmp.java.d":"Hibernate는 SQL을 전부 숨기고, MyBatis는 전부 쓰게 합니다. Modelet이 일을 어디서 나누는지 —— 그리고 왜 승부가 쓰기 측에서 갈리는지 보세요.",
+      "cmp.py.t":"vs SQL-first 진영","cmp.py.d":"psycopg row factory, aiosql, SQLAlchemy Core + Pydantic —— 모두 읽기 측에는 답했습니다. pymodelet은 쓰기 측에도 답합니다.",
+      "cmp.cta":"비교 읽기 →","cmp.cta2":"비교 읽기 →",
+      "footer.cmpjava":"Java 비교","footer.cmppy":"Python 비교",
       "footer.tagline":"Modelet · 쿼리는 SQL에게, 쓰기는 프레임워크에게"
     }
   };
