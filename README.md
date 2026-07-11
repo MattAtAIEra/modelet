@@ -12,6 +12,10 @@ INSERT / UPDATE / DELETE 由框架代勞。
 **Python port:** [pymodelet](https://github.com/MattAtAIEra/pymodelet) —
 the same philosophy on DB-API 2.0 with dataclass entities.
 
+The story behind the 2006 decision — a tribute:
+[English](TRIBUTE.md) · [繁體中文](TRIBUTE.zh.md) · [日本語](TRIBUTE.ja.md) ·
+[Deutsch](TRIBUTE.de.md) · [한국어](TRIBUTE.ko.md).
+
 ## Repository layout
 
 | Path | Description |
