@@ -13,6 +13,7 @@
     --code-bg:#f6f5f1; --code-text:#2a2a3a; --board:#ffffff;
     --kw:#7c3aed; --str:#0f766e; --com:#94929e; --fn:#b4530a;
     --grad:linear-gradient(120deg,#4f46e5,#7c3aed 55%,#c026d3);
+    --grad-q:linear-gradient(120deg,#0d9488,#0891b2);
     --maxw:1080px;
   }
   @media (prefers-color-scheme:dark){
@@ -23,6 +24,7 @@
       --code-bg:#111119; --code-text:#d6d6e6; --board:#f4f4fa;
       --kw:#c4b5fd; --str:#5eead4; --com:#6b6b82; --fn:#fdba74;
       --grad:linear-gradient(120deg,#818cf8,#a78bfa 55%,#e879f9);
+      --grad-q:linear-gradient(120deg,#2dd4bf,#22d3ee);
     }
   }
   :root[data-theme="light"]{
@@ -32,6 +34,7 @@
     --code-bg:#f6f5f1; --code-text:#2a2a3a; --board:#ffffff;
     --kw:#7c3aed; --str:#0f766e; --com:#94929e; --fn:#b4530a;
     --grad:linear-gradient(120deg,#4f46e5,#7c3aed 55%,#c026d3);
+    --grad-q:linear-gradient(120deg,#0d9488,#0891b2);
   }
   :root[data-theme="dark"]{
     --bg:#0c0c12; --surface:#14141d; --surface-2:#181824;
@@ -40,6 +43,7 @@
     --code-bg:#111119; --code-text:#d6d6e6; --board:#f4f4fa;
     --kw:#c4b5fd; --str:#5eead4; --com:#6b6b82; --fn:#fdba74;
     --grad:linear-gradient(120deg,#818cf8,#a78bfa 55%,#e879f9);
+      --grad-q:linear-gradient(120deg,#2dd4bf,#22d3ee);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -77,6 +81,8 @@
     border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);padding:5px 12px;border-radius:999px}
   h1.title{font-size:clamp(2.5rem,6vw,4.2rem);line-height:1.04;margin:22px 0 0;letter-spacing:-.03em;font-weight:800}
   .title .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tagline .g-q{background:var(--grad-q);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+  .tagline .g-w{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
   .tagline{margin:20px 0 0;font-size:clamp(1.15rem,2.4vw,1.5rem);font-weight:600;letter-spacing:-.01em}
   .lede{margin:22px 0 0;max-width:610px;color:var(--muted);font-size:1.06rem}
   .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
@@ -188,7 +194,7 @@
   <div class="wrap">
     <span class="badge">● v3.0 · Since 2006</span>
     <h1 class="title" data-i18n-html="hero.title">If you know SQL,<br>you already know <span class="grad">Modelet</span>.</h1>
-    <p class="tagline" data-i18n="hero.tagline">Queries belong to SQL. Writes belong to the framework.</p>
+    <p class="tagline" data-i18n-html="hero.tagline"><span class="g-q">Queries</span> belong to SQL. <span class="g-w">Writes</span> belong to the framework.</p>
     <p class="lede" data-i18n="hero.lede">Write queries in the ANSI SQL you already know. Hand the tedious INSERT / UPDATE / DELETE to the framework. A learning curve that barely exists — unchanged for two decades.</p>
     <div class="cta">
       <a class="btn primary" href="https://github.com/MattAtAIEra/modelet" data-i18n="hero.cta1">View on GitHub →</a>
@@ -252,9 +258,8 @@
 
     <div class="qs-step">
       <h3><span class="n">1</span><span data-i18n="qs.entitiesTitle">Define entities with JPA-compatible annotations</span></h3>
-      <div class="two">
-        <div class="codewin">
-          <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Author.java · Book.java</span><span class="lang">Java 17</span></div>
+      <div class="codewin">
+        <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Author.java · Book.java</span><span class="lang">Java 17</span></div>
 <pre class="code"><span class="kw">@Table</span>(name = <span class="str">"author"</span>)
 <span class="kw">public class</span> <span class="fn">Author</span> <span class="kw">extends</span> AbstractEntity {
   <span class="kw">private</span> String name;         <span class="com">// id: @Id @GeneratedValue (by convention)</span>
@@ -269,49 +274,24 @@
   <span class="kw">private</span> BigDecimal price;
   <span class="com">/* getters / setters */</span>
 }</pre>
-        </div>
-        <div class="codewin">
-          <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">models.py</span><span class="lang">Python 3.10+</span></div>
-<pre class="code"><span class="fn">@Table</span>(<span class="str">"author"</span>)
-<span class="fn">@dataclass</span>
-<span class="kw">class</span> <span class="fn">Author</span>(Entity):
-    name: str | <span class="kw">None</span> = <span class="kw">None</span>
-
-<span class="fn">@Table</span>(<span class="str">"book"</span>)
-<span class="fn">@dataclass</span>
-<span class="kw">class</span> <span class="fn">Book</span>(Entity):
-    author_id: int | <span class="kw">None</span> = <span class="kw">None</span>          <span class="com"># FK = the relationship</span>
-    title: str | <span class="kw">None</span> = <span class="fn">Column</span>(<span class="str">"bookName"</span>)
-    price: Decimal | <span class="kw">None</span> = <span class="kw">None</span></pre>
-        </div>
       </div>
     </div>
 
     <div class="qs-step">
       <h3><span class="n">2</span><span data-i18n="qs.queryTitle">Query with the SQL you know</span></h3>
-      <div class="two">
-        <div class="codewin">
-          <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Java</span><span class="lang">find → List</span></div>
+      <div class="codewin">
+        <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Query.java</span><span class="lang">find → List</span></div>
 <pre class="code"><span class="com">// plain ANSI SQL in, a list of entities out</span>
 List&lt;Book&gt; books = model.<span class="fn">find</span>(
   <span class="str">"select * from book where author_id = ? order by id"</span>,
   <span class="kw">new</span> Object[]{ authorId }, Book.<span class="kw">class</span>);</pre>
-        </div>
-        <div class="codewin">
-          <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Python</span><span class="lang">find → list</span></div>
-<pre class="code"><span class="com"># plain ANSI SQL in, a list of entities out</span>
-books = model.<span class="fn">find</span>(
-    <span class="str">"select * from book where author_id = ? order by id"</span>,
-    [author_id], Book)</pre>
-        </div>
       </div>
     </div>
 
     <div class="qs-step">
       <h3><span class="n">3</span><span data-i18n="qs.saveTitle">saveOrUpdate — the framework writes the SQL</span></h3>
-      <div class="two">
-        <div class="codewin">
-          <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Java</span><span class="lang">save</span></div>
+      <div class="codewin">
+        <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Save.java</span><span class="lang">save</span></div>
 <pre class="code">Book book = <span class="kw">new</span> <span class="fn">Book</span>();
 book.<span class="fn">setAuthorId</span>(author.<span class="fn">getId</span>());
 book.<span class="fn">setTitle</span>(<span class="str">"Modelet in Action"</span>);
@@ -319,16 +299,6 @@ model.<span class="fn">save</span>(book);   <span class="com">// new entity → 
 
 book.<span class="fn">setPrice</span>(<span class="kw">new</span> BigDecimal(<span class="str">"499"</span>));
 model.<span class="fn">save</span>(book);   <span class="com">// loaded entity → UPDATE. same call.</span></pre>
-        </div>
-        <div class="codewin">
-          <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">Python</span><span class="lang">save</span></div>
-<pre class="code">book = <span class="fn">Book</span>(author_id=author.id,
-            title=<span class="str">"Modelet in Action"</span>)
-model.<span class="fn">save</span>(book)    <span class="com"># new entity → INSERT, id written back</span>
-
-book.price = Decimal(<span class="str">"499"</span>)
-model.<span class="fn">save</span>(book)    <span class="com"># loaded entity → UPDATE. same call.</span></pre>
-        </div>
       </div>
     </div>
   </div>
@@ -345,10 +315,10 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
         <p data-i18n="cmp.java.d">Hibernate hides all your SQL; MyBatis makes you write all of it. See where Modelet splits the work — and why the write side decides it.</p>
         <span class="cmp-go" data-i18n="cmp.cta">Read the comparison →</span>
       </a>
-      <a class="pcard" href="compare-python.html">
-        <h3><span class="tag sql">Python</span><span data-i18n="cmp.py.t">vs the SQL-first field</span></h3>
-        <p data-i18n="cmp.py.d">psycopg row factories, aiosql, SQLAlchemy Core + Pydantic — they all take care of the read side. pymodelet makes even the writes effortless.</p>
-        <span class="cmp-go" data-i18n="cmp.cta2">Read the comparison →</span>
+      <a class="pcard" href="https://mattataiera.github.io/pymodelet/">
+        <h3><span class="tag sql">Python</span><span data-i18n="cmp.py.t">The pymodelet port</span></h3>
+        <p data-i18n="cmp.py.d">Prefer Python? pymodelet carries the same SQL-first philosophy onto any DB-API 2.0 driver — plain SQL in, typed entities out, saveOrUpdate generating the writes.</p>
+        <span class="cmp-go" data-i18n="cmp.cta2">Visit pymodelet →</span>
       </a>
     </div>
   </div>
@@ -359,7 +329,7 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
     <div class="eyebrow" data-i18n="heritage.eyebrow">Heritage · 2006</div>
     <h2 class="sec" data-i18n="heritage.h2">A quiet but precise decision</h2>
     <p class="quote" data-i18n-html="heritage.quote">"Don't fight SQL — <span class="hl">respect it.</span>" Two decades on, the Python community is rediscovering "SQL-first" as if it were new. Matt wrote it down in 2006.</p>
-    <p class="attrib" data-i18n-html="heritage.attrib">Modelet was created by <b>Matt</b> in 2006 to flatten the ORM learning curve and speed his team's delivery. The full story is in <a href="https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md">TRIBUTE.md</a>.</p>
+    <p class="attrib" data-i18n-html="heritage.attrib">Modelet was created by <b>Matt</b> in 2006 to flatten the ORM learning curve and speed his team's delivery. The full story is in <a href="https://github.com/MattAtAIEra/modelet/blob/master/TRIBUTE.md">TRIBUTE.md</a>.</p>
   </div>
 </section>
 
@@ -368,10 +338,9 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
     <span class="brand"><span class="dot"></span><span data-i18n="footer.tagline">Modelet · Queries belong to SQL, writes belong to the framework</span></span>
     <div class="foot-links">
       <a href="compare-java.html" data-i18n="footer.cmpjava">Java comparison</a>
-      <a href="compare-python.html" data-i18n="footer.cmppy">Python comparison</a>
+      <a href="https://mattataiera.github.io/pymodelet/" data-i18n="footer.pymodelet">pymodelet (Python)</a>
       <a href="https://github.com/MattAtAIEra/modelet">Repository</a>
-      <a href="https://github.com/MattAtAIEra/modelet/tree/master/python">pymodelet</a>
-      <a href="https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md">Tribute</a>
+      <a href="https://github.com/MattAtAIEra/modelet/blob/master/TRIBUTE.md" data-i18n="footer.tribute">Tribute</a>
       <a href="https://github.com/MattAtAIEra/modelet/releases">Releases</a>
     </div>
   </div>
@@ -380,10 +349,10 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
 <script>
   var I18N = {
     en:{
-      "meta.title":"Modelet — SQL-first micro ORM","meta.desc":"Queries belong to SQL, writes belong to the framework. A SQL-first micro ORM born in 2006 — JPA-compatible annotations, Java and Python.",
+      "meta.title":"Modelet — SQL-first micro ORM","meta.desc":"Queries belong to SQL, writes belong to the framework. A SQL-first micro ORM born in 2006 — JPA-compatible annotations, built on Spring JDBC.",
       "nav.philosophy":"Philosophy","nav.scale":"Scale","nav.flow":"Flow","nav.quickstart":"Quick Start",
       "hero.title":"If you know SQL,<br>you already know <span class=\"grad\">Modelet</span>.",
-      "hero.tagline":"Queries belong to SQL. Writes belong to the framework.",
+      "hero.tagline":"<span class=\"g-q\">Queries</span> belong to SQL. <span class=\"g-w\">Writes</span> belong to the framework.",
       "hero.lede":"Write queries in the ANSI SQL you already know. Hand the tedious INSERT / UPDATE / DELETE to the framework. A learning curve that barely exists — unchanged for two decades.",
       "hero.cta1":"View on GitHub →","hero.cta2":"Read the story",
       "phil.eyebrow":"The Philosophy","phil.h2":"The opposite trade-off to the ORM wave",
@@ -403,20 +372,21 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
       "qs.queryTitle":"Query with the SQL you know","qs.saveTitle":"saveOrUpdate — the framework writes the SQL",
       "heritage.eyebrow":"Heritage · 2006","heritage.h2":"A quiet but precise decision",
       "heritage.quote":"\"Don't fight SQL — <span class=\"hl\">respect it.</span>\" Two decades on, the Python community is rediscovering \"SQL-first\" as if it were new. Matt wrote it down in 2006.",
-      "heritage.attrib":"Modelet was created by <b>Matt</b> in 2006 to flatten the ORM learning curve and speed his team's delivery. The full story is in <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md\">TRIBUTE.md</a>.",
+      "heritage.attrib":"Modelet was created by <b>Matt</b> in 2006 to flatten the ORM learning curve and speed his team's delivery. The full story is in <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/TRIBUTE.md\">TRIBUTE.md</a>.",
       "nav.compare":"Compare","cmp.eyebrow":"Head-to-head","cmp.h2":"How Modelet stacks up",
       "cmp.lede":"Honest, dimension-by-dimension comparisons against the frameworks you would otherwise reach for — including when they win.",
       "cmp.java.t":"vs MyBatis & Hibernate","cmp.java.d":"Hibernate hides all your SQL; MyBatis makes you write all of it. See where Modelet splits the work — and why the write side decides it.",
-      "cmp.py.t":"vs the SQL-first field","cmp.py.d":"psycopg row factories, aiosql, SQLAlchemy Core + Pydantic — they all take care of the read side. pymodelet makes even the writes effortless.",
-      "cmp.cta":"Read the comparison →","cmp.cta2":"Read the comparison →",
+      "cmp.py.t":"The pymodelet port","cmp.py.d":"Prefer Python? pymodelet carries the same SQL-first philosophy onto any DB-API 2.0 driver — plain SQL in, typed entities out, saveOrUpdate generating the writes.",
+      "cmp.cta":"Read the comparison →","cmp.cta2":"Visit pymodelet →",
       "footer.cmpjava":"Java comparison","footer.cmppy":"Python comparison",
+      "footer.pymodelet":"pymodelet (Python)","footer.tribute":"Tribute",
       "footer.tagline":"Modelet · Queries belong to SQL, writes belong to the framework"
     },
     zh:{
-      "meta.title":"Modelet — SQL-first 微型 ORM","meta.desc":"查詢交給 SQL,寫入交給框架。2006 年誕生的 SQL-first 微型 ORM —— JPA 相容註解,Java 與 Python 雙實作。",
+      "meta.title":"Modelet — SQL-first 微型 ORM","meta.desc":"查詢交給 SQL,寫入交給框架。2006 年誕生的 SQL-first 微型 ORM —— JPA 相容註解,建構於 Spring JDBC。",
       "nav.philosophy":"哲學","nav.scale":"規模","nav.flow":"流程","nav.quickstart":"快速開始",
       "hero.title":"會 SQL,<br>就會用 <span class=\"grad\">Modelet</span>。",
-      "hero.tagline":"查詢交給 SQL,寫入交給框架。",
+      "hero.tagline":"<span class=\"g-q\">查詢</span>交給 SQL,<span class=\"g-w\">寫入</span>交給框架。",
       "hero.lede":"用你已經會的 ANSI SQL 寫查詢,把繁瑣的 INSERT / UPDATE / DELETE 交給框架。幾乎不存在的學習曲線 —— 二十年來如一日。",
       "hero.cta1":"在 GitHub 上查看 →","hero.cta2":"讀這個故事",
       "phil.eyebrow":"設計哲學","phil.h2":"和 ORM 浪潮相反的取捨",
@@ -436,20 +406,21 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
       "qs.queryTitle":"用你會的 SQL 查詢","qs.saveTitle":"saveOrUpdate —— 框架幫你寫 SQL",
       "heritage.eyebrow":"傳承 · 2006","heritage.h2":"一個安靜卻精準的決定",
       "heritage.quote":"「不對抗 SQL,<span class=\"hl\">而是尊重它。</span>」二十年過去,Python 社群重新發現了「SQL-first」,彷彿它是新的 —— 而 Matt 在 2006 年就已經寫下了它。",
-      "heritage.attrib":"Modelet 由 <b>Matt</b> 在 2006 年開創,只為了替團隊踏平 ORM 的學習曲線、加速交付。完整故事見 <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md\">TRIBUTE.md</a>。",
+      "heritage.attrib":"Modelet 由 <b>Matt</b> 在 2006 年開創,只為了替團隊踏平 ORM 的學習曲線、加速交付。完整故事見 <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/TRIBUTE.md\">TRIBUTE.md</a>。",
       "nav.compare":"比較","cmp.eyebrow":"正面對決","cmp.h2":"Modelet 和誰比、比什麼",
       "cmp.lede":"和你原本會選的框架,一個維度一個維度誠實地比 —— 連「什麼時候該選對方」也寫給你看。",
       "cmp.java.t":"vs MyBatis 與 Hibernate","cmp.java.d":"Hibernate 把 SQL 全藏起來;MyBatis 要你把 SQL 全寫完。看 Modelet 把工作切在哪裡 —— 以及為什麼勝負在寫入面。",
-      "cmp.py.t":"vs SQL-first 陣營","cmp.py.d":"psycopg row factory、aiosql、SQLAlchemy Core + Pydantic —— 它們都照顧到了讀取面。pymodelet 連寫入都讓你輕鬆自在。",
-      "cmp.cta":"閱讀完整比較 →","cmp.cta2":"閱讀完整比較 →",
+      "cmp.py.t":"pymodelet 移植版","cmp.py.d":"偏好 Python?pymodelet 把同一套 SQL-first 哲學帶到任何 DB-API 2.0 驅動 —— 純 SQL 進、型別化 entity 出,saveOrUpdate 自動產生寫入。",
+      "cmp.cta":"閱讀完整比較 →","cmp.cta2":"前往 pymodelet →",
       "footer.cmpjava":"Java 比較","footer.cmppy":"Python 比較",
+      "footer.pymodelet":"pymodelet(Python)","footer.tribute":"致敬文",
       "footer.tagline":"Modelet · 查詢交給 SQL,寫入交給框架"
     },
     ja:{
-      "meta.title":"Modelet — SQL-first マイクロ ORM","meta.desc":"クエリは SQL に、書き込みはフレームワークに。2006 年誕生の SQL-first マイクロ ORM —— JPA 互換アノテーション、Java + Python。",
+      "meta.title":"Modelet — SQL-first マイクロ ORM","meta.desc":"クエリは SQL に、書き込みはフレームワークに。2006 年誕生の SQL-first マイクロ ORM —— JPA 互換アノテーション、Spring JDBC ベース。",
       "nav.philosophy":"設計思想","nav.scale":"スケール","nav.flow":"フロー","nav.quickstart":"クイックスタート",
       "hero.title":"SQL が分かれば、<br>もう <span class=\"grad\">Modelet</span> が使えます。",
-      "hero.tagline":"クエリは SQL に、書き込みはフレームワークに。",
+      "hero.tagline":"<span class=\"g-q\">クエリ</span>は SQL に、<span class=\"g-w\">書き込み</span>はフレームワークに。",
       "hero.lede":"使い慣れた ANSI SQL でクエリを書き、面倒な INSERT / UPDATE / DELETE はフレームワークに任せる。ほとんど存在しない学習コスト —— 20 年間変わりません。",
       "hero.cta1":"GitHub で見る →","hero.cta2":"物語を読む",
       "phil.eyebrow":"設計思想","phil.h2":"ORM の潮流とは逆のトレードオフ",
@@ -469,20 +440,21 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
       "qs.queryTitle":"知っている SQL でクエリ","qs.saveTitle":"saveOrUpdate —— フレームワークが SQL を書く",
       "heritage.eyebrow":"系譜 · 2006","heritage.h2":"静かで、しかし的確な決断",
       "heritage.quote":"「SQL と戦うな、<span class=\"hl\">敬え。</span>」20 年後、Python コミュニティは「SQL-first」をまるで新しいものかのように再発見しています —— Matt は 2006 年にそれを書き記していました。",
-      "heritage.attrib":"Modelet は 2006 年に <b>Matt</b> が、ORM の学習コストを平らにし、チームの開発を加速するために作りました。全文は <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md\">TRIBUTE.md</a> に。",
+      "heritage.attrib":"Modelet は 2006 年に <b>Matt</b> が、ORM の学習コストを平らにし、チームの開発を加速するために作りました。全文は <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/TRIBUTE.md\">TRIBUTE.md</a> に。",
       "nav.compare":"比較","cmp.eyebrow":"直接対決","cmp.h2":"Modelet は何と、どう比べられるか",
       "cmp.lede":"本来なら手に取るはずのフレームワークと、観点ごとに率直に比較 —— 「相手が勝つ場面」まで書いてあります。",
       "cmp.java.t":"vs MyBatis & Hibernate","cmp.java.d":"Hibernate は SQL をすべて隠し、MyBatis はすべて書かせる。Modelet が仕事をどこで分割するか —— そしてなぜ勝負が書き込み側で決まるのかを。",
-      "cmp.py.t":"vs SQL-first 勢","cmp.py.d":"psycopg の row factory、aiosql、SQLAlchemy Core + Pydantic —— どれも読み取り側の面倒は見てくれます。pymodelet は書き込みまで楽にしてくれます。",
-      "cmp.cta":"比較を読む →","cmp.cta2":"比較を読む →",
+      "cmp.py.t":"pymodelet 移植版","cmp.py.d":"Python 派?pymodelet は同じ SQL-first の思想をどの DB-API 2.0 ドライバにも —— 素の SQL を入れ、型付きエンティティを取得、saveOrUpdate が書き込みを生成。",
+      "cmp.cta":"比較を読む →","cmp.cta2":"pymodelet へ →",
       "footer.cmpjava":"Java 比較","footer.cmppy":"Python 比較",
+      "footer.pymodelet":"pymodelet(Python)","footer.tribute":"献辞",
       "footer.tagline":"Modelet · クエリは SQL に、書き込みはフレームワークに"
     },
     de:{
-      "meta.title":"Modelet — SQL-first Mikro-ORM","meta.desc":"Abfragen gehören zu SQL, Schreibvorgänge zum Framework. Ein SQL-first Mikro-ORM seit 2006 — JPA-kompatible Annotationen, Java und Python.",
+      "meta.title":"Modelet — SQL-first Mikro-ORM","meta.desc":"Abfragen gehören zu SQL, Schreibvorgänge zum Framework. Ein SQL-first Mikro-ORM seit 2006 — JPA-kompatible Annotationen, auf Spring JDBC.",
       "nav.philosophy":"Philosophie","nav.scale":"Skalierung","nav.flow":"Ablauf","nav.quickstart":"Schnellstart",
       "hero.title":"Wer SQL kann,<br>kann schon <span class=\"grad\">Modelet</span>.",
-      "hero.tagline":"Abfragen gehören zu SQL. Schreibvorgänge gehören zum Framework.",
+      "hero.tagline":"<span class=\"g-q\">Abfragen</span> gehören zu SQL. <span class=\"g-w\">Schreibvorgänge</span> gehören zum Framework.",
       "hero.lede":"Schreibe Abfragen in dem ANSI-SQL, das du bereits kennst. Überlasse das mühsame INSERT / UPDATE / DELETE dem Framework. Eine Lernkurve, die kaum existiert — seit zwei Jahrzehnten unverändert.",
       "hero.cta1":"Auf GitHub ansehen →","hero.cta2":"Die Geschichte lesen",
       "phil.eyebrow":"Die Philosophie","phil.h2":"Der umgekehrte Kompromiss zur ORM-Welle",
@@ -502,20 +474,21 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
       "qs.queryTitle":"Mit dem SQL abfragen, das du kennst","qs.saveTitle":"saveOrUpdate — das Framework schreibt das SQL",
       "heritage.eyebrow":"Ursprung · 2006","heritage.h2":"Eine leise, aber präzise Entscheidung",
       "heritage.quote":"„Kämpfe nicht gegen SQL — <span class=\"hl\">respektiere es.</span>“ Zwei Jahrzehnte später entdeckt die Python-Community „SQL-first“ neu, als wäre es neu. Matt schrieb es 2006 nieder.",
-      "heritage.attrib":"Modelet wurde 2006 von <b>Matt</b> geschaffen, um die ORM-Lernkurve zu ebnen und die Auslieferung seines Teams zu beschleunigen. Die ganze Geschichte steht in <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md\">TRIBUTE.md</a>.",
+      "heritage.attrib":"Modelet wurde 2006 von <b>Matt</b> geschaffen, um die ORM-Lernkurve zu ebnen und die Auslieferung seines Teams zu beschleunigen. Die ganze Geschichte steht in <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/TRIBUTE.md\">TRIBUTE.md</a>.",
       "nav.compare":"Vergleich","cmp.eyebrow":"Direktvergleich","cmp.h2":"Wie sich Modelet schlägt",
       "cmp.lede":"Ehrliche Vergleiche, Dimension für Dimension, mit den Frameworks, zu denen du sonst greifen würdest — inklusive der Fälle, in denen sie gewinnen.",
       "cmp.java.t":"vs. MyBatis & Hibernate","cmp.java.d":"Hibernate versteckt dein ganzes SQL; MyBatis lässt dich alles schreiben. Sieh, wo Modelet die Arbeit teilt — und warum die Schreibseite entscheidet.",
-      "cmp.py.t":"vs. das SQL-first-Feld","cmp.py.d":"psycopg Row-Factories, aiosql, SQLAlchemy Core + Pydantic — sie alle kümmern sich um die Leseseite. Mit pymodelet werden selbst die Schreibvorgänge mühelos.",
-      "cmp.cta":"Zum Vergleich →","cmp.cta2":"Zum Vergleich →",
+      "cmp.py.t":"Die pymodelet-Portierung","cmp.py.d":"Lieber Python? pymodelet trägt dieselbe SQL-first-Philosophie auf jeden DB-API-2.0-Treiber — pures SQL rein, typisierte Entitäten raus, saveOrUpdate erzeugt die Schreibvorgänge.",
+      "cmp.cta":"Zum Vergleich →","cmp.cta2":"Zu pymodelet →",
       "footer.cmpjava":"Java-Vergleich","footer.cmppy":"Python-Vergleich",
+      "footer.pymodelet":"pymodelet (Python)","footer.tribute":"Widmung",
       "footer.tagline":"Modelet · Abfragen gehören zu SQL, Schreibvorgänge zum Framework"
     },
     ko:{
-      "meta.title":"Modelet — SQL-first 마이크로 ORM","meta.desc":"쿼리는 SQL에게, 쓰기는 프레임워크에게. 2006년 탄생한 SQL-first 마이크로 ORM —— JPA 호환 애너테이션, Java + Python.",
+      "meta.title":"Modelet — SQL-first 마이크로 ORM","meta.desc":"쿼리는 SQL에게, 쓰기는 프레임워크에게. 2006년 탄생한 SQL-first 마이크로 ORM —— JPA 호환 애너테이션, Spring JDBC 기반.",
       "nav.philosophy":"철학","nav.scale":"확장성","nav.flow":"흐름","nav.quickstart":"빠른 시작",
       "hero.title":"SQL을 안다면,<br>이미 <span class=\"grad\">Modelet</span>을 쓸 수 있습니다.",
-      "hero.tagline":"쿼리는 SQL에게, 쓰기는 프레임워크에게.",
+      "hero.tagline":"<span class=\"g-q\">쿼리</span>는 SQL에게, <span class=\"g-w\">쓰기</span>는 프레임워크에게.",
       "hero.lede":"이미 아는 ANSI SQL로 쿼리를 작성하고, 번거로운 INSERT / UPDATE / DELETE는 프레임워크에 맡기세요. 거의 존재하지 않는 학습 곡선 —— 20년째 그대로입니다.",
       "hero.cta1":"GitHub에서 보기 →","hero.cta2":"이야기 읽기",
       "phil.eyebrow":"철학","phil.h2":"ORM 물결과 정반대의 선택",
@@ -535,13 +508,14 @@ model.<span class="fn">save</span>(book)    <span class="com"># loaded entity �
       "qs.queryTitle":"아는 SQL로 조회","qs.saveTitle":"saveOrUpdate —— 프레임워크가 SQL을 작성",
       "heritage.eyebrow":"유산 · 2006","heritage.h2":"조용하지만 정확한 결정",
       "heritage.quote":"“SQL과 싸우지 말고 —— <span class=\"hl\">존중하라.</span>” 20년이 지나, Python 커뮤니티는 ‘SQL-first’를 마치 새로운 것처럼 재발견하고 있습니다. Matt는 2006년에 이미 그것을 적어 두었습니다.",
-      "heritage.attrib":"Modelet은 2006년 <b>Matt</b>가 ORM 학습 곡선을 평탄하게 하고 팀의 개발 속도를 높이기 위해 만들었습니다. 전체 이야기는 <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/python/TRIBUTE.md\">TRIBUTE.md</a>에 있습니다.",
+      "heritage.attrib":"Modelet은 2006년 <b>Matt</b>가 ORM 학습 곡선을 평탄하게 하고 팀의 개발 속도를 높이기 위해 만들었습니다. 전체 이야기는 <a href=\"https://github.com/MattAtAIEra/modelet/blob/master/TRIBUTE.md\">TRIBUTE.md</a>에 있습니다.",
       "nav.compare":"비교","cmp.eyebrow":"정면 비교","cmp.h2":"Modelet은 어디에 서 있는가",
       "cmp.lede":"원래라면 손이 갔을 프레임워크들과 차원 하나하나 정직하게 비교합니다 —— 상대가 이기는 경우까지 적어 두었습니다.",
       "cmp.java.t":"vs MyBatis & Hibernate","cmp.java.d":"Hibernate는 SQL을 전부 숨기고, MyBatis는 전부 쓰게 합니다. Modelet이 일을 어디서 나누는지 —— 그리고 왜 승부가 쓰기 측에서 갈리는지 보세요.",
-      "cmp.py.t":"vs SQL-first 진영","cmp.py.d":"psycopg row factory, aiosql, SQLAlchemy Core + Pydantic —— 모두 읽기 측은 챙겨 줍니다. pymodelet은 쓰기까지 편안하게 만들어 줍니다.",
-      "cmp.cta":"비교 읽기 →","cmp.cta2":"비교 읽기 →",
+      "cmp.py.t":"pymodelet 이식판","cmp.py.d":"Python이 좋다면? pymodelet은 같은 SQL-first 철학을 모든 DB-API 2.0 드라이버로 —— 순수 SQL을 넣고 타입 있는 엔티티를 받고, saveOrUpdate가 쓰기를 생성합니다.",
+      "cmp.cta":"비교 읽기 →","cmp.cta2":"pymodelet 보기 →",
       "footer.cmpjava":"Java 비교","footer.cmppy":"Python 비교",
+      "footer.pymodelet":"pymodelet (Python)","footer.tribute":"헌정",
       "footer.tagline":"Modelet · 쿼리는 SQL에게, 쓰기는 프레임워크에게"
     }
   };

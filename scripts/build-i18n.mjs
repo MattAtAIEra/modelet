@@ -14,7 +14,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const BASE = 'https://mattataiera.github.io/modelet';
-const PAGES = ['index.html', 'compare-java.html', 'compare-python.html'];
+const PAGES = ['index.html', 'compare-java.html'];
 const LANGS = ['en', 'zh', 'ja', 'de', 'ko'];
 const HTML_LANG = { en: 'en', zh: 'zh-Hant', ja: 'ja', de: 'de', ko: 'ko' };
 const HREFLANG = { en: 'en', zh: 'zh-Hant', ja: 'ja', de: 'de', ko: 'ko' };
