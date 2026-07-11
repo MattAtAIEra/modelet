@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>pymodelet vs the SQL-first field</title>
-<meta name="description" content="Every SQL-first tool in Python answers the read side. pymodelet also answers the write side — an honest comparison with psycopg row factories, aiosql and SQLAlchemy Core + Pydantic.">
+<meta name="description" content="Every SQL-first tool in Python takes care of the read side. pymodelet makes even the writes effortless — the only package where SQL gives you a list of entities you can save right back, with insert/update/delete decided automatically. Compared honestly with psycopg row factories, aiosql and SQLAlchemy Core + Pydantic.">
 <style>
   :root{
     --bg:#fbfaf8; --surface:#ffffff; --surface-2:#f4f3ef;
@@ -78,6 +78,8 @@
   h1.title{font-size:clamp(2rem,5vw,3.3rem);line-height:1.08;margin:16px 0 0;letter-spacing:-.03em;font-weight:800}
   .title .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .tagline{margin:18px 0 0;font-size:clamp(1.05rem,2.2vw,1.3rem);font-weight:600;max-width:820px}
+  .subline{margin:14px 0 0;font-size:1.02rem;font-weight:600;max-width:800px;color:var(--accent);
+    border-left:3px solid var(--accent);padding-left:14px}
   .lede{margin:18px 0 0;max-width:700px;color:var(--muted);font-size:1.04rem}
 
   section{padding:72px 0}
@@ -158,7 +160,8 @@
   <div class="wrap">
     <span class="eyebrow" data-i18n="hero.eyebrow">Python · Head-to-head</span>
     <h1 class="title" data-i18n-html="hero.h1"><span class="grad">pymodelet</span> vs the SQL-first field</h1>
-    <p class="tagline" data-i18n="hero.tagline">Every SQL-first tool in Python answers the read side. pymodelet also answers the write side.</p>
+    <p class="tagline" data-i18n="hero.tagline">Every SQL-first tool in Python takes care of the read side. pymodelet makes even the writes effortless.</p>
+    <p class="subline" data-i18n="hero.sub">pymodelet is currently the only package where you run SQL to get a list of entities, save that same list right back — and insert, update or delete is decided automatically.</p>
     <p class="lede" data-i18n="hero.lede">SQLAlchemy ORM is Python's Hibernate — powerful, heavy, a learning curve of its own. The lightweight field got reads right: psycopg's row factories, aiosql's SQL files, SQLAlchemy Core with Pydantic. Here is what still sets pymodelet apart.</p>
   </div>
 </header>
@@ -328,7 +331,8 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "nav.back":"← back","nav.field":"The field","nav.table":"Side by side","nav.writes":"The write side",
       "hero.eyebrow":"Python · Head-to-head",
       "hero.h1":"<span class=\"grad\">pymodelet</span> vs the SQL-first field",
-      "hero.tagline":"Every SQL-first tool in Python answers the read side. pymodelet also answers the write side.",
+      "hero.tagline":"Every SQL-first tool in Python takes care of the read side. pymodelet makes even the writes effortless.",
+      "hero.sub":"pymodelet is currently the only package where you run SQL to get a list of entities, save that same list right back — and insert, update or delete is decided automatically.",
       "hero.lede":"SQLAlchemy ORM is Python's Hibernate — powerful, heavy, a learning curve of its own. The lightweight field got reads right: psycopg's row factories, aiosql's SQL files, SQLAlchemy Core with Pydantic. Here is what still sets pymodelet apart.",
       "fld.eyebrow":"The field","fld.h2":"Four ways to stay SQL-first in Python",
       "fld.pm.t":"Reads and writes, both answered","fld.pm.d":"Plain SQL in, typed entities out — on any DB-API 2.0 driver, zero dependencies. And the part nobody else does: saveOrUpdate generates every INSERT / UPDATE / DELETE from the entity, writes the key back, stamps audit fields.",
@@ -362,7 +366,8 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "nav.back":"← 回主頁","nav.field":"競爭者們","nav.table":"逐項對照","nav.writes":"寫入面",
       "hero.eyebrow":"Python · 正面對決",
       "hero.h1":"<span class=\"grad\">pymodelet</span> vs SQL-first 陣營",
-      "hero.tagline":"Python 的每一個 SQL-first 工具都回答了讀取面。pymodelet 連寫入面也一併回答。",
+      "hero.tagline":"Python 的每一個 SQL-first 工具都照顧到了讀取面。pymodelet 連寫入都讓你輕鬆自在。",
+      "hero.sub":"pymodelet 是目前唯一讓你下 SQL 得到 list of entity,再把 list of entity 直接儲存,自動判斷新增、修改、刪除的套件。",
       "hero.lede":"SQLAlchemy ORM 是 Python 界的 Hibernate —— 強大、沉重、自成一條學習曲線。輕量陣營把讀取做對了:psycopg 的 row factory、aiosql 的 SQL 檔、SQLAlchemy Core 加 Pydantic。以下是 pymodelet 依然與眾不同的地方。",
       "fld.eyebrow":"競爭者們","fld.h2":"在 Python 保持 SQL-first 的四種方式",
       "fld.pm.t":"讀與寫,都有答案","fld.pm.d":"純 SQL 進、型別化 entity 出 —— 站在任何 DB-API 2.0 驅動上,零依賴。還有別人都沒做的那一塊:saveOrUpdate 從 entity 自動產生每一句 INSERT / UPDATE / DELETE,回填主鍵、蓋上稽核欄位。",
@@ -396,7 +401,8 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "nav.back":"← ホームへ","nav.field":"競合たち","nav.table":"項目別比較","nav.writes":"書き込み側",
       "hero.eyebrow":"Python · 直接対決",
       "hero.h1":"<span class=\"grad\">pymodelet</span> vs SQL-first 勢",
-      "hero.tagline":"Python の SQL-first ツールはどれも読み取り側に答えました。pymodelet は書き込み側にも答えます。",
+      "hero.tagline":"Python の SQL-first ツールはどれも読み取り側の面倒を見てくれます。pymodelet は書き込みまで楽にしてくれます。",
+      "hero.sub":"SQL を投げて list of entity を受け取り、その list をそのまま保存すれば、追加・更新・削除は自動判定 —— それができるのは、現時点で pymodelet だけです。",
       "hero.lede":"SQLAlchemy ORM は Python 界の Hibernate —— 強力で、重く、独自の学習コストを持ちます。軽量勢は読み取りを正しく解きました:psycopg の row factory、aiosql の SQL ファイル、SQLAlchemy Core + Pydantic。それでも pymodelet が際立つ理由を示します。",
       "fld.eyebrow":"競合たち","fld.h2":"Python で SQL-first を貫く四つの道",
       "fld.pm.t":"読みも書きも、答えあり","fld.pm.d":"素の SQL を入れ、型付きエンティティが出てくる —— どの DB-API 2.0 ドライバでも、依存ゼロで。そして誰もやらなかった部分:saveOrUpdate がエンティティから INSERT / UPDATE / DELETE を全て生成し、キーを書き戻し、監査項目を付与します。",
@@ -430,7 +436,8 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "nav.back":"← zurück","nav.field":"Das Feld","nav.table":"Im Vergleich","nav.writes":"Die Schreibseite",
       "hero.eyebrow":"Python · Direktvergleich",
       "hero.h1":"<span class=\"grad\">pymodelet</span> vs. das SQL-first-Feld",
-      "hero.tagline":"Jedes SQL-first-Tool in Python beantwortet die Leseseite. pymodelet beantwortet auch die Schreibseite.",
+      "hero.tagline":"Jedes SQL-first-Tool in Python kümmert sich um die Leseseite. Mit pymodelet werden selbst die Schreibvorgänge mühelos.",
+      "hero.sub":"pymodelet ist derzeit das einzige Paket, bei dem du SQL absetzt, eine Liste von Entitäten erhältst und dieselbe Liste direkt zurückspeicherst — Insert, Update oder Delete wird automatisch entschieden.",
       "hero.lede":"SQLAlchemy ORM ist Pythons Hibernate — mächtig, schwer, mit eigener Lernkurve. Das leichte Feld hat das Lesen gelöst: psycopgs Row-Factories, aiosqls SQL-Dateien, SQLAlchemy Core mit Pydantic. Hier ist, was pymodelet weiterhin abhebt.",
       "fld.eyebrow":"Das Feld","fld.h2":"Vier Wege, in Python SQL-first zu bleiben",
       "fld.pm.t":"Lesen und Schreiben, beides beantwortet","fld.pm.d":"Pures SQL rein, typisierte Entitäten raus — auf jedem DB-API-2.0-Treiber, null Abhängigkeiten. Und der Teil, den sonst niemand macht: saveOrUpdate generiert jedes INSERT / UPDATE / DELETE aus der Entität, schreibt den Schlüssel zurück, setzt Audit-Felder.",
@@ -464,7 +471,8 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "nav.back":"← 홈으로","nav.field":"경쟁자들","nav.table":"항목별 비교","nav.writes":"쓰기 측",
       "hero.eyebrow":"Python · 정면 비교",
       "hero.h1":"<span class=\"grad\">pymodelet</span> vs SQL-first 진영",
-      "hero.tagline":"Python의 모든 SQL-first 도구는 읽기 측에 답했습니다. pymodelet은 쓰기 측에도 답합니다.",
+      "hero.tagline":"Python의 모든 SQL-first 도구는 읽기 측을 챙겨 줍니다. pymodelet은 쓰기까지 편안하게 만들어 줍니다.",
+      "hero.sub":"SQL을 실행해 list of entity를 받고, 그 list를 그대로 저장하면 추가·수정·삭제가 자동으로 판별됩니다 —— 현재 이것이 가능한 패키지는 pymodelet뿐입니다.",
       "hero.lede":"SQLAlchemy ORM은 Python의 Hibernate입니다 —— 강력하고, 무겁고, 그 자체의 학습 곡선을 가집니다. 경량 진영은 읽기를 제대로 풀었습니다: psycopg의 row factory, aiosql의 SQL 파일, SQLAlchemy Core + Pydantic. 그럼에도 pymodelet이 다른 이유를 보입니다.",
       "fld.eyebrow":"경쟁자들","fld.h2":"Python에서 SQL-first를 지키는 네 가지 길",
       "fld.pm.t":"읽기와 쓰기, 둘 다 답이 있다","fld.pm.d":"순수 SQL을 넣으면 타입 있는 엔티티가 나옵니다 —— 어떤 DB-API 2.0 드라이버에서든, 의존성 제로로. 그리고 아무도 하지 않은 부분: saveOrUpdate가 엔티티로부터 모든 INSERT / UPDATE / DELETE를 생성하고, 키를 되써 주고, 감사 필드를 채웁니다.",
