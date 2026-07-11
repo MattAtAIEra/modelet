@@ -271,7 +271,7 @@
   <div class="wrap">
     <span class="eyebrow" data-i18n="wr.eyebrow">결정적 차이</span>
     <h2 class="sec" data-i18n="wr.h2">pymodelet: 읽기도 쓰기도 간편, 코드는 더 읽기 쉽게, AI 토큰은 절약</h2>
-    <p class="sec-lede" data-i18n="wr.lede">같은 요구사항: 사용자를 등록하고 이메일을 바꿉니다. 읽기 측 도구들은 두 문장을 모두 쓰게 합니다. pymodelet은 그것들을 사라지게 합니다.</p>
+    <p class="sec-lede" data-i18n="wr.lede">흔한 데이터 CRUD 상황을 떠올려 보세요: 사용자를 등록해 저장하고, 나중에 이메일을 수정합니다. 다른 패키지는 두 SQL 문장을 직접 쓰게 하지만, pymodelet은 그것들을 사라지게 합니다 —— 당신과 AI는 비즈니스 로직에 집중하고, 무의미한 토큰 생성은 아낍니다.</p>
     <div class="two">
       <div class="codewin">
         <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">aiosql — users.sql + Python</span><span class="lang">every statement, by hand</span></div>
@@ -297,7 +297,7 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
 <span class="com"># delete? user.txn_mode = TxnMode.DELETE; model.save(user)</span></pre>
       </div>
     </div>
-    <p class="cap" data-i18n="wr.cap">컬럼 하나를 추가하면: aiosql에서는 테이블, INSERT, UPDATE, 그리고 필드를 나열하는 모든 호출부에 손이 갑니다. pymodelet은 테이블과 dataclass 필드 하나뿐 —— SQL은 스스로 다시 자랍니다. 이것을 스키마의 모든 테이블만큼 곱해 보세요.</p>
+    <p class="cap" data-i18n="wr.cap">컬럼 하나를 추가하면: aiosql에서는 테이블, INSERT, UPDATE, 그리고 필드를 나열하는 모든 호출부에 손이 갑니다. pymodelet은 테이블과 dataclass 필드 하나뿐 —— SQL은 스스로 다시 자랍니다.</p>
   </div>
 </section>
 

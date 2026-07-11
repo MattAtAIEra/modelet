@@ -264,7 +264,7 @@
   <div class="wrap">
     <span class="eyebrow" data-i18n="wr.eyebrow">The decisive difference</span>
     <h2 class="sec" data-i18n="wr.h2">pymodelet: effortless reads and writes, readable code, fewer AI tokens</h2>
-    <p class="sec-lede" data-i18n="wr.lede">Same requirement: insert a user, then change the email. The read-side tools all make you author both statements. pymodelet makes them disappear.</p>
+    <p class="sec-lede" data-i18n="wr.lede">Picture a routine data-CRUD scenario: create a user, save it, then fix the email later. The other packages make you author both SQL statements; pymodelet makes them disappear — you and your AI stay focused on business logic instead of generating pointless tokens.</p>
     <div class="two">
       <div class="codewin">
         <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">aiosql — users.sql + Python</span><span class="lang">every statement, by hand</span></div>
@@ -290,7 +290,7 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
 <span class="com"># delete? user.txn_mode = TxnMode.DELETE; model.save(user)</span></pre>
       </div>
     </div>
-    <p class="cap" data-i18n="wr.cap">Add a column: in aiosql that touches the table, the INSERT, the UPDATE and every call site that names the fields. In pymodelet it touches the table and one dataclass field — the SQL regenerates itself. Multiply by every table in your schema.</p>
+    <p class="cap" data-i18n="wr.cap">Add a column: in aiosql that touches the table, the INSERT, the UPDATE and every call site that names the fields. In pymodelet it touches the table and one dataclass field — the SQL regenerates itself.</p>
   </div>
 </section>
 
@@ -334,8 +334,8 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "r10":"Java twin","r10a":"Yes — same concepts and JPA-style vocabulary as Modelet (Java), 1:1","r10b":"—","r10c":"—","r10d":"—",
       "r11":"Size","r11a":"~600 lines, read in one sitting","r11b":"Built into the driver","r11c":"< 1,000 lines","r11d":"Large library",
       "wr.eyebrow":"The decisive difference","wr.h2":"pymodelet: effortless reads and writes, readable code, fewer AI tokens",
-      "wr.lede":"Same requirement: insert a user, then change the email. The read-side tools all make you author both statements. pymodelet makes them disappear.",
-      "wr.cap":"Add a column: in aiosql that touches the table, the INSERT, the UPDATE and every call site that names the fields. In pymodelet it touches the table and one dataclass field — the SQL regenerates itself. Multiply by every table in your schema.",
+      "wr.lede":"Picture a routine data-CRUD scenario: create a user, save it, then fix the email later. The other packages make you author both SQL statements; pymodelet makes them disappear — you and your AI stay focused on business logic instead of generating pointless tokens.",
+      "wr.cap":"Add a column: in aiosql that touches the table, the INSERT, the UPDATE and every call site that names the fields. In pymodelet it touches the table and one dataclass field — the SQL regenerates itself.",
       "foot.tagline":"pymodelet · Queries belong to SQL, writes belong to the framework",
       "foot.home":"Home","foot.java":"Java comparison"
     },
@@ -365,8 +365,8 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "r10":"Java 雙生","r10a":"有 —— 與 Modelet(Java)概念與 JPA 式詞彙一比一","r10b":"—","r10c":"—","r10d":"—",
       "r11":"規模","r11a":"約 600 行,一口氣讀完","r11b":"驅動內建","r11c":"不到 1,000 行","r11d":"大型函式庫",
       "wr.eyebrow":"決定性差異","wr.h2":"pymodelet 讓讀寫都便利,程式更易讀,AI 省 token",
-      "wr.lede":"同一個需求:新增一位使用者,然後改 email。讀取派的工具都要你把兩句 SQL 寫出來;pymodelet 讓它們直接消失。",
-      "wr.cap":"加一個欄位:在 aiosql 要動資料表、INSERT、UPDATE,還有每個點名欄位的呼叫處。在 pymodelet 只要動資料表和一個 dataclass 欄位 —— SQL 自己重新長出來。再乘上你 schema 裡的每一張表。",
+      "wr.lede":"假設一個資料 AUDI 情境:新增一位使用者、存檔,後來又修正 email。其他套件都要你把兩句 SQL 寫出來;pymodelet 讓它們直接消失。真正讓你跟 AI 專注商業邏輯,節省無謂的 token 產出。",
+      "wr.cap":"加一個欄位:在 aiosql 要動資料表、INSERT、UPDATE,還有每個點名欄位的呼叫處。在 pymodelet 只要動資料表和一個 dataclass 欄位 —— SQL 自己重新長出來。",
       "foot.tagline":"pymodelet · 查詢交給 SQL,寫入交給框架",
       "foot.home":"主頁","foot.java":"Java 比較"
     },
@@ -396,8 +396,8 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "r10":"Java の双子","r10a":"あり —— Modelet(Java)と概念・JPA 風語彙が 1:1","r10b":"—","r10c":"—","r10d":"—",
       "r11":"規模","r11a":"約 600 行、一気に読める","r11b":"ドライバ内蔵","r11c":"1,000 行未満","r11d":"大規模ライブラリ",
       "wr.eyebrow":"決定的な違い","wr.h2":"pymodelet なら読み書きが楽、コードは読みやすく、AI のトークンも節約",
-      "wr.lede":"同じ要件:ユーザーを登録し、メールアドレスを変更する。読み取り系ツールはどれも二つの文を書かせます。pymodelet はそれらを消し去ります。",
-      "wr.cap":"カラムを一つ追加すると:aiosql ではテーブル、INSERT、UPDATE、そしてフィールド名を列挙する全呼び出し箇所に手が入ります。pymodelet ならテーブルと dataclass のフィールド一つ —— SQL は自動的に生え変わります。これをスキーマの全テーブル分、掛け算してください。",
+      "wr.lede":"ありふれたデータ CRUD の場面を想像してください:ユーザーを登録して保存し、あとからメールアドレスを修正する。他のパッケージでは二つの SQL 文を自分で書くことになりますが、pymodelet ならそれらは消えてなくなります。あなたと AI は業務ロジックに集中でき、無駄なトークン生成も省けます。",
+      "wr.cap":"カラムを一つ追加すると:aiosql ではテーブル、INSERT、UPDATE、そしてフィールド名を列挙する全呼び出し箇所に手が入ります。pymodelet ならテーブルと dataclass のフィールド一つ —— SQL は自動的に生え変わります。",
       "foot.tagline":"pymodelet · クエリは SQL に、書き込みはフレームワークに",
       "foot.home":"ホーム","foot.java":"Java 比較"
     },
@@ -427,8 +427,8 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "r10":"Java-Zwilling","r10a":"Ja — gleiche Konzepte und JPA-artiges Vokabular wie Modelet (Java), 1:1","r10b":"—","r10c":"—","r10d":"—",
       "r11":"Umfang","r11a":"~600 Zeilen, in einem Rutsch lesbar","r11b":"Im Treiber eingebaut","r11c":"< 1.000 Zeilen","r11d":"Große Bibliothek",
       "wr.eyebrow":"Der entscheidende Unterschied","wr.h2":"pymodelet: Lesen und Schreiben mühelos, lesbarer Code, weniger KI-Tokens",
-      "wr.lede":"Gleiche Anforderung: einen Benutzer anlegen, dann die E-Mail ändern. Die Lese-Tools lassen dich beide Statements verfassen. pymodelet lässt sie verschwinden.",
-      "wr.cap":"Eine neue Spalte: In aiosql berührt sie die Tabelle, das INSERT, das UPDATE und jede Aufrufstelle, die Felder benennt. In pymodelet nur die Tabelle und ein Dataclass-Feld — das SQL erzeugt sich neu. Multipliziere das mit jeder Tabelle deines Schemas.",
+      "wr.lede":"Stell dir ein alltägliches Daten-CRUD-Szenario vor: einen Benutzer anlegen, speichern, später die E-Mail korrigieren. Bei den anderen Paketen schreibst du beide SQL-Statements selbst; pymodelet lässt sie verschwinden — du und deine KI bleibt bei der Geschäftslogik, statt sinnlose Tokens zu erzeugen.",
+      "wr.cap":"Eine neue Spalte: In aiosql berührt sie die Tabelle, das INSERT, das UPDATE und jede Aufrufstelle, die Felder benennt. In pymodelet nur die Tabelle und ein Dataclass-Feld — das SQL erzeugt sich neu.",
       "foot.tagline":"pymodelet · Abfragen gehören zu SQL, Schreibvorgänge zum Framework",
       "foot.home":"Startseite","foot.java":"Java-Vergleich"
     },
@@ -458,8 +458,8 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
       "r10":"Java 쌍둥이","r10a":"있음 —— Modelet(Java)과 개념·JPA식 어휘가 1:1","r10b":"—","r10c":"—","r10d":"—",
       "r11":"규모","r11a":"약 600줄, 한자리에서 완독","r11b":"드라이버 내장","r11c":"1,000줄 미만","r11d":"대형 라이브러리",
       "wr.eyebrow":"결정적 차이","wr.h2":"pymodelet: 읽기도 쓰기도 간편, 코드는 더 읽기 쉽게, AI 토큰은 절약",
-      "wr.lede":"같은 요구사항: 사용자를 등록하고 이메일을 바꿉니다. 읽기 측 도구들은 두 문장을 모두 쓰게 합니다. pymodelet은 그것들을 사라지게 합니다.",
-      "wr.cap":"컬럼 하나를 추가하면: aiosql에서는 테이블, INSERT, UPDATE, 그리고 필드를 나열하는 모든 호출부에 손이 갑니다. pymodelet은 테이블과 dataclass 필드 하나뿐 —— SQL은 스스로 다시 자랍니다. 이것을 스키마의 모든 테이블만큼 곱해 보세요.",
+      "wr.lede":"흔한 데이터 CRUD 상황을 떠올려 보세요: 사용자를 등록해 저장하고, 나중에 이메일을 수정합니다. 다른 패키지는 두 SQL 문장을 직접 쓰게 하지만, pymodelet은 그것들을 사라지게 합니다 —— 당신과 AI는 비즈니스 로직에 집중하고, 무의미한 토큰 생성은 아낍니다.",
+      "wr.cap":"컬럼 하나를 추가하면: aiosql에서는 테이블, INSERT, UPDATE, 그리고 필드를 나열하는 모든 호출부에 손이 갑니다. pymodelet은 테이블과 dataclass 필드 하나뿐 —— SQL은 스스로 다시 자랍니다.",
       "foot.tagline":"pymodelet · 쿼리는 SQL에게, 쓰기는 프레임워크에게",
       "foot.home":"홈","foot.java":"Java 비교"
     }

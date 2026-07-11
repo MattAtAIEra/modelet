@@ -271,7 +271,7 @@
   <div class="wrap">
     <span class="eyebrow" data-i18n="wr.eyebrow">Der entscheidende Unterschied</span>
     <h2 class="sec" data-i18n="wr.h2">pymodelet: Lesen und Schreiben mühelos, lesbarer Code, weniger KI-Tokens</h2>
-    <p class="sec-lede" data-i18n="wr.lede">Gleiche Anforderung: einen Benutzer anlegen, dann die E-Mail ändern. Die Lese-Tools lassen dich beide Statements verfassen. pymodelet lässt sie verschwinden.</p>
+    <p class="sec-lede" data-i18n="wr.lede">Stell dir ein alltägliches Daten-CRUD-Szenario vor: einen Benutzer anlegen, speichern, später die E-Mail korrigieren. Bei den anderen Paketen schreibst du beide SQL-Statements selbst; pymodelet lässt sie verschwinden — du und deine KI bleibt bei der Geschäftslogik, statt sinnlose Tokens zu erzeugen.</p>
     <div class="two">
       <div class="codewin">
         <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">aiosql — users.sql + Python</span><span class="lang">every statement, by hand</span></div>
@@ -297,7 +297,7 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
 <span class="com"># delete? user.txn_mode = TxnMode.DELETE; model.save(user)</span></pre>
       </div>
     </div>
-    <p class="cap" data-i18n="wr.cap">Eine neue Spalte: In aiosql berührt sie die Tabelle, das INSERT, das UPDATE und jede Aufrufstelle, die Felder benennt. In pymodelet nur die Tabelle und ein Dataclass-Feld — das SQL erzeugt sich neu. Multipliziere das mit jeder Tabelle deines Schemas.</p>
+    <p class="cap" data-i18n="wr.cap">Eine neue Spalte: In aiosql berührt sie die Tabelle, das INSERT, das UPDATE und jede Aufrufstelle, die Felder benennt. In pymodelet nur die Tabelle und ein Dataclass-Feld — das SQL erzeugt sich neu.</p>
   </div>
 </section>
 

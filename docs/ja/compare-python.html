@@ -271,7 +271,7 @@
   <div class="wrap">
     <span class="eyebrow" data-i18n="wr.eyebrow">決定的な違い</span>
     <h2 class="sec" data-i18n="wr.h2">pymodelet なら読み書きが楽、コードは読みやすく、AI のトークンも節約</h2>
-    <p class="sec-lede" data-i18n="wr.lede">同じ要件:ユーザーを登録し、メールアドレスを変更する。読み取り系ツールはどれも二つの文を書かせます。pymodelet はそれらを消し去ります。</p>
+    <p class="sec-lede" data-i18n="wr.lede">ありふれたデータ CRUD の場面を想像してください:ユーザーを登録して保存し、あとからメールアドレスを修正する。他のパッケージでは二つの SQL 文を自分で書くことになりますが、pymodelet ならそれらは消えてなくなります。あなたと AI は業務ロジックに集中でき、無駄なトークン生成も省けます。</p>
     <div class="two">
       <div class="codewin">
         <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">aiosql — users.sql + Python</span><span class="lang">every statement, by hand</span></div>
@@ -297,7 +297,7 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
 <span class="com"># delete? user.txn_mode = TxnMode.DELETE; model.save(user)</span></pre>
       </div>
     </div>
-    <p class="cap" data-i18n="wr.cap">カラムを一つ追加すると:aiosql ではテーブル、INSERT、UPDATE、そしてフィールド名を列挙する全呼び出し箇所に手が入ります。pymodelet ならテーブルと dataclass のフィールド一つ —— SQL は自動的に生え変わります。これをスキーマの全テーブル分、掛け算してください。</p>
+    <p class="cap" data-i18n="wr.cap">カラムを一つ追加すると:aiosql ではテーブル、INSERT、UPDATE、そしてフィールド名を列挙する全呼び出し箇所に手が入ります。pymodelet ならテーブルと dataclass のフィールド一つ —— SQL は自動的に生え変わります。</p>
   </div>
 </section>
 

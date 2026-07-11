@@ -271,7 +271,7 @@
   <div class="wrap">
     <span class="eyebrow" data-i18n="wr.eyebrow">The decisive difference</span>
     <h2 class="sec" data-i18n="wr.h2">pymodelet: effortless reads and writes, readable code, fewer AI tokens</h2>
-    <p class="sec-lede" data-i18n="wr.lede">Same requirement: insert a user, then change the email. The read-side tools all make you author both statements. pymodelet makes them disappear.</p>
+    <p class="sec-lede" data-i18n="wr.lede">Picture a routine data-CRUD scenario: create a user, save it, then fix the email later. The other packages make you author both SQL statements; pymodelet makes them disappear — you and your AI stay focused on business logic instead of generating pointless tokens.</p>
     <div class="two">
       <div class="codewin">
         <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="lbl">aiosql — users.sql + Python</span><span class="lang">every statement, by hand</span></div>
@@ -297,7 +297,7 @@ model.<span class="fn">save</span>(user)          <span class="com"># UPDATE —
 <span class="com"># delete? user.txn_mode = TxnMode.DELETE; model.save(user)</span></pre>
       </div>
     </div>
-    <p class="cap" data-i18n="wr.cap">Add a column: in aiosql that touches the table, the INSERT, the UPDATE and every call site that names the fields. In pymodelet it touches the table and one dataclass field — the SQL regenerates itself. Multiply by every table in your schema.</p>
+    <p class="cap" data-i18n="wr.cap">Add a column: in aiosql that touches the table, the INSERT, the UPDATE and every call site that names the fields. In pymodelet it touches the table and one dataclass field — the SQL regenerates itself.</p>
   </div>
 </section>
 
